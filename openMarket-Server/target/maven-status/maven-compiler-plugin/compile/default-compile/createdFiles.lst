@@ -1,0 +1,14 @@
+co\unicauca\openmarket\server\infra\tcpip\OpenMarketServer.class
+co\unicauca\openmarket\server\infra\Context.class
+co\unicauca\openmarket\server\access\ProductRepositoryImplMysql.class
+co\unicauca\openmarket\server\infra\tcpip\OpenMarketHandler$1.class
+co\unicauca\openmarket\server\access\CategoryRepositoryImplArrays.class
+co\unicauca\openmarket\server\infra\ErrorResponse.class
+co\unicauca\openmarket\server\access\ProductRepositoryImplArrays.class
+co\unicauca\openmarket\server\infra\tcpip\OpenMarketHandler.class
+co\unicauca\openmarket\server\access\CategoryRepositoryImplMysql.class
+co\unicauca\openmarket\server\access\Factory.class
+co\unicauca\openmarket\server\access\IProductRepository.class
+co\unicauca\openmarket\server\domain\services\ProductService.class
+co\unicauca\openmarket\server\access\ICategoryRepository.class
+co\unicauca\openmarket\server\domain\services\CategoryService.class

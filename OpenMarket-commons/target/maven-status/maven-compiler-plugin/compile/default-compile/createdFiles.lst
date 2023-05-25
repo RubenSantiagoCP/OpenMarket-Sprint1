@@ -1,0 +1,10 @@
+co\unicauca\openmarket\commons\domain\Location.class
+co\unicauca\openmarket\commons\infra\Utilities.class
+co\unicauca\openmarket\commons\infra\Parameter.class
+co\unicauca\openmarket\commons\domain\Product.class
+co\unicauca\openmarket\commons\infra\Protocol.class
+co\unicauca\openmarket\commons\infra\JsonError.class
+co\unicauca\openmarket\commons\domain\Category.class
+co\unicauca\openmarket\commons\infra\Parameters.class
+co\unicauca\openmarket\commons\observer\Observer.class
+co\unicauca\openmarket\commons\observer\Subject.class
