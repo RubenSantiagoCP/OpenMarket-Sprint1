@@ -1,19 +1,32 @@
-C:\Users\SANTIAGO\Desktop\ESCRITORIO\INGENIERIA DE SISTEMAS\SEXTO SEMESTRE\INGENIERIA DE SOFTWARE II\SEGUNDO CORTE\SPRINT\Open_Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\access\ICategoryAccess.java
-C:\Users\SANTIAGO\Desktop\ESCRITORIO\INGENIERIA DE SISTEMAS\SEXTO SEMESTRE\INGENIERIA DE SOFTWARE II\SEGUNDO CORTE\SPRINT\Open_Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\presentation\GUIProductsFind.java
-C:\Users\SANTIAGO\Desktop\ESCRITORIO\INGENIERIA DE SISTEMAS\SEXTO SEMESTRE\INGENIERIA DE SOFTWARE II\SEGUNDO CORTE\SPRINT\Open_Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\main\Main.java
-C:\Users\SANTIAGO\Desktop\ESCRITORIO\INGENIERIA DE SISTEMAS\SEXTO SEMESTRE\INGENIERIA DE SOFTWARE II\SEGUNDO CORTE\SPRINT\Open_Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\domain\service\ProductService.java
-C:\Users\SANTIAGO\Desktop\ESCRITORIO\INGENIERIA DE SISTEMAS\SEXTO SEMESTRE\INGENIERIA DE SOFTWARE II\SEGUNDO CORTE\SPRINT\Open_Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\domain\User.java
-C:\Users\SANTIAGO\Desktop\ESCRITORIO\INGENIERIA DE SISTEMAS\SEXTO SEMESTRE\INGENIERIA DE SOFTWARE II\SEGUNDO CORTE\SPRINT\Open_Market\openMarket-Client\src\main\java\co\unicauca\openmaket\client\command\Command.java
-C:\Users\SANTIAGO\Desktop\ESCRITORIO\INGENIERIA DE SISTEMAS\SEXTO SEMESTRE\INGENIERIA DE SOFTWARE II\SEGUNDO CORTE\SPRINT\Open_Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\access\Factory.java
-C:\Users\SANTIAGO\Desktop\ESCRITORIO\INGENIERIA DE SISTEMAS\SEXTO SEMESTRE\INGENIERIA DE SOFTWARE II\SEGUNDO CORTE\SPRINT\Open_Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\presentation\GUIProducts.java
-C:\Users\SANTIAGO\Desktop\ESCRITORIO\INGENIERIA DE SISTEMAS\SEXTO SEMESTRE\INGENIERIA DE SOFTWARE II\SEGUNDO CORTE\SPRINT\Open_Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\access\IProductAccess.java
-C:\Users\SANTIAGO\Desktop\ESCRITORIO\INGENIERIA DE SISTEMAS\SEXTO SEMESTRE\INGENIERIA DE SOFTWARE II\SEGUNDO CORTE\SPRINT\Open_Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\infra\OpenMarketSocket.java
-C:\Users\SANTIAGO\Desktop\ESCRITORIO\INGENIERIA DE SISTEMAS\SEXTO SEMESTRE\INGENIERIA DE SOFTWARE II\SEGUNDO CORTE\SPRINT\Open_Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\access\ProductAccessImplSockets.java
-C:\Users\SANTIAGO\Desktop\ESCRITORIO\INGENIERIA DE SISTEMAS\SEXTO SEMESTRE\INGENIERIA DE SOFTWARE II\SEGUNDO CORTE\SPRINT\Open_Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\presentation\GUICategoriesFind.java
-C:\Users\SANTIAGO\Desktop\ESCRITORIO\INGENIERIA DE SISTEMAS\SEXTO SEMESTRE\INGENIERIA DE SOFTWARE II\SEGUNDO CORTE\SPRINT\Open_Market\openMarket-Client\src\main\java\co\unicauca\openmaket\client\command\RemoveProductCommand.java
-C:\Users\SANTIAGO\Desktop\ESCRITORIO\INGENIERIA DE SISTEMAS\SEXTO SEMESTRE\INGENIERIA DE SOFTWARE II\SEGUNDO CORTE\SPRINT\Open_Market\openMarket-Client\src\main\java\co\unicauca\openmaket\client\command\AddProductCommand.java
-C:\Users\SANTIAGO\Desktop\ESCRITORIO\INGENIERIA DE SISTEMAS\SEXTO SEMESTRE\INGENIERIA DE SOFTWARE II\SEGUNDO CORTE\SPRINT\Open_Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\access\CategoryAccessImplSockets.java
-C:\Users\SANTIAGO\Desktop\ESCRITORIO\INGENIERIA DE SISTEMAS\SEXTO SEMESTRE\INGENIERIA DE SOFTWARE II\SEGUNDO CORTE\SPRINT\Open_Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\domain\service\CategoryService.java
-C:\Users\SANTIAGO\Desktop\ESCRITORIO\INGENIERIA DE SISTEMAS\SEXTO SEMESTRE\INGENIERIA DE SOFTWARE II\SEGUNDO CORTE\SPRINT\Open_Market\openMarket-Client\src\main\java\co\unicauca\openmaket\client\command\Invoker.java
-C:\Users\SANTIAGO\Desktop\ESCRITORIO\INGENIERIA DE SISTEMAS\SEXTO SEMESTRE\INGENIERIA DE SOFTWARE II\SEGUNDO CORTE\SPRINT\Open_Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\presentation\GUICategory.java
-C:\Users\SANTIAGO\Desktop\ESCRITORIO\INGENIERIA DE SISTEMAS\SEXTO SEMESTRE\INGENIERIA DE SOFTWARE II\SEGUNDO CORTE\SPRINT\Open_Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\infra\Messages.java
+C:\Users\juank\OneDrive\Desktop\Sprint 1\OpenMarket-Sprint1\openMarket-Client\src\main\java\co\unicauca\openmarket\client\access\CategoryAccessImplSockets.java
+C:\Users\juank\OneDrive\Desktop\Sprint 1\OpenMarket-Sprint1\openMarket-Client\src\main\java\co\unicauca\openmarket\client\presentation\vendedor\JpPrincipal.java
+C:\Users\juank\OneDrive\Desktop\Sprint 1\OpenMarket-Sprint1\openMarket-Client\src\main\java\co\unicauca\openmarket\client\presentation\repartidor\GUIRepartidor.java
+C:\Users\juank\OneDrive\Desktop\Sprint 1\OpenMarket-Sprint1\openMarket-Client\src\main\java\co\unicauca\openmarket\client\presentation\comprador\NewClass.java
+C:\Users\juank\OneDrive\Desktop\Sprint 1\OpenMarket-Sprint1\openMarket-Client\src\main\java\co\unicauca\openmarket\client\presentation\vendedor\GUIVendedor.java
+C:\Users\juank\OneDrive\Desktop\Sprint 1\OpenMarket-Sprint1\openMarket-Client\src\main\java\co\unicauca\openmarket\client\access\Factory.java
+C:\Users\juank\OneDrive\Desktop\Sprint 1\OpenMarket-Sprint1\openMarket-Client\src\main\java\co\unicauca\openmarket\client\presentation\comprador\JPBuscarProductos.java
+C:\Users\juank\OneDrive\Desktop\Sprint 1\OpenMarket-Sprint1\openMarket-Client\src\main\java\co\unicauca\openmarket\client\presentation\vendedor\JpEditar.java
+C:\Users\juank\OneDrive\Desktop\Sprint 1\OpenMarket-Sprint1\openMarket-Client\src\main\java\co\unicauca\openmaket\client\command\AddProductCommand.java
+C:\Users\juank\OneDrive\Desktop\Sprint 1\OpenMarket-Sprint1\openMarket-Client\src\main\java\co\unicauca\openmarket\client\access\IProductAccess.java
+C:\Users\juank\OneDrive\Desktop\Sprint 1\OpenMarket-Sprint1\openMarket-Client\src\main\java\co\unicauca\openmarket\client\infra\Messages.java
+C:\Users\juank\OneDrive\Desktop\Sprint 1\OpenMarket-Sprint1\openMarket-Client\src\main\java\co\unicauca\openmarket\client\presentation\vendedor\JpBorrar.java
+C:\Users\juank\OneDrive\Desktop\Sprint 1\OpenMarket-Sprint1\openMarket-Client\src\main\java\co\unicauca\openmarket\client\presentation\GUIProducts.java
+C:\Users\juank\OneDrive\Desktop\Sprint 1\OpenMarket-Sprint1\openMarket-Client\src\main\java\co\unicauca\openmarket\client\infra\OpenMarketSocket.java
+C:\Users\juank\OneDrive\Desktop\Sprint 1\OpenMarket-Sprint1\openMarket-Client\src\main\java\co\unicauca\openmarket\client\presentation\GUICategoriesFind.java
+C:\Users\juank\OneDrive\Desktop\Sprint 1\OpenMarket-Sprint1\openMarket-Client\src\main\java\co\unicauca\openmaket\client\command\Invoker.java
+C:\Users\juank\OneDrive\Desktop\Sprint 1\OpenMarket-Sprint1\openMarket-Client\src\main\java\co\unicauca\openmarket\client\domain\service\ProductService.java
+C:\Users\juank\OneDrive\Desktop\Sprint 1\OpenMarket-Sprint1\openMarket-Client\src\main\java\co\unicauca\openmarket\client\domain\service\CategoryService.java
+C:\Users\juank\OneDrive\Desktop\Sprint 1\OpenMarket-Sprint1\openMarket-Client\src\main\java\co\unicauca\openmarket\client\main\Main.java
+C:\Users\juank\OneDrive\Desktop\Sprint 1\OpenMarket-Sprint1\openMarket-Client\src\main\java\co\unicauca\openmarket\client\presentation\GUIProductsFind.java
+C:\Users\juank\OneDrive\Desktop\Sprint 1\OpenMarket-Sprint1\openMarket-Client\src\main\java\co\unicauca\openmarket\client\presentation\comprador\JPConfirmarE.java
+C:\Users\juank\OneDrive\Desktop\Sprint 1\OpenMarket-Sprint1\openMarket-Client\src\main\java\co\unicauca\openmarket\client\domain\User.java
+C:\Users\juank\OneDrive\Desktop\Sprint 1\OpenMarket-Sprint1\openMarket-Client\src\main\java\co\unicauca\openmarket\client\access\ProductAccessImplSockets.java
+C:\Users\juank\OneDrive\Desktop\Sprint 1\OpenMarket-Sprint1\openMarket-Client\src\main\java\co\unicauca\openmarket\client\presentation\comprador\JPTusCompras.java
+C:\Users\juank\OneDrive\Desktop\Sprint 1\OpenMarket-Sprint1\openMarket-Client\src\main\java\co\unicauca\openmaket\client\command\Command.java
+C:\Users\juank\OneDrive\Desktop\Sprint 1\OpenMarket-Sprint1\openMarket-Client\src\main\java\co\unicauca\openmarket\client\presentation\GUICategory.java
+C:\Users\juank\OneDrive\Desktop\Sprint 1\OpenMarket-Sprint1\openMarket-Client\src\main\java\co\unicauca\openmarket\client\presentation\vendedor\JpAgregarCategoria.java
+C:\Users\juank\OneDrive\Desktop\Sprint 1\OpenMarket-Sprint1\openMarket-Client\src\main\java\co\unicauca\openmarket\client\presentation\comprador\GUIComprador.java
+C:\Users\juank\OneDrive\Desktop\Sprint 1\OpenMarket-Sprint1\openMarket-Client\src\main\java\co\unicauca\openmarket\client\access\ICategoryAccess.java
+C:\Users\juank\OneDrive\Desktop\Sprint 1\OpenMarket-Sprint1\openMarket-Client\src\main\java\co\unicauca\openmarket\client\presentation\vendedor\JpAgregarProducto.java
+C:\Users\juank\OneDrive\Desktop\Sprint 1\OpenMarket-Sprint1\openMarket-Client\src\main\java\co\unicauca\openmaket\client\command\RemoveProductCommand.java
+C:\Users\juank\OneDrive\Desktop\Sprint 1\OpenMarket-Sprint1\openMarket-Client\src\main\java\co\unicauca\openmarket\client\presentation\repartidor\jpRecogerProducto.java

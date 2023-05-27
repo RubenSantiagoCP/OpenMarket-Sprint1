@@ -1,23 +1,53 @@
 package co.unicauca.openmarket.client.presentation.vendedor;
 
+import co.unicauca.openmaket.client.command.Invoker;
+import co.unicauca.openmarket.client.domain.service.CategoryService;
+import co.unicauca.openmarket.client.domain.service.ProductService;
+import co.unicauca.openmarket.commons.observer.Observer;
+
 /**
  *
  * @author juan
  */
-public class GUIVendedor extends javax.swing.JFrame {
+public class GUIVendedor extends javax.swing.JFrame implements Observer{
+    
+    private ProductService productService;
+    private static CategoryService categoryService;
+    private static Invoker invoker;
+    private static JpPrincipal jpPrincipal;
+    private static JpAgregarProducto jpAgregar;
+    private static JpCategoria jpCategoria;
     
     /** Creates new form GUIVendedor */
-    public GUIVendedor() {
+    public GUIVendedor(ProductService productService, CategoryService categoryService) {
         initComponents();
         
-        JpPrincipal jpPrincipal = new JpPrincipal(jpContent);
+        this.productService = productService;
+        this.categoryService = categoryService;
+        invoker = new Invoker();
+        invoker.registerObserver(this);
+        
+        
+        //Panel principal
+        jpPrincipal = new JpPrincipal(jpContent, productService, categoryService, invoker);
+        productService.registerObserver(jpPrincipal);
+        categoryService.registerObserver(jpPrincipal);
         jpPrincipal.setSize(700, 600);
         jpPrincipal.setLocation(0, 0);
-        
         jpContent.removeAll();
         jpContent.add(jpPrincipal, new org.netbeans.lib.awtextra.AbsoluteLayout());
         jpContent.revalidate();
         jpContent.repaint();
+        
+        //Panel Agregar producto
+        jpAgregar = new JpAgregarProducto(jpContent, productService, categoryService, invoker);
+        productService.registerObserver(jpAgregar);
+        categoryService.registerObserver(jpAgregar);
+        
+        //Panel Agregar producto
+        jpCategoria = new JpCategoria(jpContent, productService, categoryService, invoker);
+        productService.registerObserver(jpAgregar);
+        categoryService.registerObserver(jpAgregar);
     }
 
     /** This method is called from within the constructor to
@@ -37,6 +67,8 @@ public class GUIVendedor extends javax.swing.JFrame {
         lbVendedor = new javax.swing.JLabel();
         jpContent = new javax.swing.JPanel();
         btnPrincipal = new javax.swing.JButton();
+        btnRehacer = new javax.swing.JButton();
+        btnDeshacer = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(900, 600));
@@ -48,7 +80,7 @@ public class GUIVendedor extends javax.swing.JFrame {
         btnAgregarCategoria.setBackground(new java.awt.Color(242, 204, 143));
         btnAgregarCategoria.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
         btnAgregarCategoria.setForeground(new java.awt.Color(255, 255, 255));
-        btnAgregarCategoria.setText("Añadir Categoria");
+        btnAgregarCategoria.setText("Categoria");
         btnAgregarCategoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAgregarCategoriaActionPerformed(evt);
@@ -120,6 +152,22 @@ public class GUIVendedor extends javax.swing.JFrame {
         });
         jpGestionVendedor.add(btnPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, 140, -1));
 
+        btnRehacer.setText("Rehacer");
+        btnRehacer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRehacerActionPerformed(evt);
+            }
+        });
+        jpGestionVendedor.add(btnRehacer, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 470, -1, -1));
+
+        btnDeshacer.setText("Deshacer");
+        btnDeshacer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeshacerActionPerformed(evt);
+            }
+        });
+        jpGestionVendedor.add(btnDeshacer, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 470, -1, -1));
+
         getContentPane().add(jpGestionVendedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, 600));
 
         pack();
@@ -127,23 +175,27 @@ public class GUIVendedor extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarCategoriaActionPerformed
-        JpAgregarCategoria jpC = new JpAgregarCategoria();
-        jpC.setSize(700, 600);
-        jpC.setLocation(0, 0);
+
+        productService.registerObserver(jpCategoria);
+        categoryService.registerObserver(jpCategoria);
         
+        jpCategoria.setSize(700, 600);
+        jpCategoria.setLocation(0, 0);
         jpContent.removeAll();
-        jpContent.add(jpC, new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jpContent.add(jpCategoria, new org.netbeans.lib.awtextra.AbsoluteLayout());
         jpContent.revalidate();
         jpContent.repaint();
     }//GEN-LAST:event_btnAgregarCategoriaActionPerformed
 
     private void btnAgregarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarProductoActionPerformed
-        JpAgregarProducto jpP = new JpAgregarProducto();
-        jpP.setSize(700, 600);
-        jpP.setLocation(0, 0);
+
+        productService.registerObserver(jpAgregar);
+        categoryService.registerObserver(jpAgregar);
         
+        jpAgregar.setSize(700, 600);
+        jpAgregar.setLocation(0, 0);
         jpContent.removeAll();
-        jpContent.add(jpP, new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jpContent.add(jpAgregar, new org.netbeans.lib.awtextra.AbsoluteLayout());
         jpContent.revalidate();
         jpContent.repaint();
     }//GEN-LAST:event_btnAgregarProductoActionPerformed
@@ -157,60 +209,53 @@ public class GUIVendedor extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVerProductosActionPerformed
 
     private void btnPrincipalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrincipalActionPerformed
-        JpPrincipal jpPrincipal = new JpPrincipal(jpContent);
+
+        productService.registerObserver(jpPrincipal);
+        categoryService.registerObserver(jpPrincipal);
+        
         jpPrincipal.setSize(700, 600);
         jpPrincipal.setLocation(0, 0);
-        
         jpContent.removeAll();
         jpContent.add(jpPrincipal, new org.netbeans.lib.awtextra.AbsoluteLayout());
         jpContent.revalidate();
         jpContent.repaint();
     }//GEN-LAST:event_btnPrincipalActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GUIVendedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GUIVendedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GUIVendedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GUIVendedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    private void btnRehacerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRehacerActionPerformed
+        invoker.redoLastCommand();
+        if (!invoker.hasMoreRedoCommands()) {
+            this.btnRehacer.setVisible(false);
         }
-        //</editor-fold>
+    }//GEN-LAST:event_btnRehacerActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new GUIVendedor().setVisible(true);
-            }
-        });
-    }
+    private void btnDeshacerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeshacerActionPerformed
+        invoker.undoLastCommand();
+        if (!invoker.hasMoreUndoCommands()) {
+            this.btnDeshacer.setVisible(false);
+        }
+    }//GEN-LAST:event_btnDeshacerActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarCategoria;
     private javax.swing.JButton btnAgregarProducto;
     private javax.swing.JButton btnAgregarUbicacion;
+    private javax.swing.JButton btnDeshacer;
     private javax.swing.JButton btnPrincipal;
+    private javax.swing.JButton btnRehacer;
     private javax.swing.JButton btnVerProductos;
     private javax.swing.JPanel jpContent;
     private javax.swing.JPanel jpGestionVendedor;
     private javax.swing.JLabel lbVendedor;
     // End of variables declaration//GEN-END:variables
 
+    
+    
+    @Override
+    public void update() {
+  
+            btnDeshacer.setVisible(invoker.hasMoreUndoCommands());
+            btnRehacer.setVisible(invoker.hasMoreRedoCommands());
+        
+    }
 }
