@@ -23,4 +23,6 @@ public interface IProductAccess {
     List<Product> findByCategory(String categoryName) throws Exception;
     List<Product> findAll() throws Exception;
 
+    List<Product> finByPrice(Long minPrice, Long maxPrice) throws Exception;
+    
 }

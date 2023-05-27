@@ -4,24 +4,28 @@
  */
 package co.unicauca.openmarket.client.presentation.comprador;
 
+import co.unicauca.openmarket.client.domain.service.CategoryService;
+import co.unicauca.openmarket.client.domain.service.ProductService;
 import co.unicauca.openmarket.client.presentation.comprador.JPBuscarProductos;
 import co.unicauca.openmarket.client.presentation.comprador.JPConfirmarE;
 import co.unicauca.openmarket.client.presentation.comprador.JPTusCompras;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
-import org.netbeans.lib.awtextra.AbsoluteLayout;
 
 /**
  *
  * @author Hewlett Packard
  */
 public class GUIComprador extends javax.swing.JFrame {
-
+    private ProductService productService;
+    private CategoryService categoryService;
     /**
      * Creates new form GUIComprador
      */
-    public GUIComprador() {
+    public GUIComprador(ProductService productService, CategoryService categoryService) {
         initComponents();
+        this.productService = productService;
+        this.categoryService = categoryService;
     }
 
     
@@ -99,7 +103,7 @@ public class GUIComprador extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBuscarPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarPActionPerformed
-        JPanel jpBuscar = new JPBuscarProductos();
+        JPanel jpBuscar = new JPBuscarProductos(productService, categoryService);
         jpBuscar.setSize(700, 600);
         jpBuscar.setLocation(0, 0);
         

@@ -29,6 +29,8 @@ public class ProductAccessImplSockets implements IProductAccess {
         mySocket = new OpenMarketSocket();
     }
 
+    //<editor-fold defaultstate="collapsed" desc="Metodos implementados de IProductAccess">
+    
     /**
      * Guarda un Product.Utiliza socket para pedir el servicio al servidor
      *
@@ -194,6 +196,7 @@ public class ProductAccessImplSockets implements IProductAccess {
         String jsonResponse = null;
         String requestJson = doFindProductByNameRequestJson(pname);
         System.out.println(requestJson);
+        
         try {
             mySocket.connect();
             jsonResponse = mySocket.sendRequest(requestJson);
@@ -202,6 +205,7 @@ public class ProductAccessImplSockets implements IProductAccess {
         } catch (IOException ex) {
             Logger.getLogger(ProductAccessImplSockets.class.getName()).log(Level.SEVERE, "No hubo conexión con el servidor", ex);
         }
+        
         if (jsonResponse == null) {
             throw new Exception("No se pudo conectar con el servidor. Revise la red o que el servidor esté escuchando. ");
         } else {
@@ -211,6 +215,36 @@ public class ProductAccessImplSockets implements IProductAccess {
                 throw new Exception(extractMessages(jsonResponse));
             } else {
                 //Encontró el product
+                List<Product> products = jsonToProductList(jsonResponse);
+                Logger.getLogger(ProductAccessImplSockets.class.getName()).log(Level.INFO, "Lo que va en el JSon: (" + jsonResponse.toString() + ")");
+                return products;
+            }
+        }
+    }
+    
+    @Override
+    public List<Product> finByPrice(Long minPrice, Long maxPrice) throws Exception {
+        String jsonResponse = null;
+        String requestJson = doFindProductByPriceRequestJson(minPrice.toString(), maxPrice.toString());
+        System.err.println(requestJson);
+        
+        try {
+            mySocket.connect();
+            jsonResponse = mySocket.sendRequest(requestJson);
+            mySocket.disconnect();
+        } catch (Exception ex) {
+            Logger.getLogger(ProductAccessImplSockets.class.getName()).log(Level.SEVERE, "No hubo conexión con el servidor", ex);
+        }
+        
+        if(jsonResponse == null){
+            throw new Exception("No se pudo conectar con el servidor. Revise la red o que el servidor esté escuchando. ");
+        }else{
+            if(jsonResponse.contains("error")){
+                //Devolvio algun error
+                Logger.getLogger(ProductAccessImplSockets.class.getName()).log(Level.INFO, jsonResponse);
+                throw new Exception(extractMessages(jsonResponse));
+            }else{
+                //Encontro el product
                 List<Product> products = jsonToProductList(jsonResponse);
                 Logger.getLogger(ProductAccessImplSockets.class.getName()).log(Level.INFO, "Lo que va en el JSon: (" + jsonResponse.toString() + ")");
                 return products;
@@ -298,26 +332,12 @@ public class ProductAccessImplSockets implements IProductAccess {
      * @param jsonResponse lista de mensajes json
      * @return Mensajes de error
      */
-    private String extractMessages(String jsonResponse) {
-        JsonError[] errors = jsonToErrors(jsonResponse);
-        String msjs = "";
-        for (JsonError error : errors) {
-            msjs += error.getMessage();
-        }
-        return msjs;
-    }
-
-    /**
-     * Convierte el jsonError a un array de objetos jsonError
-     *
-     * @param jsonError
-     * @return objeto MyError
-     */
-    private JsonError[] jsonToErrors(String jsonError) {
-        Gson gson = new Gson();
-        JsonError[] error = gson.fromJson(jsonError, JsonError[].class);
-        return error;
-    }
+    
+    //</editor-fold>
+    
+    
+    
+    //<editor-fold defaultstate="collapsed" desc="Creacion de peticiones en Json (do) ">
 
     /**
      * Crea la solicitud json de creación del product para ser enviado por el
@@ -426,6 +446,24 @@ public class ProductAccessImplSockets implements IProductAccess {
         String requestJson = gson.toJson(protocol);
         return requestJson;
     }
+    
+    /**
+     * Crea una peticion de busuqeda por rango de precio para ser enviada por el socket
+     * @param minPrice Rango minimo seleccionado por el comprador 
+     * @param maxPrice Rango maximo seleccionado por el comprador 
+     * @return solicitud de consulta del producto en formato Json
+     */
+    private String doFindProductByPriceRequestJson(String minPrice, String maxPrice){
+        Protocol protocol = new Protocol();
+        protocol.setResource("product");
+        protocol.setAction("getProductByPrice");
+        protocol.addParameter("minPriceProduct", minPrice);
+        protocol.addParameter("maxPriceProduct", maxPrice);
+        
+        Gson gson = new Gson();
+        String requestJson = gson.toJson(protocol);
+        return requestJson;
+    }
 
     /**
      * Crea una solicitud json de busqueda de productos por nombre de categoria
@@ -465,7 +503,29 @@ public class ProductAccessImplSockets implements IProductAccess {
 
         return requestJson;
     }
+    //</editor-fold>
+    
+    private String extractMessages(String jsonResponse) {
+        JsonError[] errors = jsonToErrors(jsonResponse);
+        String msjs = "";
+        for (JsonError error : errors) {
+            msjs += error.getMessage();
+        }
+        return msjs;
+    }
 
+    /**
+     * Convierte el jsonError a un array de objetos jsonError
+     *
+     * @param jsonError
+     * @return objeto MyError
+     */
+    private JsonError[] jsonToErrors(String jsonError) {
+        Gson gson = new Gson();
+        JsonError[] error = gson.fromJson(jsonError, JsonError[].class);
+        return error;
+    }
+    
     /**
      * Convierte jsonProduct, proveniente del server socket, de json a un objeto
      * Product
@@ -487,5 +547,7 @@ public class ProductAccessImplSockets implements IProductAccess {
         List<Product> productList = gson.fromJson(jsonProductList, productListType);
         return productList;
     }
+
+    
 
 }

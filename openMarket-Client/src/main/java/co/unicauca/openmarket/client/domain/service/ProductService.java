@@ -51,6 +51,13 @@ public class ProductService implements Subject {
         return result;
 
     }
+    
+    //Buscar productos por rango de precio
+    public List<Product> findProductsByPrice(Long minPrice, Long maxPrice) throws Exception{
+        List<Product> products = new ArrayList<>();
+        products = repository.finByPrice(minPrice, maxPrice);
+        return products;
+    }
 
     public List<Product> findAllProducts() throws Exception {
         List<Product> products = new ArrayList<>();
