@@ -30,7 +30,7 @@ public class BuyService implements Subject{
         this.repository = repository;
     }
     
-    public boolean saveBuy(Long idCompra, String estadoCompra, Date fechaCompra, Long idComprador, Long idProducto) throws Exception{
+    public boolean saveBuy(Long idCompra, String estadoCompra, String fechaCompra, Long idComprador, Long idProducto) throws Exception{
         Buy newBuy = new Buy();
         newBuy.setId(idCompra);
         newBuy.setEstado(estadoCompra);

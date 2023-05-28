@@ -24,8 +24,8 @@ public class BuyAccessImplSocket implements IBuyAccess{
 
     private OpenMarketSocket mySocket;
 
-    public BuyAccessImplSocket(OpenMarketSocket mySocket) {
-        this.mySocket = mySocket;
+    public BuyAccessImplSocket() {
+        this.mySocket = new OpenMarketSocket();
     }
     
     //<editor-fold defaultstate="collapsed" desc="Metodos abstractos">

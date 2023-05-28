@@ -4,6 +4,7 @@
  */
 package co.unicauca.openmarket.client.presentation.comprador;
 
+import co.unicauca.openmarket.client.domain.service.BuyService;
 import co.unicauca.openmarket.client.domain.service.CategoryService;
 import co.unicauca.openmarket.client.domain.service.ProductService;
 import co.unicauca.openmarket.client.presentation.comprador.JPBuscarProductos;
@@ -19,13 +20,15 @@ import javax.swing.JPanel;
 public class GUIComprador extends javax.swing.JFrame {
     private ProductService productService;
     private CategoryService categoryService;
+    private BuyService buyService;
     /**
      * Creates new form GUIComprador
      */
-    public GUIComprador(ProductService productService, CategoryService categoryService) {
+    public GUIComprador(ProductService productService, CategoryService categoryService, BuyService buyService) {
         initComponents();
         this.productService = productService;
         this.categoryService = categoryService;
+        this.buyService = buyService;
     }
 
     
@@ -103,7 +106,7 @@ public class GUIComprador extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBuscarPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarPActionPerformed
-        JPanel jpBuscar = new JPBuscarProductos(productService, categoryService);
+        JPanel jpBuscar = new JPBuscarProductos(productService, categoryService, buyService);
         jpBuscar.setSize(700, 600);
         jpBuscar.setLocation(0, 0);
         

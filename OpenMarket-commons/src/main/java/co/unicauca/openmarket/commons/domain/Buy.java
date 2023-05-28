@@ -16,12 +16,12 @@ public class Buy {
     private Long compradorId;
     private Long productoId;
     private String estado;
-    private Date fechaCompra;
+    private String fechaCompra;
     
     //Contructores
     public Buy() {}
 
-    public Buy(Long id, Long compradorId, Long productoId, String estado, Date fechaCompra) {
+    public Buy(Long id, Long compradorId, Long productoId, String estado, String fechaCompra) {
         this.id = id;
         this.compradorId = compradorId;
         this.productoId = productoId;
@@ -58,10 +58,10 @@ public class Buy {
         this.estado = estado;
     }
 
-    public Date getFechaCompra() {
+    public String getFechaCompra() {
         return fechaCompra;
     }
-    public void setFechaCompra(Date fechaCompra) {
+    public void setFechaCompra(String fechaCompra) {
         this.fechaCompra = fechaCompra;
     }
     //</editor-fold>

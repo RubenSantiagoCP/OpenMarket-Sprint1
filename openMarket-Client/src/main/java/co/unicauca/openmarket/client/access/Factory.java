@@ -61,5 +61,18 @@ public class Factory {
         }
         return result;
     }
+    
+    public IBuyAccess getBuyAccess(){
+        IBuyAccess result = null;
+        String type = Utilities.loadProperty("buy.service");
+        
+        switch(type){
+            case "default":
+                result = new BuyAccessImplSocket();
+                break;
+        }
+        
+        return result;
+    }
 
 }

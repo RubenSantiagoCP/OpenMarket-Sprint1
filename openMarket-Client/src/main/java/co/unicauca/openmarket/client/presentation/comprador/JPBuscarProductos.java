@@ -4,19 +4,20 @@
  */
 package co.unicauca.openmarket.client.presentation.comprador;
 
+import co.unicauca.openmaket.client.command.AddBuyCommand;
+import co.unicauca.openmaket.client.command.Invoker;
+import co.unicauca.openmarket.client.domain.service.BuyService;
 import co.unicauca.openmarket.client.domain.service.CategoryService;
 import co.unicauca.openmarket.client.domain.service.ProductService;
+import co.unicauca.openmarket.client.infra.Messages;
+import co.unicauca.openmarket.commons.domain.Buy;
 import co.unicauca.openmarket.commons.domain.Product;
-import java.awt.Point;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import jdk.internal.org.jline.reader.Editor;
 
 /**
  *
@@ -24,14 +25,17 @@ import jdk.internal.org.jline.reader.Editor;
  */
 public class JPBuscarProductos extends javax.swing.JPanel {
     
+    private BuyService buyService;
     private ProductService productService;
     private CategoryService categoryService;
-
+    private Invoker invoker;
+    
     //Constructor
-    public JPBuscarProductos(ProductService productService, CategoryService categoryService) {
+    public JPBuscarProductos(ProductService productService, CategoryService categoryService, BuyService buyService) {
         initComponents();
         this.productService = productService;
         this.categoryService = categoryService;
+        this.buyService = buyService;
         
         //<editor-fold defaultstate="collapsed" desc="Metodo auxiliar para seleccionar filas">
         /*tblProductosO.addMouseListener(new MouseAdapter(){
@@ -65,6 +69,14 @@ public class JPBuscarProductos extends javax.swing.JPanel {
             String id = tblProductosO.getValueAt(selection, 0).toString();
             String name = tblProductosO.getValueAt(selection, 1).toString();
             lblInformacion.setText("¿Desea comprar el producto "+name+" con id "+id+"?");
+            
+            //Creacion de la compra
+            Buy newBuy = new Buy();
+            newBuy.setCompradorId(Long.MIN_VALUE);
+            newBuy.setProductoId(Long.parseLong(id));
+            newBuy.setEstado("Realizada");
+            Date fechaActual = new Date();
+            newBuy.setFechaCompra(fechaActual.toString());
         } catch (Exception e) {
             lblInformacion.setText("Seleccione un producto a comprar");
         }
@@ -147,6 +159,32 @@ public class JPBuscarProductos extends javax.swing.JPanel {
         
     }
     //</editor-fold>
+    
+    //<editor-fold defaultstate="collapsed" desc="Metodo para crear compra">
+    private void addBuy(){
+        try {
+            int selection= tblProductosO.getSelectedRow();
+            
+            
+            //Creacion de la compra
+            Buy newBuy = new Buy();
+            newBuy.setCompradorId(Long.MIN_VALUE);
+            String id = tblProductosO.getValueAt(selection, 0).toString();
+            newBuy.setProductoId(Long.parseLong(id));
+            newBuy.setEstado("Realizada");
+            Date fechaActual = new Date();
+            newBuy.setFechaCompra(fechaActual.toString());
+            
+            AddBuyCommand comm = new AddBuyCommand(buyService, newBuy);
+            
+            
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error al grabar", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    //</editor-fold>
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -162,7 +200,7 @@ public class JPBuscarProductos extends javax.swing.JPanel {
         cbxTipoBusqueda = new javax.swing.JComboBox<>();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblProductosO = new javax.swing.JTable();
-        btnComprarPS = new javax.swing.JButton();
+        btnCrearCompra = new javax.swing.JButton();
         lblInformacion = new javax.swing.JLabel();
         lblMensajeVI1 = new javax.swing.JLabel();
         lblMensajeVI2 = new javax.swing.JLabel();
@@ -241,17 +279,17 @@ public class JPBuscarProductos extends javax.swing.JPanel {
 
         JPCentralBuscarP.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 280, 560, 200));
 
-        btnComprarPS.setBackground(new java.awt.Color(242, 204, 143));
-        btnComprarPS.setFont(new java.awt.Font("Arial Black", 0, 11)); // NOI18N
-        btnComprarPS.setForeground(new java.awt.Color(255, 255, 255));
-        btnComprarPS.setText("Comprar producto seleccionado");
-        btnComprarPS.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnComprarPS.addActionListener(new java.awt.event.ActionListener() {
+        btnCrearCompra.setBackground(new java.awt.Color(242, 204, 143));
+        btnCrearCompra.setFont(new java.awt.Font("Arial Black", 0, 11)); // NOI18N
+        btnCrearCompra.setForeground(new java.awt.Color(255, 255, 255));
+        btnCrearCompra.setText("Comprar producto seleccionado");
+        btnCrearCompra.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnCrearCompra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnComprarPSActionPerformed(evt);
+                btnCrearCompraActionPerformed(evt);
             }
         });
-        JPCentralBuscarP.add(btnComprarPS, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 520, 210, 30));
+        JPCentralBuscarP.add(btnCrearCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 520, 210, 30));
 
         lblInformacion.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         lblInformacion.setForeground(new java.awt.Color(255, 255, 255));
@@ -329,9 +367,36 @@ public class JPBuscarProductos extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_cbxTipoBusquedaActionPerformed
 
-    private void btnComprarPSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprarPSActionPerformed
+    private void btnCrearCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearCompraActionPerformed
+        String seleccion = cbxTipoBusqueda.getSelectedItem().toString();
+        boolean bandera = true;
         
-    }//GEN-LAST:event_btnComprarPSActionPerformed
+        //<editor-fold defaultstate="collapsed" desc="Validacion de campos de texto">
+            if(seleccion.equals("Precio")){
+                if(txtValorIngresado1.getText().trim().isBlank() &&
+                        txtValorIngresado2.getText().trim().isBlank()){
+                    bandera = false;
+                }
+            }else{
+                if(txtValorIngresado1.getText().trim().isBlank()){
+                    bandera = false;
+                }
+            }
+            //</editor-fold>
+        
+        try {
+            if(bandera){
+                addBuy();
+            }else{
+                Messages.showMessageDialog("Debe ingresar los datos requeridos", "Atencion");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        
+        
+    }//GEN-LAST:event_btnCrearCompraActionPerformed
 
     private void btnBuscarTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarTodosActionPerformed
         try {
@@ -416,7 +481,7 @@ public class JPBuscarProductos extends javax.swing.JPanel {
     private javax.swing.JPanel JPCentralBuscarP;
     private javax.swing.JButton btnBuscarP;
     private javax.swing.JButton btnBuscarTodos;
-    private javax.swing.JButton btnComprarPS;
+    private javax.swing.JButton btnCrearCompra;
     private javax.swing.JComboBox<String> cbxTipoBusqueda;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblBuscarPor;
