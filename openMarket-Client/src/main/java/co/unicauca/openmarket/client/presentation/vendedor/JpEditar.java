@@ -1,21 +1,72 @@
 package co.unicauca.openmarket.client.presentation.vendedor;
 
+import co.unicauca.openmaket.client.command.AddProductCommand;
+import co.unicauca.openmaket.client.command.Invoker;
+import co.unicauca.openmarket.client.domain.service.CategoryService;
+import co.unicauca.openmarket.client.domain.service.ProductService;
+import co.unicauca.openmarket.client.infra.Messages;
+import co.unicauca.openmarket.client.presentation.GUIProductsFind;
+import co.unicauca.openmarket.commons.domain.Category;
+import co.unicauca.openmarket.commons.domain.Product;
+import co.unicauca.openmarket.commons.observer.Observer;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author juan
  */
-public class JpEditar extends javax.swing.JPanel {
+public class JpEditar extends javax.swing.JPanel implements Observer {
     
     private javax.swing.JPanel jpContent;
-    private javax.swing.JPanel jpP;
+    private javax.swing.JPanel jpPrincipal;
+    private ProductService productService;
+    private CategoryService categoryService;
+    private Invoker invoker;
     
     /**
      * Creates new form JpEditar
      */
-    public JpEditar(javax.swing.JPanel jpContent, javax.swing.JPanel jpP) {
+    public JpEditar(javax.swing.JPanel jpContent, javax.swing.JPanel jpPrincipal, ProductService productService, CategoryService categoryService, Invoker invoker) {
+        initComponents();  
+        initializeTable();
+        this.productService = productService;
+        this.categoryService = categoryService;
+        this.invoker = new Invoker();
+        this.invoker.registerObserver(this);
+        this.jpPrincipal = jpPrincipal;
         this.jpContent = jpContent;
-        this.jpP = jpP;
-        initComponents();
+        update();
+        
+    }
+    
+    private void initializeTable() {
+        tblEditar.setModel(new javax.swing.table.DefaultTableModel(
+                new Object[][]{},
+                new String[]{
+                    "Id", "Name", "Description", "Precio", "Categoria"
+                }
+        ));
+    }
+    
+    private void fillTable(List<Product> listProducts) throws Exception {
+        initializeTable();
+        DefaultTableModel model = (DefaultTableModel) tblEditar.getModel();
+        Object rowData[] = new Object[5];//No columnas
+        for (int i = 0; i < listProducts.size(); i++) {
+            rowData[0] = listProducts.get(i).getProductId();
+            rowData[1] = listProducts.get(i).getName();
+            rowData[2] = listProducts.get(i).getDescription();
+            Long catId = listProducts.get(i).getCategoryId();
+            String catName = categoryService.findCategoryById(catId).getName();
+            rowData[3] = listProducts.get(i).getPrice();
+            rowData[4] = catName;
+
+            model.addRow(rowData);
+        }
     }
 
     /**
@@ -43,6 +94,8 @@ public class JpEditar extends javax.swing.JPanel {
         txtADescripcion = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblEditar = new javax.swing.JTable();
+        lbIdProducto = new javax.swing.JLabel();
+        txtIdProducto = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(61, 64, 91));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -59,7 +112,7 @@ public class JpEditar extends javax.swing.JPanel {
 
         lbIdCategoria.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
         lbIdCategoria.setForeground(new java.awt.Color(255, 255, 255));
-        lbIdCategoria.setText("Categoria");
+        lbIdCategoria.setText("Id categoria");
         add(lbIdCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 150, -1, -1));
 
         lbLocacion.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
@@ -82,6 +135,11 @@ public class JpEditar extends javax.swing.JPanel {
         btnGuardar.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
         btnGuardar.setForeground(new java.awt.Color(255, 255, 255));
         btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
         add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 90, 100, -1));
 
         btnVolver.setBackground(new java.awt.Color(224, 122, 95));
@@ -119,17 +177,41 @@ public class JpEditar extends javax.swing.JPanel {
         jScrollPane2.setViewportView(tblEditar);
 
         add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 330, 535, 245));
+
+        lbIdProducto.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
+        lbIdProducto.setForeground(new java.awt.Color(255, 255, 255));
+        lbIdProducto.setText("Id producto");
+        add(lbIdProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, -1, -1));
+        add(txtIdProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 10, 220, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-        jpP.setSize(700, 600);
-        jpP.setLocation(0, 0);
         
+        jpPrincipal.setSize(700, 600);
+        jpPrincipal.setLocation(0, 0);
         jpContent.removeAll();
-        jpContent.add(jpP, new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jpContent.add(jpPrincipal, new org.netbeans.lib.awtextra.AbsoluteLayout());
         jpContent.revalidate();
         jpContent.repaint();
     }//GEN-LAST:event_btnVolverActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        try {
+            txtIdProducto.requestFocus();
+            if (txtIdProducto.getText().trim().equals("")) {
+                Messages.showMessageDialog("Debe ingresar el id del producto", "Atención");
+                txtIdProducto.requestFocus();
+                return;
+            }
+            //Editar
+            editProduct();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,
+                    e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnGuardarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -140,14 +222,72 @@ public class JpEditar extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lbDescripcion;
     private javax.swing.JLabel lbIdCategoria;
+    private javax.swing.JLabel lbIdProducto;
     private javax.swing.JLabel lbLocacion;
     private javax.swing.JLabel lbNombreProducto;
     private javax.swing.JLabel lbPrecio;
     private javax.swing.JTable tblEditar;
     private javax.swing.JTextArea txtADescripcion;
     private javax.swing.JTextField txtIdCategoria;
+    private javax.swing.JTextField txtIdProducto;
     private javax.swing.JTextField txtLocacion;
     private javax.swing.JTextField txtNombreProducto;
     private javax.swing.JTextField txtPrecio;
     // End of variables declaration//GEN-END:variables
+
+    private void editProduct() throws Exception {
+        Long productId = Long.valueOf(txtIdProducto.getText().trim());
+
+        Product prod = productService.findProductById(productId);
+
+        if (!txtNombreProducto.getText().isEmpty()) {
+            prod.setName(txtNombreProducto.getText().trim());
+        }
+        if (!txtADescripcion.getText().isEmpty()) {
+            prod.setDescription(txtADescripcion.getText().trim());
+        }
+        if (!txtPrecio.getText().isEmpty()) {
+            prod.setPrice(Double.parseDouble(txtPrecio.getText().trim()));
+        }
+        if (!txtIdCategoria.getText().isEmpty()) {
+
+            Category cat = categoryService.findCategoryById(Long.valueOf(txtIdCategoria.getText()));
+            if (cat == null) {
+                JOptionPane.showMessageDialog(null,
+                        "La categoria no existe, ingrese una valida",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            prod.setCategoryId(cat.getCategoryId());
+
+        }
+
+        if (productService.editProduct(productId, prod)) {
+            Messages.showMessageDialog("Se editó con éxito", "Atención");
+            cleanControls();
+            update();
+        } else {
+            Messages.showMessageDialog("Error al editar, lo siento mucho", "Atención");
+        }
+    }
+    
+    private void cleanControls() {
+        txtIdProducto.setText("");
+        txtNombreProducto.setText("");
+        txtADescripcion.setText("");
+        txtIdCategoria.setText("");
+        txtPrecio.setText("");
+        txtLocacion.setText("");
+    }
+    
+    @Override
+    public void update() {
+        try {
+            fillTable(productService.findAllProducts());
+        } catch (Exception ex) {
+            Logger.getLogger(GUIProductsFind.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
 }
