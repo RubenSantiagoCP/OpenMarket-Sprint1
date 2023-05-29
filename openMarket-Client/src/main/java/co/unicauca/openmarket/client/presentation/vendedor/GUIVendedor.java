@@ -158,7 +158,7 @@ public class GUIVendedor extends javax.swing.JFrame implements Observer{
                 btnRehacerActionPerformed(evt);
             }
         });
-        jpGestionVendedor.add(btnRehacer, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 470, -1, -1));
+        jpGestionVendedor.add(btnRehacer, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 470, -1, -1));
 
         btnDeshacer.setText("Deshacer");
         btnDeshacer.addActionListener(new java.awt.event.ActionListener() {
@@ -166,7 +166,7 @@ public class GUIVendedor extends javax.swing.JFrame implements Observer{
                 btnDeshacerActionPerformed(evt);
             }
         });
-        jpGestionVendedor.add(btnDeshacer, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 470, -1, -1));
+        jpGestionVendedor.add(btnDeshacer, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 470, -1, -1));
 
         getContentPane().add(jpGestionVendedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, 600));
 

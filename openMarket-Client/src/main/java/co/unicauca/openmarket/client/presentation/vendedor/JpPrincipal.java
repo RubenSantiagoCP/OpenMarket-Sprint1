@@ -24,6 +24,7 @@ public class JpPrincipal extends javax.swing.JPanel implements Observer{
     private ProductService productService;
     private CategoryService categoryService;
     private Invoker invoker;
+    private static JpEditar jpEditar;
     /**
      * Creates new form jpPrincipal
      */
@@ -35,6 +36,12 @@ public class JpPrincipal extends javax.swing.JPanel implements Observer{
         this.invoker = new Invoker();
         this.invoker.registerObserver(this);
         this.jpContent = parent;
+        
+        //Panel Editar producto
+        jpEditar = new JpEditar(jpContent, this, productService, categoryService, invoker);
+        productService.registerObserver(jpEditar);
+        categoryService.registerObserver(jpEditar);
+
         
         stateInitial();
     }
@@ -311,6 +318,7 @@ public class JpPrincipal extends javax.swing.JPanel implements Observer{
             } else if (this.cmbBuscar.getSelectedItem().toString() == "Nombre") {
                 fillTableName(productService.findProductsByName(this.txtProducto.getText()));
             }
+            txtProducto.setText("");
         } catch (NullPointerException ex) {
             JOptionPane.showMessageDialog(null,
                 "Envia la informacion correspondiente",
@@ -330,12 +338,13 @@ public class JpPrincipal extends javax.swing.JPanel implements Observer{
     }//GEN-LAST:event_btnBorrarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        JpEditar jpE = new JpEditar(jpContent,this);
-        jpE.setSize(700, 600);
-        jpE.setLocation(0, 0);
-
+        productService.registerObserver(jpEditar);
+        categoryService.registerObserver(jpEditar);
+        
+        jpEditar.setSize(700, 600);
+        jpEditar.setLocation(0, 0);
         jpContent.removeAll();
-        jpContent.add(jpE, new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jpContent.add(jpEditar, new org.netbeans.lib.awtextra.AbsoluteLayout());
         jpContent.revalidate();
         jpContent.repaint();
     }//GEN-LAST:event_btnEditarActionPerformed
@@ -364,6 +373,7 @@ public class JpPrincipal extends javax.swing.JPanel implements Observer{
         btnBorrar.setVisible(true);
         btnEliminar.setVisible(false);
         btnVolver.setVisible(false);
+        cmbBuscar.setSelectedItem("Id");
         cmbBuscar.setEnabled(true);
 
     }
@@ -375,6 +385,7 @@ public class JpPrincipal extends javax.swing.JPanel implements Observer{
         btnBorrar.setVisible(false);
         btnEliminar.setVisible(true);
         btnVolver.setVisible(true);
+        cmbBuscar.setSelectedItem("Id");
         cmbBuscar.setEnabled(false);
     }
     
