@@ -62,6 +62,7 @@ public class Factory {
         return result;
     }
     
+
     public IBuyAccess getBuyAccess(){
         IBuyAccess result = null;
         String type = Utilities.loadProperty("buy.service");
@@ -72,6 +73,19 @@ public class Factory {
                 break;
         }
         
+              return result;
+    }
+        
+      public IUserAccess getUserAccess() {
+
+        IUserAccess result = null;
+        String type = Utilities.loadProperty("user.service");
+
+        switch (type) {
+            case "default":
+                result = new UserAccessImpSockets();
+                break;
+        }
         return result;
     }
 
