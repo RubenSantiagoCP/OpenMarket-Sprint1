@@ -19,6 +19,10 @@ public class User {
      * Nombres y apellidos completos
      */
     private String username;
+    
+    private long id;
+    
+    private String tipo;
 
     /**
      * Constructor que inicializa un usuario
@@ -34,6 +38,32 @@ public class User {
 
         //Vuelo vuelo = new Vuelo();
     }
+
+    public User(String login, String password, String username, long id, String tipo) {
+        this.login = login;
+        this.password = password;
+        this.username = username;
+        this.id = id;
+        this.tipo = tipo;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+    
+    
 
     public String getLogin() {
         return login;

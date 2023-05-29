@@ -4,6 +4,8 @@
  */
 package co.unicauca.openmarket.client.presentation.repartidor;
 
+import java.awt.BorderLayout;
+
 /**
  *
  * @author SANTIAGO
@@ -15,6 +17,14 @@ public class GUIRepartidor extends javax.swing.JFrame {
      */
     public GUIRepartidor() {
         initComponents();
+        jpTusEntregas vtnTusEntregas = new jpTusEntregas();
+        vtnTusEntregas.setSize(700, 600);
+        vtnTusEntregas.setLocation(0,0);
+
+        pnlCentral.removeAll();
+        pnlCentral.add(vtnTusEntregas, BorderLayout.CENTER);
+        pnlCentral.revalidate();
+        pnlCentral.repaint();
     }
 
     /**
@@ -31,11 +41,7 @@ public class GUIRepartidor extends javax.swing.JFrame {
         btnRecoger = new javax.swing.JButton();
         btnEntregas = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        lblImage = new javax.swing.JLabel();
         pnlCentral = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblEntregas = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -49,17 +55,25 @@ public class GUIRepartidor extends javax.swing.JFrame {
         btnRecoger.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
         btnRecoger.setForeground(new java.awt.Color(255, 255, 255));
         btnRecoger.setText("Recoger productos");
+        btnRecoger.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRecogerActionPerformed(evt);
+            }
+        });
 
         btnEntregas.setBackground(new java.awt.Color(242, 204, 143));
         btnEntregas.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
         btnEntregas.setForeground(new java.awt.Color(255, 255, 255));
         btnEntregas.setText("Tus entregas");
+        btnEntregas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEntregasActionPerformed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Nombre Repartidor");
-
-        lblImage.setText("Image");
 
         javax.swing.GroupLayout pnlLateralLayout = new javax.swing.GroupLayout(pnlLateral);
         pnlLateral.setLayout(pnlLateralLayout);
@@ -74,18 +88,13 @@ public class GUIRepartidor extends javax.swing.JFrame {
                             .addComponent(btnEntregas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(pnlLateralLayout.createSequentialGroup()
                         .addGap(59, 59, 59)
-                        .addComponent(jLabel2))
-                    .addGroup(pnlLateralLayout.createSequentialGroup()
-                        .addGap(88, 88, 88)
-                        .addComponent(lblImage)))
+                        .addComponent(jLabel2)))
                 .addContainerGap(39, Short.MAX_VALUE))
         );
         pnlLateralLayout.setVerticalGroup(
             pnlLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlLateralLayout.createSequentialGroup()
-                .addGap(89, 89, 89)
-                .addComponent(lblImage)
-                .addGap(71, 71, 71)
+                .addGap(176, 176, 176)
                 .addComponent(jLabel2)
                 .addGap(72, 72, 72)
                 .addComponent(btnRecoger, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -98,42 +107,15 @@ public class GUIRepartidor extends javax.swing.JFrame {
 
         pnlCentral.setBackground(new java.awt.Color(61, 64, 91));
 
-        tblEntregas.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(tblEntregas);
-
-        jLabel1.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Entregas que has realizado:");
-
         javax.swing.GroupLayout pnlCentralLayout = new javax.swing.GroupLayout(pnlCentral);
         pnlCentral.setLayout(pnlCentralLayout);
         pnlCentralLayout.setHorizontalGroup(
             pnlCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlCentralLayout.createSequentialGroup()
-                .addGap(94, 94, 94)
-                .addGroup(pnlCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addContainerGap(114, Short.MAX_VALUE))
+            .addGap(0, 660, Short.MAX_VALUE)
         );
         pnlCentralLayout.setVerticalGroup(
             pnlCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCentralLayout.createSequentialGroup()
-                .addContainerGap(125, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(36, 36, 36)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(124, 124, 124))
+            .addGap(0, 600, Short.MAX_VALUE)
         );
 
         getContentPane().add(pnlCentral, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 0, 660, 600));
@@ -142,6 +124,29 @@ public class GUIRepartidor extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnEntregasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntregasActionPerformed
+         jpTusEntregas vtnTusEntregas = new jpTusEntregas();
+        vtnTusEntregas.setSize(700, 600);
+        vtnTusEntregas.setLocation(0,0);
+
+        pnlCentral.removeAll();
+        pnlCentral.add(vtnTusEntregas, BorderLayout.CENTER);
+        pnlCentral.revalidate();
+        pnlCentral.repaint();
+    }//GEN-LAST:event_btnEntregasActionPerformed
+
+    private void btnRecogerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecogerActionPerformed
+        jpRecogerProducto vtnRecoger = new jpRecogerProducto();
+
+        vtnRecoger.setSize(700, 600);
+        vtnRecoger.setLocation(0,0);
+
+        pnlCentral.removeAll();
+        pnlCentral.add(vtnRecoger, BorderLayout.CENTER);
+        pnlCentral.revalidate();
+        pnlCentral.repaint();
+    }//GEN-LAST:event_btnRecogerActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -149,13 +154,9 @@ public class GUIRepartidor extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEntregas;
     private javax.swing.JButton btnRecoger;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lblImage;
     private javax.swing.JPanel pnlCentral;
     private javax.swing.JPanel pnlLateral;
-    private javax.swing.JTable tblEntregas;
     // End of variables declaration//GEN-END:variables
 }

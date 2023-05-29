@@ -61,5 +61,18 @@ public class Factory {
         }
         return result;
     }
+    
+      public IUserAccess getUserAccess() {
+
+        IUserAccess result = null;
+        String type = Utilities.loadProperty("user.service");
+
+        switch (type) {
+            case "default":
+                result = new UserAccessImpSockets();
+                break;
+        }
+        return result;
+    }
 
 }
