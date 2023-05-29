@@ -21,6 +21,7 @@ public class Main {
     public static void main(String[] args) {
         
        GUILogin vtnLogin = new GUILogin();
+       vtnLogin.setVisible(true);
     }
     
 }

@@ -138,6 +138,7 @@ public class UserRepositoryImplMySql implements IUserRepository{
         return users;
     }
     
+    /*
      public int connect() {
         try {
             Class.forName(Utilities.loadProperty("server.db.driver"));
@@ -157,12 +158,38 @@ public class UserRepositoryImplMySql implements IUserRepository{
      * Cierra la conexion con la base de datos
      *
      */
+    /*
     public void disconnect() {
         try {
             conn.close();
         } catch (SQLException ex) {
             Logger.getLogger(UserRepositoryImplMySql.class.getName()).log(Level.FINER, "Error al cerrar Connection", ex);
         }
+    }*/
+    
+     public void connect() {
+        // SQLite connection string
+        //String url = "jdbc:sqlite:./myDatabase.db"; //Para Linux/Mac
+        //String url = "jdbc:sqlite:C:/sqlite/db/myDatabase.db"; //Para Windows
+        String url = "jdbc:sqlite::memory:";
+
+        try {
+            conn = DriverManager.getConnection(url);
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UserRepositoryImplMySql.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void disconnect() {
+        try {
+            if (conn != null) {
+                conn.close();
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+
     }
     
 }
