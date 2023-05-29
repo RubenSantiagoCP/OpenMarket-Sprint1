@@ -4,19 +4,75 @@
  */
 package co.unicauca.openmarket.client.presentation.comprador;
 
+import co.unicauca.openmaket.client.command.Invoker;
+import co.unicauca.openmarket.client.domain.service.BuyService;
+import co.unicauca.openmarket.client.domain.service.CategoryService;
+import co.unicauca.openmarket.client.domain.service.ProductService;
+import co.unicauca.openmarket.client.infra.Messages;
+import co.unicauca.openmarket.commons.domain.Buy;
+import java.security.MessageDigest;
+import java.util.Date;
+
 /**
  *
  * @author Hewlett Packard
  */
 public class JPConfirmarE extends javax.swing.JPanel {
 
-    /**
-     * Creates new form JPConfirmarE
-     */
-    public JPConfirmarE() {
+    private BuyService buyService;
+    private ProductService productService;
+    private CategoryService categoryService;
+    private Invoker invoker;
+    
+    //Constructor
+    public JPConfirmarE(ProductService productService, CategoryService categoryService, BuyService buyService) {
         initComponents();
+        this.productService = productService;
+        this.categoryService = categoryService;
+        this.buyService = buyService;
     }
 
+    //<editor-fold defaultstate="collapsed" desc="Metodo auxiliar para seleccionar producto">
+    private void rowSelection(){
+        try {
+            int selection= tblConfirmarE.getSelectedRow();
+            String id = tblConfirmarE.getValueAt(selection, 0).toString();
+            String name = tblConfirmarE.getValueAt(selection, 1).toString();
+            String price = tblConfirmarE.getValueAt(selection, 2).toString();
+            lblInformacion.setText("¿Desea confirmar la entrega del producto "+name+" con id "+id+"?");
+            
+            //Creacion de la compra
+            Buy newBuy = new Buy();
+            newBuy.setCompradorId(Long.MIN_VALUE);
+            newBuy.setProductoId(Long.parseLong(id));
+            newBuy.setEstado("Realizada");
+            Date fechaActual = new Date();
+            newBuy.setFechaCompra(fechaActual.toString());
+        } catch (Exception e) {
+            lblInformacion.setText("Seleccione la compra que desea confirmar");
+        }
+        
+    }
+    //</editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="Metodo para editar estado de compra">   
+    private void editBuy() throws Exception{
+        int selection = tblConfirmarE.getSelectedRow();
+        String id = tblConfirmarE.getValueAt(selection, 0).toString();
+        
+        //Obtener el producto seleccionado en la tabla con id
+        Buy buy = buyService.findBuyById(Long.parseLong(id));
+        //Se cambia el estado de compra a entregada para finalizar todo el proceso
+        buy.setEstado("Entregada");
+        
+        if(buyService.editBuy(Long.parseLong(id), buy)){
+            Messages.showMessageDialog("El proceso de compra finalizo con exito", "Gracias por su compra");
+        }else{
+            Messages.showMessageDialog("Hubo un problema al confirmar la compra", "Atencion");
+        }
+    }
+    //</editor-fold>
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -74,6 +130,11 @@ public class JPConfirmarE extends javax.swing.JPanel {
         tblConfirmarE.setGridColor(new java.awt.Color(255, 255, 255));
         tblConfirmarE.setSelectionBackground(new java.awt.Color(153, 255, 153));
         tblConfirmarE.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tblConfirmarE.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblConfirmarEMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblConfirmarE);
 
         JPCentralConfirmarE.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 140, 590, 190));
@@ -81,7 +142,7 @@ public class JPConfirmarE extends javax.swing.JPanel {
         lblInformacion.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         lblInformacion.setForeground(new java.awt.Color(255, 255, 255));
         lblInformacion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblInformacion.setText("[Label de informacion al oprimir boton \"Compar\"]");
+        lblInformacion.setText("Seleccione la compra que desea confirmar");
         JPCentralConfirmarE.add(lblInformacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 410, 330, -1));
 
         btnConfirmarE.setBackground(new java.awt.Color(242, 204, 143));
@@ -107,6 +168,10 @@ public class JPConfirmarE extends javax.swing.JPanel {
     private void btnConfirmarEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarEActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnConfirmarEActionPerformed
+
+    private void tblConfirmarEMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblConfirmarEMouseClicked
+        rowSelection();
+    }//GEN-LAST:event_tblConfirmarEMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

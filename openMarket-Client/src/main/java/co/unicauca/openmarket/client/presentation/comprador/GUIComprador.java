@@ -1,15 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package co.unicauca.openmarket.client.presentation.comprador;
 
 import co.unicauca.openmarket.client.domain.service.BuyService;
 import co.unicauca.openmarket.client.domain.service.CategoryService;
 import co.unicauca.openmarket.client.domain.service.ProductService;
-import co.unicauca.openmarket.client.presentation.comprador.JPBuscarProductos;
-import co.unicauca.openmarket.client.presentation.comprador.JPConfirmarE;
-import co.unicauca.openmarket.client.presentation.comprador.JPTusCompras;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
 
@@ -117,7 +111,7 @@ public class GUIComprador extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBuscarPActionPerformed
 
     private void btnConfirmarEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarEActionPerformed
-        JPanel jpConfirmarE = new JPConfirmarE();
+        JPanel jpConfirmarE = new JPConfirmarE(productService, categoryService, buyService);
         jpConfirmarE.setSize(700, 600);
         jpConfirmarE.setLocation(0, 0);
         
@@ -125,6 +119,9 @@ public class GUIComprador extends javax.swing.JFrame {
         jpCentralC.add(jpConfirmarE, BorderLayout.CENTER);
         jpCentralC.revalidate();
         jpCentralC.repaint();
+        
+        //TODO que cuando oprime el boton se muestre en tabla las compras en estado de realizado
+        
     }//GEN-LAST:event_btnConfirmarEActionPerformed
 
     private void btnTusEntregasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTusEntregasActionPerformed
