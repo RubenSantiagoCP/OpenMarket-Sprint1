@@ -13,8 +13,8 @@ public class BuyRepositoryImplArrays implements IBuyRepository{
 
     private static List<Buy> buys;
     private Connection conn;
-    private IBuyRepository buyRepository;
-
+    private IBuyRepository buyRepository;    
+    
     public BuyRepositoryImplArrays(IBuyRepository buyRepository) {
         this.buyRepository = buyRepository;
         

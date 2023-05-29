@@ -7,6 +7,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -26,8 +27,28 @@ public class ProductRepositoryImplMysql implements IProductRepository {
     private Connection conn;
 
     public ProductRepositoryImplMysql() {
-
+        initDatabase();
     }
+    
+      private void initDatabase() {
+        // SQL statement for creating a new table
+        String sql = "CREATE TABLE IF NOT EXISTS products (\n"
+                + "	productId integer PRIMARY KEY,\n"
+                + "	name text NOT NULL,\n"
+                + "	description text NULL\n"
+                + ");";
+
+        try {
+            this.connect();
+            Statement stmt = conn.createStatement();
+            stmt.execute(sql);
+            //this.disconnect();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductRepositoryImplMysql.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
 
     @Override
     public List<Product> findAll() {
