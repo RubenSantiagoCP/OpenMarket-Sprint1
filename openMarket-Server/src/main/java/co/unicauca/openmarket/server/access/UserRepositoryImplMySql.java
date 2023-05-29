@@ -63,7 +63,7 @@ public class UserRepositoryImplMySql implements IUserRepository{
                 + "	user_password text NOT NULL,\n"
                 + "	user_username text NOT NULL,\n"
                 + "	user_login text NOT NULL,\n"
-                + "	user_tipo text NOT NULL,\n"
+                + "	user_tipo text NOT NULL\n"
                 + ");";
 
         try {

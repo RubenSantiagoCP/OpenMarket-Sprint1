@@ -41,7 +41,7 @@ public class BuyRepositoryImplArrays implements IBuyRepository{
 
     @Override
     public Boolean edit(Long id, Buy buy) throws Exception {
-        Buy buyToEsdit = finById(id);
+        Buy buyToEsdit = findById(id);
         
         buyToEsdit.setEstado(buy.getEstado());
         
@@ -64,16 +64,6 @@ public class BuyRepositoryImplArrays implements IBuyRepository{
     public Buy findById(Long id) throws Exception {
         for(Buy buy : buys){
             if(buy.getId().equals(id)){
-                return buy;
-            }
-        }
-        return null;
-    }
-
-    @Override
-    public Buy finById(Long id) throws Exception {
-        for(Buy buy : buys){
-            if(buy.getClass().equals(id)){
                 return buy;
             }
         }

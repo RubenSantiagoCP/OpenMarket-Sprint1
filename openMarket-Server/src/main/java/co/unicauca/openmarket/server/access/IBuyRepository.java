@@ -18,7 +18,6 @@ public interface IBuyRepository {
     Buy findById(Long id)throws Exception;
     
     //Metodos de busqueda
-    Buy finById(Long id)throws Exception;
     
     List<Buy> findByComp(String nombreComprador)throws Exception;
     
