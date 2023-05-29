@@ -39,9 +39,6 @@ public class Factory {
 
         switch (type) {
             case "default":
-                result = new ProductRepositoryImplArrays(getCatRepository());
-                break;
-            case "mysql":
                 result = new ProductRepositoryImplMysql();
                 break;
         }
@@ -57,13 +54,40 @@ public class Factory {
 
         switch (type) {
             case "default":
-                result = new CategoryRepositoryImplArrays();
-                break;
-            case "mysql":
                 result = new CategoryRepositoryImplMysql();
                 break;
         }
         return result;
         
+    }
+    
+    public IUserRepository getUserRepository() {
+        String type = Utilities.loadProperty("user.repository");
+        if (type.isEmpty()) {
+            type = "default";
+        }
+        IUserRepository result = null;
+
+        switch (type) {
+            case "default":
+                result = new UserRepositoryImplMySql();
+                break;
+        }
+        return result;
+    }
+    
+    public IBuyRepository getBuyRepository() {
+        String type = Utilities.loadProperty("user.repository");
+        if (type.isEmpty()) {
+            type = "default";
+        }
+        IBuyRepository result = null;
+
+        switch (type) {
+            case "default":
+                result = new BuyRepositoryImplMySql();
+                break;
+        }
+        return result;
     }
 }

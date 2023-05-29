@@ -30,8 +30,9 @@ public class AddProductCommand implements Command {
         String desc= product.getDescription();
         Double price = product.getPrice();
         Long catId=product.getCategoryId();
+        Long vendedorId = product.getVendedorId();
         try {
-            return productService.saveProduct(prodId, name, desc, price, catId);
+            return productService.saveProduct(prodId, name, desc, price, catId, vendedorId);
         } catch (Exception ex) {
             Logger.getLogger(AddProductCommand.class.getName()).log(Level.SEVERE, null, ex);
                 return false;

@@ -283,14 +283,14 @@ public class CategoryAccessImplSockets implements ICategoryAccess {
      *
      * @param category objeto categoria
      * @return devulve algo como:
-     * {"resource":"category","action":"post","parameters":[{"name":"categoryId","value":"1"},{"name":"name","value":"lacteos"},...}]}
+     * {"resource":"category","action":"post","parameters":[{"name":"cat_id","value":"1"},{"name":"name","value":"lacteos"},...}]}
      */
     private String doCreateCategoryRequestJson(Category category) {
 
         Protocol protocol = new Protocol();
         protocol.setResource("category");
         protocol.setAction("post");
-        protocol.addParameter("categoryId", String.valueOf(category.getCategoryId()));
+        protocol.addParameter("cat_id", String.valueOf(category.getCategoryId()));
         protocol.addParameter("name", category.getName());
 
         Gson gson = new Gson();
@@ -302,15 +302,15 @@ public class CategoryAccessImplSockets implements ICategoryAccess {
      * Crea una solicitud json de editar categoria para ser enviada por el socket
      *
      *
-     * @param id de la categoria, categoryId identificación de la categoria
+     * @param id de la categoria, cat_id identificación de la categoria
      * @return solicitud de consulta de la categoria en formato Json, algo como:
-     * {"resource":"category","action":"get","parameters":[{"name":"categoryId","value":"1"},...]}
+     * {"resource":"category","action":"get","parameters":[{"name":"cat_id","value":"1"},...]}
      */
     private String doEditCategoryRequestJson(Long id, Category category) {
         Protocol protocol = new Protocol();
         protocol.setResource("category");
         protocol.setAction("edit");
-        protocol.addParameter("categoryId", category.getCategoryId().toString());
+        protocol.addParameter("cat_id", category.getCategoryId().toString());
         protocol.addParameter("name", category.getName());
 
         Gson gson = new Gson();
@@ -322,16 +322,16 @@ public class CategoryAccessImplSockets implements ICategoryAccess {
      * Crea una solicitud json de eliminar categoria para ser enviada por el socket
      *
      *
-     * @param categoryId identificación de la categoria
+     * @param cat_id identificación de la categoria
      * @return solicitud de consulta de la categoria en formato Json, algo como:
-     * {"resource":"category","action":"get","parameters":[{"name":"categoryId","value":"1"},...]}
+     * {"resource":"category","action":"get","parameters":[{"name":"cat_id","value":"1"},...]}
      */
-    private String doDeleteCategoryRequestJson(Long categoryId) {
+    private String doDeleteCategoryRequestJson(Long cat_id) {
 
         Protocol protocol = new Protocol();
         protocol.setResource("category");
         protocol.setAction("deleteCategory");
-        protocol.addParameter("categoryId", categoryId.toString());
+        protocol.addParameter("cat_id", cat_id.toString());
 
         Gson gson = new Gson();
         String requestJson = gson.toJson(protocol);
@@ -342,15 +342,15 @@ public class CategoryAccessImplSockets implements ICategoryAccess {
      * Crea una solicitud json de buscar una categoria por id para ser enviada por el socket
      *
      *
-     * @param categoryId identificación de la categoria
+     * @param cat_id identificación de la categoria
      * @return solicitud de consulta de la categoria en formato Json, algo como:
-     * {"resource":"category","action":"get","parameters":[{"name":"categoryId","value":"1"}]}
+     * {"resource":"category","action":"get","parameters":[{"name":"cat_id","value":"1"}]}
      */
-    private String doFindCategoyIdRequestJson(Long categoryId) {
+    private String doFindCategoyIdRequestJson(Long cat_id) {
         Protocol protocol = new Protocol();
         protocol.setResource("category");
         protocol.setAction("get");
-        protocol.addParameter("categoryId", categoryId.toString());
+        protocol.addParameter("cat_id", cat_id.toString());
 
         Gson gson = new Gson();
         String requestJson = gson.toJson(protocol);
@@ -364,7 +364,7 @@ public class CategoryAccessImplSockets implements ICategoryAccess {
      *
      * @param jsonProductList lista de categorias
      * @return solicitud de consulta de la categoria en formato Json, algo como:
-     * {"resource":"category","action":"get","parameters":[{"name":"categoryId","value":"1"}]}
+     * {"resource":"category","action":"get","parameters":[{"name":"cat_id","value":"1"}]}
      */
     private String doFindAllCategoriesRequestJson(String jsonProductList) {
         Protocol protocol = new Protocol();
@@ -382,7 +382,7 @@ public class CategoryAccessImplSockets implements ICategoryAccess {
      *
      * @param cname nombre de la categoria
      * @return solicitud de consulta de la categoria en formato Json, algo como:
-     * {"resource":"category","action":"get","parameters":[{"name":"categoryId","value":"1"}]}
+     * {"resource":"category","action":"get","parameters":[{"name":"cat_id","value":"1"}]}
      */
     private String doFindCategoriesByNameRequestJson(String cname) {
         Protocol protocol = new Protocol();

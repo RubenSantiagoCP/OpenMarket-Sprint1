@@ -13,16 +13,24 @@ public class Product {
     private String description;
     private Long categoryId;
     private double price;
+    private Long vendedorId;
 
-    public Product(Long productId, String name, String description, double price,Long categoryId) {
+    public Product(Long productId, String name, String description, double price,Long categoryId, Long vendedorId ) {
         this.productId = productId;
         this.name = name;
         this.description = description;
         this.categoryId=categoryId;
         this.price=price;
+        this.vendedorId = vendedorId;
     }
-    
 
+    public Long getVendedorId() {
+        return vendedorId;
+    }
+
+    public void setVendedorId(Long vendedorId) {
+        this.vendedorId = vendedorId;
+    }
     
     public Product(){
         this.categoryId=null;

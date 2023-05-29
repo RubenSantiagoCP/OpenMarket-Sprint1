@@ -5,10 +5,12 @@
 package co.unicauca.openmarket.client.presentation.inicioSesion;
 
 import co.unicauca.openmarket.client.access.Factory;
+import co.unicauca.openmarket.client.access.IBuyAccess;
 import co.unicauca.openmarket.client.access.ICategoryAccess;
 import co.unicauca.openmarket.client.access.IProductAccess;
 import co.unicauca.openmarket.client.access.IUserAccess;
 import co.unicauca.openmarket.client.domain.User;
+import co.unicauca.openmarket.client.domain.service.BuyService;
 import co.unicauca.openmarket.client.domain.service.CategoryService;
 import co.unicauca.openmarket.client.domain.service.ProductService;
 import co.unicauca.openmarket.client.domain.service.UserService;
@@ -30,6 +32,7 @@ public class GUILogin extends javax.swing.JFrame {
     private UserService userService;
     private CategoryService categoryService;
     private ProductService productService;
+    private BuyService buyService;
             
     public GUILogin() {
         initComponents();
@@ -37,9 +40,11 @@ public class GUILogin extends javax.swing.JFrame {
         IProductAccess repository = Factory.getInstance().getProductAccess();
         ICategoryAccess repository2 =  Factory.getInstance().getCategoryAccess();
         IUserAccess repository3 = Factory.getInstance().getUserAccess();
+        IBuyAccess repository4 = Factory.getInstance().getBuyAccess();
         this.productService = new ProductService(repository);
         this.categoryService=new CategoryService(repository2);
         this.userService = new UserService(repository3);
+        this.buyService = new BuyService(repository4);
     }
 
     /**
@@ -190,10 +195,10 @@ public class GUILogin extends javax.swing.JFrame {
 
     private void permitirAcceso(User user) {
         if(user.getTipo().equalsIgnoreCase("vendedor")){
-            GUIVendedor vtnVendedor = new GUIVendedor();
+            GUIVendedor vtnVendedor = new GUIVendedor(productService, categoryService, user);
             vtnVendedor.setVisible(true);
         }else if(user.getTipo().equalsIgnoreCase("comprador")){
-            GUIComprador vtnComprador = new GUIComprador();
+            GUIComprador vtnComprador = new GUIComprador(productService, categoryService,buyService, user);
             vtnComprador.setVisible(true);
         }else if(user.getTipo().equalsIgnoreCase("repartidor")){
             GUIRepartidor vtnRepartidor = new GUIRepartidor();

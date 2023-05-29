@@ -2,14 +2,12 @@
 package co.unicauca.openmarket.client.domain.service;
 
 import co.unicauca.openmarket.client.access.ICategoryAccess;
-import co.unicauca.openmarket.client.presentation.GUICategoriesFind;
 import co.unicauca.openmarket.commons.domain.Category;
 import co.unicauca.openmarket.commons.observer.Observer;
 import co.unicauca.openmarket.commons.observer.Subject;
 import java.util.ArrayList;
 
 import java.util.List;
-import javax.swing.JOptionPane;
 
 /**
  *

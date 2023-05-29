@@ -31,7 +31,7 @@ public class ProductService implements Subject {
         this.repository = repository;
     }
 
-    public boolean saveProduct(Long id, String name, String description,Double price, Long categoryId) throws Exception {
+    public boolean saveProduct(Long id, String name, String description,Double price, Long categoryId, Long vendedorId) throws Exception {
         
         Product newProduct = new Product();
         newProduct.setProductId(id);
@@ -39,6 +39,7 @@ public class ProductService implements Subject {
         newProduct.setDescription(description);
         newProduct.setPrice(price);
         newProduct.setCategoryId(categoryId);
+        newProduct.setVendedorId(vendedorId);
 
 
         boolean result = repository.save(newProduct);

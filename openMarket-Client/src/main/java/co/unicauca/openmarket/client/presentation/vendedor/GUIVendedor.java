@@ -1,6 +1,7 @@
 package co.unicauca.openmarket.client.presentation.vendedor;
 
 import co.unicauca.openmaket.client.command.Invoker;
+import co.unicauca.openmarket.client.domain.User;
 import co.unicauca.openmarket.client.domain.service.CategoryService;
 import co.unicauca.openmarket.client.domain.service.ProductService;
 import co.unicauca.openmarket.commons.observer.Observer;
@@ -18,14 +19,16 @@ public class GUIVendedor extends javax.swing.JFrame implements Observer{
     private static JpAgregarProducto jpAgregar;
     private static JpCategoria jpCategoria;
     
+    private User vendedor;
     /** Creates new form GUIVendedor */
-    public GUIVendedor(ProductService productService, CategoryService categoryService) {
+    public GUIVendedor(ProductService productService, CategoryService categoryService, User user) {
         initComponents();
         
         this.productService = productService;
         this.categoryService = categoryService;
         invoker = new Invoker();
         invoker.registerObserver(this);
+        this.vendedor = user;
         
         
         //Panel principal
@@ -40,7 +43,7 @@ public class GUIVendedor extends javax.swing.JFrame implements Observer{
         jpContent.repaint();
         
         //Panel Agregar producto
-        jpAgregar = new JpAgregarProducto(jpContent, productService, categoryService, invoker);
+        jpAgregar = new JpAgregarProducto(jpContent, productService, categoryService, invoker, vendedor.getId());
         productService.registerObserver(jpAgregar);
         categoryService.registerObserver(jpAgregar);
         

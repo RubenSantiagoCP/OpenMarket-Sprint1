@@ -26,7 +26,7 @@ public class NewClass {
         BuyService buyService = new BuyService(repositoryB);
         
         
-        GUIComprador jp = new GUIComprador(ProductService, categoryService, buyService);
-        jp.setVisible(true);
+        //GUIComprador jp = new GUIComprador(ProductService, categoryService, buyService);
+        //jp.setVisible(true);
     }
 }

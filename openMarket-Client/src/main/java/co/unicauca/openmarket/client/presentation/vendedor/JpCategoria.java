@@ -5,7 +5,6 @@ import co.unicauca.openmarket.client.domain.service.CategoryService;
 import co.unicauca.openmarket.client.domain.service.ProductService;
 import co.unicauca.openmarket.client.infra.Messages;
 import static co.unicauca.openmarket.client.infra.Messages.successMessage;
-import co.unicauca.openmarket.client.presentation.GUICategoriesFind;
 import co.unicauca.openmarket.commons.domain.Category;
 import co.unicauca.openmarket.commons.observer.Observer;
 import java.util.List;
@@ -257,7 +256,7 @@ public class JpCategoria extends javax.swing.JPanel implements Observer{
         try {
             fillTable(categoryService.findAllCategories());
         } catch (Exception ex) {
-            Logger.getLogger(GUICategoriesFind.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(JpCategoria.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     

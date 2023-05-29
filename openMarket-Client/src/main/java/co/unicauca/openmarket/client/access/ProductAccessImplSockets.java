@@ -355,8 +355,8 @@ public class ProductAccessImplSockets implements IProductAccess {
         protocol.addParameter("name", product.getName());
         protocol.addParameter("description", product.getDescription());
         protocol.addParameter("price", String.valueOf(product.getPrice()));
-        protocol.addParameter("categoryId", product.getCategoryId().toString());
-        
+        protocol.addParameter("cat_id", product.getCategoryId().toString());
+         protocol.addParameter("user_id", product.getVendedorId().toString());
 
         Gson gson = new Gson();
         String requestJson = gson.toJson(protocol);
@@ -379,8 +379,8 @@ public class ProductAccessImplSockets implements IProductAccess {
         protocol.addParameter("name", product.getName());
         protocol.addParameter("description", product.getDescription());
         protocol.addParameter("precio", String.valueOf(product.getPrice()));
-        protocol.addParameter("categoryId", product.getCategoryId().toString());
-
+        protocol.addParameter("cat_id", product.getCategoryId().toString());
+        protocol.addParameter("user_id", product.getVendedorId().toString());
         Gson gson = new Gson();
         String requestJson = gson.toJson(protocol);
         return requestJson;

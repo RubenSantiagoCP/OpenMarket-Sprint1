@@ -6,7 +6,15 @@ package co.unicauca.openmarket.server.access;
 
 import co.unicauca.openmarket.commons.domain.Category;
 import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -21,34 +29,192 @@ public class CategoryRepositoryImplMysql implements ICategoryRepository{
     public CategoryRepositoryImplMysql() {
 
     }
+    
+     private void initDataBase() {
+         // SQL statement for creating a new table
+        String sql = "CREATE TABLE IF NOT EXISTS category (\n"
+                + "	cat_id integer PRIMARY KEY AUTOINCREMENT,\n"
+                + "	name text NOT NULL\n"
+                + ");";
+
+        try {
+            this.connect();
+            Statement stmt = conn.createStatement();
+            stmt.execute(sql);
+            //this.disconnect();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoryRepositoryImplMysql.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+     
+      public void connect() {
+        // SQLite connection string
+        //String url = "jdbc:sqlite:./myDatabase.db"; //Para Linux/Mac
+        //String url = "jdbc:sqlite:C:/sqlite/db/myDatabase.db"; //Para Windows
+        String url = "jdbc:sqlite::memory:";
+
+        try {
+            conn = DriverManager.getConnection(url);
+
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoryRepositoryImplMysql.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void disconnect() {
+        try {
+            if (conn != null) {
+                conn.close();
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+    }
 
     @Override
     public boolean save(Category newCategory) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+          try {
+            this.connect();
+            String sql = "INSERT INTO category ( name) "
+                    + "VALUES (?)";
+
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, newCategory.getName());
+            pstmt.executeUpdate();
+            pstmt.close();
+            this.disconnect();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductRepositoryImplMysql.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return true;
     }
 
     @Override
     public boolean edit(Long id, Category category) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+         try {
+            this.connect();
+            String sql = "UPDATE  category "
+                    + "SET name=?"
+                    + "WHERE cat_id = ?";
+
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, category.getName());
+            pstmt.setLong(2, id);
+            pstmt.executeUpdate();
+            pstmt.close();
+            this.disconnect();
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoryRepositoryImplMysql.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return true;
     }
 
     @Override
     public boolean delete(Long id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+          try {
+            this.connect();
+            String sql = "DELETE FROM category "
+                    + "WHERE cat_id = ?";
+
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setLong(1, id);
+            pstmt.executeUpdate();
+            pstmt.close();
+            this.disconnect();
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoryRepositoryImplMysql.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+        return true;
+    }    
 
     @Override
     public Category findById(Long id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Category category = null;
+
+        try {
+            this.connect();
+
+            String sql = "SELECT * FROM category  "
+                    + "WHERE cat_id = ?";
+
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setLong(1, id);
+
+            ResultSet res = pstmt.executeQuery();
+
+            if (res.next()) {
+                Category newCategory = new Category();
+                newCategory.setCategoryId(res.getLong("cat_id"));
+                newCategory.setName(res.getString("name"));
+   
+                return newCategory;
+            }
+            pstmt.close();
+            this.disconnect();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoryRepositoryImplMysql.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return category;
     }
 
     @Override
     public List<Category> findAll() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        List<Category> categories= new ArrayList<>();
+        try {
+            this.connect();
+            String sql = "SELECT * FROM category";
+
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            ResultSet res = pstmt.executeQuery();
+            while (res.next()) {
+               Category newCategory = new Category();
+                newCategory.setCategoryId(res.getLong("cat_id"));
+                newCategory.setName(res.getString("name"));
+                categories.add(newCategory);
+            }
+            pstmt.executeUpdate();
+            pstmt.close();
+            this.disconnect();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoryRepositoryImplMysql.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return categories;
     }
 
     @Override
     public List<Category> findByName(String name) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        List<Category> categories = new ArrayList<>();
+
+        try {
+
+            this.connect();
+            String sql = "SELECT * FROM category"
+                    + " WHERE name = ?";
+
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, name);
+            ResultSet res = stmt.executeQuery();
+            while (res.next()) {
+                Category newCategory = new Category();
+                newCategory.setCategoryId(res.getLong("cat_id"));
+                newCategory.setName(res.getString("name"));
+
+                categories.add(newCategory);
+            }
+
+            stmt.close();
+            this.disconnect();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductRepositoryImplMysql.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return categories;
     }
 }

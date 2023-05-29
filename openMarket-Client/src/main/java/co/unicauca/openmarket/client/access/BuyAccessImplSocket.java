@@ -298,7 +298,7 @@ public class BuyAccessImplSocket implements IBuyAccess{
     private String doFindBuyCompJson(String compName){
         Protocol protocol = new Protocol();
         protocol.setResource("buy");
-        protocol.setAction("getBuyByCategory");
+        protocol.setAction("getBuyByComprador");
         
         Gson gson = new Gson();
         String jsonRequest = gson.toJson(protocol);

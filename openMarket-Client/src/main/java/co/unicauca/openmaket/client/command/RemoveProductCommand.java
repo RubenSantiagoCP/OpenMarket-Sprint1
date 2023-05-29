@@ -40,8 +40,9 @@ public class RemoveProductCommand implements Command {
         String desc= product.getDescription();
         Double price = product.getPrice();
         Long catId=product.getCategoryId();
+        Long vendedorId = product.getVendedorId();
         try {
-            productService.saveProduct(prodId, name, desc, price, catId);
+            productService.saveProduct(prodId, name, desc, price, catId, vendedorId);
         } catch (Exception ex) {
             Logger.getLogger(AddProductCommand.class.getName()).log(Level.SEVERE, null, ex);
         }

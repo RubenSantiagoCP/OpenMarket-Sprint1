@@ -5,11 +5,15 @@
  */
 package co.unicauca.openmarket.server.infra.tcpip;
 
+import co.unicauca.openmarket.commons.domain.Buy;
 import co.unicauca.openmarket.commons.domain.Category;
 import co.unicauca.openmarket.commons.infra.*;
 import co.unicauca.openmarket.server.domain.services.CategoryService;
 import co.unicauca.openmarket.server.domain.services.ProductService;
 import co.unicauca.openmarket.commons.domain.Product;
+import co.unicauca.openmarket.commons.domain.User;
+import co.unicauca.openmarket.server.domain.services.BuyService;
+import co.unicauca.openmarket.server.domain.services.UserService;
 import co.unicauca.openmarket.server.infra.Context;
 import co.unicauca.openmarket.server.infra.ErrorResponse;
 import co.unicauca.strategyserver.infra.ServerHandler;
@@ -17,6 +21,8 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -25,6 +31,8 @@ import java.util.List;
 public class OpenMarketHandler extends ServerHandler {
     private static ProductService productService;
     private static CategoryService categoryService;
+    private static BuyService buyService;
+    private static UserService userService;
 
 
     public OpenMarketHandler() {
@@ -94,6 +102,81 @@ public class OpenMarketHandler extends ServerHandler {
                     response = processGetListCategory();
                 }
             }
+             case "buy" -> {
+                 if (protocolRequest.getAction().equals("post")) {
+                     try {
+                         response = processSaveBuy(protocolRequest);
+                     } catch (Exception ex) {
+                         Logger.getLogger(OpenMarketHandler.class.getName()).log(Level.SEVERE, null, ex);
+                     }
+                 }
+                 
+                 if (protocolRequest.getAction().equals("edit")) {
+                     try {
+                         response = String.valueOf( processEditBuy(protocolRequest));
+                     } catch (Exception ex) {
+                         Logger.getLogger(OpenMarketHandler.class.getName()).log(Level.SEVERE, null, ex);
+                     }
+                 }
+                 
+                 if (protocolRequest.getAction().equals("deleteBuy")) {
+                     try {
+                         response = processDeleteBuy(protocolRequest);
+                     } catch (Exception ex) {
+                         Logger.getLogger(OpenMarketHandler.class.getName()).log(Level.SEVERE, null, ex);
+                     }
+                 }
+                 
+                 if (protocolRequest.getAction().equals("get")) {
+                     try {
+                         response = processFindByIdBuy(protocolRequest);
+                     } catch (Exception ex) {
+                         Logger.getLogger(OpenMarketHandler.class.getName()).log(Level.SEVERE, null, ex);
+                     }
+                 }
+                 
+                 if (protocolRequest.getAction().equals("getBuyByComprador")) {
+                     try {
+                         response = processFindBuyComp(protocolRequest);
+                     } catch (Exception ex) {
+                         Logger.getLogger(OpenMarketHandler.class.getName()).log(Level.SEVERE, null, ex);
+                     }
+                 }
+                 
+                 if (protocolRequest.getAction().equals("getListBuys")) {
+                     try {
+                         response = processFindAllBuysBuy();
+                     } catch (Exception ex) {
+                         Logger.getLogger(OpenMarketHandler.class.getName()).log(Level.SEVERE, null, ex);
+                     }
+                 }
+             }
+             case "user" -> {
+                 if (protocolRequest.getAction().equals("get")) {
+                     try {
+                         response = processFindUserLogin(protocolRequest);
+                     } catch (Exception ex) {
+                         Logger.getLogger(OpenMarketHandler.class.getName()).log(Level.SEVERE, null, ex);
+                     }
+                 }
+                 
+                 if (protocolRequest.getAction().equals("getUserByType")) {
+                     try {
+                         response = processFindUserType(protocolRequest);
+                     } catch (Exception ex) {
+                         Logger.getLogger(OpenMarketHandler.class.getName()).log(Level.SEVERE, null, ex);
+                     }
+                 }
+                 
+                 if (protocolRequest.getAction().equals("getListUsers")) {
+                     try {
+                         response = processFindAllUsers();
+                     } catch (Exception ex) {
+                         Logger.getLogger(OpenMarketHandler.class.getName()).log(Level.SEVERE, null, ex);
+                     }
+                 }
+             }
+             
         }
 
 
@@ -304,6 +387,7 @@ public class OpenMarketHandler extends ServerHandler {
         switch (context) {
             case PRODUCT -> message = "Error, un producto con ese id ya existe";
             case CATEGORY -> message = "Error, una categoria con ese id ya existe";
+            case BUY -> message = "Error, una compra con ese id ya existe";
 
             default -> throw new IllegalArgumentException("Contexto desconocido: " + context);
         }
@@ -320,6 +404,10 @@ public class OpenMarketHandler extends ServerHandler {
     public ProductService getProductService() {
         return productService;
     }
+    
+    public BuyService getBuyService() {
+        return buyService;
+    }
 
     /**
      * @param service the service to set
@@ -331,6 +419,99 @@ public class OpenMarketHandler extends ServerHandler {
     public void setCategoryService(CategoryService service) {
         categoryService = service;
     }
+    
+    public UserService getUserService(){
+       return userService;
+    }
+
+    public void setBuyService(BuyService buyService) {
+        OpenMarketHandler.buyService = buyService;
+    }
+
+    public  void setUserService(UserService userService) {
+        OpenMarketHandler.userService = userService;
+    }
+    
+    
+
+    private String processSaveBuy(Protocol protocolRequest) throws Exception {
+        
+
+      
+          Buy buy = new Buy();
+        // Reconstruir el producto a partir de lo que viene en los parámetros
+        buy.setId(Long.valueOf(protocolRequest.getParameters().get(0).getValue()));
+        buy.setCompradorId(Long.valueOf(protocolRequest.getParameters().get(1).getValue()));
+        buy.setProductoId(Long.valueOf(protocolRequest.getParameters().get(2).getValue()));
+        buy.setEstado(protocolRequest.getParameters().get(3).getValue());
+        buy.setFechaCompra(protocolRequest.getParameters().get(4).getValue());
 
 
+        getBuyService().save(buy);
+
+        return objectToJSON(buy);
+    }
+
+    private String processEditBuy(Protocol protocolRequest) throws Exception {
+        Long id = Long.valueOf(protocolRequest.getParameters().get(0).getValue());
+        Buy buy = getBuyService().findById(id);
+        if (buy == null) {
+            return generateNotFoundErrorJson(Context.BUY);
+        }
+
+        buy = new Buy();
+         buy.setId(Long.valueOf(protocolRequest.getParameters().get(0).getValue()));
+        buy.setCompradorId(Long.valueOf(protocolRequest.getParameters().get(1).getValue()));
+        buy.setProductoId(Long.valueOf(protocolRequest.getParameters().get(2).getValue()));
+        buy.setEstado(protocolRequest.getParameters().get(3).getValue());
+        buy.setFechaCompra(protocolRequest.getParameters().get(4).getValue());
+
+        boolean response = getBuyService().edit(id, buy);
+        return String.valueOf(response);
+    }
+
+    private String processDeleteBuy(Protocol protocolRequest) throws Exception {
+        Long id = Long.valueOf(protocolRequest.getParameters().get(0).getValue());
+        boolean response = getBuyService().delete(id);
+        return String.valueOf(response);
+    }
+
+    private String processFindByIdBuy(Protocol protocolRequest) throws Exception {
+         Long id = Long.valueOf(protocolRequest.getParameters().get(0).getValue());
+
+        Buy buy = getBuyService().findById(id);
+        if (buy == null) {
+            return generateNotFoundErrorJson(Context.BUY);
+        } else {
+            return objectToJSON(buy);
+        }
+    }
+
+    private String processFindBuyComp(Protocol protocolRequest) throws Exception {
+        String compName = protocolRequest.getParameters().get(0).getValue();
+        List<Buy> buys = getBuyService().findByComp(compName);
+        return objectToJSON(buys);
+    }
+
+    private String processFindAllBuysBuy() throws Exception {
+        List<Buy> buys = getBuyService().findAll();
+        return objectToJSON(buys);
+    }
+
+    private String processFindUserLogin(Protocol protocolRequest) throws Exception {
+        String login = protocolRequest.getParameters().get(0).getValue();
+        List<User> users = getUserService().findAll();
+        return objectToJSON(users);
+    }
+
+    private String processFindUserType(Protocol protocolRequest) throws Exception {
+        String type = protocolRequest.getParameters().get(0).getValue();
+        List<User> users = getUserService().findByType(type);
+        return objectToJSON(users);
+    }
+
+    private String processFindAllUsers() throws Exception {
+        List<User> users = getUserService().findAll();
+        return objectToJSON(users);
+    }
 }

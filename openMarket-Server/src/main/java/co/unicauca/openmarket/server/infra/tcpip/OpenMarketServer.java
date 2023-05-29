@@ -5,12 +5,18 @@
  */
 package co.unicauca.openmarket.server.infra.tcpip;
 
-import co.unicauca.openmarket.server.access.CategoryRepositoryImplArrays;
+import co.unicauca.openmarket.server.access.BuyRepositoryImplMySql;
+import co.unicauca.openmarket.server.access.CategoryRepositoryImplMysql;
+import co.unicauca.openmarket.server.access.IBuyRepository;
 import co.unicauca.openmarket.server.access.ICategoryRepository;
 import co.unicauca.openmarket.server.access.IProductRepository;
-import co.unicauca.openmarket.server.access.ProductRepositoryImplArrays;
+import co.unicauca.openmarket.server.access.IUserRepository;
+import co.unicauca.openmarket.server.access.ProductRepositoryImplMysql;
+import co.unicauca.openmarket.server.access.UserRepositoryImplMySql;
+import co.unicauca.openmarket.server.domain.services.BuyService;
 import co.unicauca.openmarket.server.domain.services.CategoryService;
 import co.unicauca.openmarket.server.domain.services.ProductService;
+import co.unicauca.openmarket.server.domain.services.UserService;
 import co.unicauca.strategyserver.infra.ServerSocketMultiThread;
 
 import java.util.Scanner;
@@ -30,11 +36,15 @@ public class OpenMarketServer {
         int port = teclado.nextInt();
         ServerSocketMultiThread myServer = new ServerSocketMultiThread(port);
         OpenMarketHandler myHandler = new OpenMarketHandler();
-        ICategoryRepository catRepo= new CategoryRepositoryImplArrays();
-        IProductRepository prodRepo= new ProductRepositoryImplArrays(catRepo);
+        ICategoryRepository catRepo= new CategoryRepositoryImplMysql();
+        IProductRepository prodRepo= new ProductRepositoryImplMysql();
+        IUserRepository userRepo = new UserRepositoryImplMySql();
+        IBuyRepository buyRepo = new BuyRepositoryImplMySql();
 
         myHandler.setCategoryService(new CategoryService(catRepo));
         myHandler.setProductService(new ProductService(prodRepo));
+        myHandler.setBuyService(new BuyService(buyRepo));
+        myHandler.setUserService(new UserService(userRepo));
         myServer.setServerHandler(myHandler);
         myServer.startServer();
     }

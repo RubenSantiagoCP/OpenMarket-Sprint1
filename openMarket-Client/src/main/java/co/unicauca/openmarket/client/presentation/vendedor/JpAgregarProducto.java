@@ -5,7 +5,6 @@ import co.unicauca.openmaket.client.command.Invoker;
 import co.unicauca.openmarket.client.domain.service.CategoryService;
 import co.unicauca.openmarket.client.domain.service.ProductService;
 import co.unicauca.openmarket.client.infra.Messages;
-import co.unicauca.openmarket.client.presentation.GUIProductsFind;
 import co.unicauca.openmarket.commons.domain.Product;
 import co.unicauca.openmarket.commons.observer.Observer;
 import java.util.List;
@@ -24,11 +23,12 @@ public class JpAgregarProducto extends javax.swing.JPanel implements Observer{
     private ProductService productService;
     private CategoryService categoryService;
     private Invoker invoker;
+    private Long vendedorId;
     
     /**
      * Creates new form JpAgregarProducto
      */
-    public JpAgregarProducto(javax.swing.JPanel parent, ProductService productService, CategoryService categoryService, Invoker invoker) {
+    public JpAgregarProducto(javax.swing.JPanel parent, ProductService productService, CategoryService categoryService, Invoker invoker, Long vendedorId) {
         initComponents();  
         initializeTable();
         this.productService = productService;
@@ -36,6 +36,7 @@ public class JpAgregarProducto extends javax.swing.JPanel implements Observer{
         this.invoker = new Invoker();
         this.invoker.registerObserver(this);
         this.jpContent = parent;
+        this.vendedorId = vendedorId;
     }
 
     
@@ -78,13 +79,11 @@ public class JpAgregarProducto extends javax.swing.JPanel implements Observer{
         lbNombreProducto = new javax.swing.JLabel();
         lbPrecio = new javax.swing.JLabel();
         lbIdCategoria = new javax.swing.JLabel();
-        lbLocacion = new javax.swing.JLabel();
         lbDescripcion = new javax.swing.JLabel();
         txtIdProducto = new javax.swing.JTextField();
         txtNombreProducto = new javax.swing.JTextField();
         txtPrecio = new javax.swing.JTextField();
         txtIdCategoria = new javax.swing.JTextField();
-        txtLocacion = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtADescripcion = new javax.swing.JTextArea();
         btnGuardar = new javax.swing.JButton();
@@ -115,26 +114,20 @@ public class JpAgregarProducto extends javax.swing.JPanel implements Observer{
         lbIdCategoria.setText("Id Categoria");
         add(lbIdCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 190, -1, -1));
 
-        lbLocacion.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
-        lbLocacion.setForeground(new java.awt.Color(255, 255, 255));
-        lbLocacion.setText("Locación");
-        add(lbLocacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 230, -1, -1));
-
         lbDescripcion.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
         lbDescripcion.setForeground(new java.awt.Color(255, 255, 255));
         lbDescripcion.setText("Descripción");
-        add(lbDescripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 290, -1, -1));
+        add(lbDescripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 240, -1, -1));
         add(txtIdProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(162, 37, 223, -1));
         add(txtNombreProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(162, 83, 223, -1));
         add(txtPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(162, 131, 223, -1));
         add(txtIdCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(162, 178, 223, -1));
-        add(txtLocacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(162, 228, 223, -1));
 
         txtADescripcion.setColumns(20);
         txtADescripcion.setRows(5);
         jScrollPane1.setViewportView(txtADescripcion);
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(162, 270, -1, 74));
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 230, -1, 74));
 
         btnGuardar.setBackground(new java.awt.Color(224, 122, 95));
         btnGuardar.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
@@ -200,14 +193,12 @@ public class JpAgregarProducto extends javax.swing.JPanel implements Observer{
     private javax.swing.JLabel lbDescripcion;
     private javax.swing.JLabel lbIdCategoria;
     private javax.swing.JLabel lbIdProducto;
-    private javax.swing.JLabel lbLocacion;
     private javax.swing.JLabel lbNombreProducto;
     private javax.swing.JLabel lbPrecio;
     private javax.swing.JTable tblAgregarProducto;
     private javax.swing.JTextArea txtADescripcion;
     private javax.swing.JTextField txtIdCategoria;
     private javax.swing.JTextField txtIdProducto;
-    private javax.swing.JTextField txtLocacion;
     private javax.swing.JTextField txtNombreProducto;
     private javax.swing.JTextField txtPrecio;
     // End of variables declaration//GEN-END:variables
@@ -219,7 +210,7 @@ public class JpAgregarProducto extends javax.swing.JPanel implements Observer{
             String description = txtADescripcion.getText().trim();
             Long categoryId = Long.valueOf(this.txtIdCategoria.getText().trim());
             Double price = Double.valueOf(txtPrecio.getText().trim());
-            Product prod = new Product(Long.valueOf(id), name, description, price, categoryId);
+            Product prod = new Product(Long.valueOf(id), name, description, price, categoryId, vendedorId);
 
             AddProductCommand comm = new AddProductCommand(productService, prod);
 
@@ -252,7 +243,7 @@ public class JpAgregarProducto extends javax.swing.JPanel implements Observer{
         try {
             fillTable(productService.findAllProducts());
         } catch (Exception ex) {
-            Logger.getLogger(GUIProductsFind.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GUIVendedor.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     

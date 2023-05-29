@@ -1,6 +1,7 @@
 
 package co.unicauca.openmarket.client.presentation.comprador;
 
+import co.unicauca.openmarket.client.domain.User;
 import co.unicauca.openmarket.client.domain.service.BuyService;
 import co.unicauca.openmarket.client.domain.service.CategoryService;
 import co.unicauca.openmarket.client.domain.service.ProductService;
@@ -15,14 +16,16 @@ public class GUIComprador extends javax.swing.JFrame {
     private ProductService productService;
     private CategoryService categoryService;
     private BuyService buyService;
+    private User user;
     /**
      * Creates new form GUIComprador
      */
-    public GUIComprador(ProductService productService, CategoryService categoryService, BuyService buyService) {
+    public GUIComprador(ProductService productService, CategoryService categoryService, BuyService buyService, User user) {
         initComponents();
         this.productService = productService;
         this.categoryService = categoryService;
         this.buyService = buyService;
+        this.user = user;
     }
 
     
