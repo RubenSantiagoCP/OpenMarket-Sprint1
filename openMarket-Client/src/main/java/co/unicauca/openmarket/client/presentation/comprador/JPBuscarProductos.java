@@ -12,6 +12,7 @@ import co.unicauca.openmarket.client.domain.service.ProductService;
 import co.unicauca.openmarket.client.infra.Messages;
 import co.unicauca.openmarket.commons.domain.Buy;
 import co.unicauca.openmarket.commons.domain.Product;
+import co.unicauca.openmarket.commons.domain.User;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -24,19 +25,21 @@ import javax.swing.table.DefaultTableModel;
  * @author Hewlett Packard
  */
 public class JPBuscarProductos extends javax.swing.JPanel {
-    
+
     private BuyService buyService;
     private ProductService productService;
     private CategoryService categoryService;
+    private User user;
     private Invoker invoker;
-    
+
     //Constructor
-    public JPBuscarProductos(ProductService productService, CategoryService categoryService, BuyService buyService) {
+    public JPBuscarProductos(ProductService productService, CategoryService categoryService, BuyService buyService, User user) {
         initComponents();
         this.productService = productService;
         this.categoryService = categoryService;
         this.buyService = buyService;
-        
+        this.user = user;
+
         //<editor-fold defaultstate="collapsed" desc="Metodo auxiliar para seleccionar filas">
         /*tblProductosO.addMouseListener(new MouseAdapter(){
             public void mousePressed(MouseEvent mouseEvent){
@@ -61,15 +64,15 @@ public class JPBuscarProductos extends javax.swing.JPanel {
         });*/
         //</editor-fold>
     }
-    
+
     //<editor-fold defaultstate="collapsed" desc="Metodo auxiliar para seleccionar producto">
-    private void rowSelection(){
+    private void rowSelection() {
         try {
-            int selection= tblProductosO.getSelectedRow();
+            int selection = tblProductosO.getSelectedRow();
             String id = tblProductosO.getValueAt(selection, 0).toString();
             String name = tblProductosO.getValueAt(selection, 1).toString();
-            lblInformacion.setText("¿Desea comprar el producto "+name+" con id "+id+"?");
-            
+            lblInformacion.setText("¿Desea comprar el producto " + name + " con id " + id + "?");
+
             //Creacion de la compra
             Buy newBuy = new Buy();
             newBuy.setCompradorId(Long.MIN_VALUE);
@@ -80,16 +83,16 @@ public class JPBuscarProductos extends javax.swing.JPanel {
         } catch (Exception e) {
             lblInformacion.setText("Seleccione un producto a comprar");
         }
-        
+
     }
     //</editor-fold>
-    
+
     //<editor-fold defaultstate="collapsed" desc="Metodo para imprimir todos lo productos">
-    private void fillTable(List<Product> lstProducts) throws Exception{
+    private void fillTable(List<Product> lstProducts) throws Exception {
         DefaultTableModel model = (DefaultTableModel) tblProductosO.getModel();
         Object rowData[] = new Object[4];
-        
-        for(int i = 0; i<lstProducts.size(); i++){
+
+        for (int i = 0; i < lstProducts.size(); i++) {
             rowData[0] = lstProducts.get(i).getProductId();
             rowData[1] = lstProducts.get(i).getName();
             rowData[2] = lstProducts.get(i).getPrice();
@@ -97,17 +100,17 @@ public class JPBuscarProductos extends javax.swing.JPanel {
             Long idCat = lstProducts.get(i).getCategoryId();
             String nameCat = categoryService.findCategoryById(idCat).getName();
             rowData[3] = nameCat;
-            
+
             model.addRow(rowData);
         }
     }
     //</editor-fold>
-    
+
     //<editor-fold defaultstate="collapsed" desc="Metodo para imprimir con Id">
-    private void fillTableId(Product product) throws Exception{
+    private void fillTableId(Product product) throws Exception {
         DefaultTableModel model = (DefaultTableModel) tblProductosO.getModel();
         Object rowData[] = new Object[4];
-        
+
         rowData[0] = product.getProductId();
         rowData[1] = product.getName();
         rowData[2] = product.getPrice();
@@ -115,17 +118,17 @@ public class JPBuscarProductos extends javax.swing.JPanel {
         Long idCat = product.getCategoryId();
         String nameCat = categoryService.findCategoryById(idCat).getName();
         rowData[3] = nameCat;
-        
+
         model.addRow(rowData);
     }
     //</editor-fold>
-    
+
     //<editor-fold defaultstate="collapsed" desc="Metodo para imprimir con Categoria">
-    private void fillTableCategory(List<Product> lstProducts) throws Exception{
+    private void fillTableCategory(List<Product> lstProducts) throws Exception {
         DefaultTableModel model = (DefaultTableModel) tblProductosO.getModel();
         Object rowData[] = new Object[4];
-        
-        for(int i = 0; i<lstProducts.size(); i++){
+
+        for (int i = 0; i < lstProducts.size(); i++) {
             rowData[0] = lstProducts.get(i).getProductId();
             rowData[1] = lstProducts.get(i).getName();
             rowData[2] = lstProducts.get(i).getPrice();
@@ -133,19 +136,19 @@ public class JPBuscarProductos extends javax.swing.JPanel {
             Long idCat = lstProducts.get(i).getCategoryId();
             String nameCat = categoryService.findCategoryById(idCat).getName();
             rowData[3] = nameCat;
-            
+
             model.addRow(rowData);
         }
-        
+
     }
     //</editor-fold>
-    
+
     //<editor-fold defaultstate="collapsed" desc="Metodo para imprimir con Nombre">
-    private void fillTableName(List<Product> lstProducts) throws Exception{
+    private void fillTableName(List<Product> lstProducts) throws Exception {
         DefaultTableModel model = (DefaultTableModel) tblProductosO.getModel();
         Object rowData[] = new Object[4];
-        
-        for(int i = 0; i<lstProducts.size(); i++){
+
+        for (int i = 0; i < lstProducts.size(); i++) {
             rowData[0] = lstProducts.get(i).getProductId();
             rowData[1] = lstProducts.get(i).getName();
             rowData[2] = lstProducts.get(i).getPrice();
@@ -153,38 +156,40 @@ public class JPBuscarProductos extends javax.swing.JPanel {
             Long idCat = lstProducts.get(i).getCategoryId();
             String nameCat = categoryService.findCategoryById(idCat).getName();
             rowData[3] = nameCat;
-            
+
             model.addRow(rowData);
         }
-        
+
     }
     //</editor-fold>
-    
+
     //<editor-fold defaultstate="collapsed" desc="Metodo para crear compra">
-    private void addBuy(){
+    private void addBuy() {
         try {
-            int selection= tblProductosO.getSelectedRow();
-            
-            
+            int selection = tblProductosO.getSelectedRow();
+
             //Creacion de la compra
             Buy newBuy = new Buy();
-            newBuy.setCompradorId(Long.MIN_VALUE);
+            
+            newBuy.setCompradorId(user.getId());
             String id = tblProductosO.getValueAt(selection, 0).toString();
             newBuy.setProductoId(Long.parseLong(id));
             newBuy.setEstado("Realizada");
             Date fechaActual = new Date();
             newBuy.setFechaCompra(fechaActual.toString());
-            
+
             AddBuyCommand comm = new AddBuyCommand(buyService, newBuy);
             
-            
-            
+            if(invoker.executeCommand(comm)){
+                Messages.showMessageDialog("La compra se grabo con exito", "Atencion");
+            }
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error al grabar", JOptionPane.ERROR_MESSAGE);
         }
     }
     //</editor-fold>
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -343,59 +348,39 @@ public class JPBuscarProductos extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cbxTipoBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxTipoBusquedaActionPerformed
+        //<editor-fold defaultstate="collapsed" desc="Logica para controlar entrada para metodos de busqueda">
         String seleccion = cbxTipoBusqueda.getSelectedItem().toString();
-        
-        if(seleccion.equals("Seleccionar")){
+
+        if (seleccion.equals("Seleccionar")) {
             estadoInicial();
-        }else{
+        } else {
             btnBuscarP.setVisible(true);
-            if(seleccion.equals("Precio")){
+            if (seleccion.equals("Precio")) {
                 txtValorIngresado1.setVisible(true);
                 lblMensajeVI1.setVisible(true);
                 lblMensajeVI1.setText("Ingrese rango inferior");
-                
+
                 txtValorIngresado2.setVisible(true);
                 lblMensajeVI2.setVisible(true);
                 lblMensajeVI2.setText("Ingrese rango superior");
-            }else{
+            } else {
                 txtValorIngresado1.setVisible(true);
                 lblMensajeVI1.setVisible(true);
-                lblMensajeVI1.setText("Ingrese "+ seleccion);
+                lblMensajeVI1.setText("Ingrese " + seleccion);
                 txtValorIngresado2.setVisible(false);
                 lblMensajeVI2.setVisible(false);
             }
         }
+        //</editor-fold>
     }//GEN-LAST:event_cbxTipoBusquedaActionPerformed
 
     private void btnCrearCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearCompraActionPerformed
-        String seleccion = cbxTipoBusqueda.getSelectedItem().toString();
-        boolean bandera = true;
-        
-        //<editor-fold defaultstate="collapsed" desc="Validacion de campos de texto">
-            if(seleccion.equals("Precio")){
-                if(txtValorIngresado1.getText().trim().isBlank() &&
-                        txtValorIngresado2.getText().trim().isBlank()){
-                    bandera = false;
-                }
-            }else{
-                if(txtValorIngresado1.getText().trim().isBlank()){
-                    bandera = false;
-                }
-            }
-            //</editor-fold>
-        
         try {
-            if(bandera){
-                addBuy();
-            }else{
-                Messages.showMessageDialog("Debe ingresar los datos requeridos", "Atencion");
-            }
+            //Agregar o crear compra
+            addBuy();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-        
-        
-        
     }//GEN-LAST:event_btnCrearCompraActionPerformed
 
     private void btnBuscarTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarTodosActionPerformed
@@ -409,71 +394,71 @@ public class JPBuscarProductos extends javax.swing.JPanel {
     private void btnBuscarPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarPActionPerformed
         String seleccion = cbxTipoBusqueda.getSelectedItem().toString();
         boolean band = false;
-        
+
         try {
             //<editor-fold defaultstate="collapsed" desc="Validacion de campos de texto">
-            if(seleccion.equals("Precio")){
-                if(!txtValorIngresado1.getText().trim().isBlank() &&
-                        !txtValorIngresado2.getText().trim().isBlank()){
+            if (seleccion.equals("Precio")) {
+                if (!txtValorIngresado1.getText().trim().isBlank()
+                        && !txtValorIngresado2.getText().trim().isBlank()) {
                     band = true;
                 }
-            }else{
-                if(!txtValorIngresado1.getText().trim().isBlank()){
+            } else {
+                if (!txtValorIngresado1.getText().trim().isBlank()) {
                     band = true;
                 }
             }
             //</editor-fold>
-            
+
             //<editor-fold defaultstate="collapsed" desc="Llamado de metodos segun Seleccion">
-            if(band){
-                if(seleccion.equals("Identificador")){
-                    
+            if (band) {
+                if (seleccion.equals("Identificador")) {
+
                     Long id = Long.valueOf(txtValorIngresado1.getText());
                     fillTableId(productService.findProductById(id));
-                    
-                }else if(seleccion.equals("Nombre")){
-                    
+
+                } else if (seleccion.equals("Nombre")) {
+
                     fillTableName(productService.findProductsByName(txtValorIngresado1.getText()));
-                    
-                }else if(seleccion.equals("Categoria")){
-                    
+
+                } else if (seleccion.equals("Categoria")) {
+
                     fillTableCategory(productService.findProductsByCategory(txtValorIngresado1.getText()));
-                    
-                }else if(seleccion.equals("Precio")){
-                    
+
+                } else if (seleccion.equals("Precio")) {
+
                     Long minPrice = Long.parseLong(txtValorIngresado1.getText());
                     Long maxPrice = Long.parseLong(txtValorIngresado2.getText());
                     //Nota: se uso solo del metodo fillTable para imprimir y 
                     //ver si puede remplazar a fillTableName y fillTableCategory
                     fillTable(productService.findProductsByPrice(minPrice, maxPrice));
-                    
+
                 }
-            }else{
-                JOptionPane.showMessageDialog(null,"El texto no debe estar vacio",
+            } else {
+                JOptionPane.showMessageDialog(null, "El texto no debe estar vacio",
                         "Error", JOptionPane.ERROR_MESSAGE);
             }
             //</editor-fold>
         } catch (NullPointerException ex) {
-            JOptionPane.showMessageDialog(null,"Envia la informacion correspondiente",
-                    "Error tipo de dato",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Envia la informacion correspondiente",
+                    "Error tipo de dato", JOptionPane.ERROR_MESSAGE);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnBuscarPActionPerformed
 
     private void tblProductosOMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProductosOMouseClicked
-       rowSelection();
+        rowSelection();
     }//GEN-LAST:event_tblProductosOMouseClicked
-    
-    private void estadoInicial(){
+
+    private void estadoInicial() {
         txtValorIngresado1.setVisible(false);
         txtValorIngresado1.setText(" ");
         lblMensajeVI1.setVisible(false);
-        
+
         txtValorIngresado2.setVisible(false);
         txtValorIngresado2.setText(" ");
         lblMensajeVI2.setVisible(false);
-        
+
         btnBuscarP.setVisible(false);
     }
 

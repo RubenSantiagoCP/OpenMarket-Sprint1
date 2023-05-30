@@ -8,10 +8,10 @@ import co.unicauca.openmarket.client.access.Factory;
 import co.unicauca.openmarket.client.access.IBuyAccess;
 import co.unicauca.openmarket.client.access.ICategoryAccess;
 import co.unicauca.openmarket.client.access.IProductAccess;
-import co.unicauca.openmarket.client.domain.User;
 import co.unicauca.openmarket.client.domain.service.BuyService;
 import co.unicauca.openmarket.client.domain.service.CategoryService;
 import co.unicauca.openmarket.client.domain.service.ProductService;
+import co.unicauca.openmarket.commons.domain.User;
 
 /**
  *

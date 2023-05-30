@@ -10,8 +10,12 @@ import co.unicauca.openmarket.client.domain.service.CategoryService;
 import co.unicauca.openmarket.client.domain.service.ProductService;
 import co.unicauca.openmarket.client.infra.Messages;
 import co.unicauca.openmarket.commons.domain.Buy;
-import java.security.MessageDigest;
+import co.unicauca.openmarket.commons.domain.Product;
+import co.unicauca.openmarket.commons.domain.User;
 import java.util.Date;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -22,14 +26,17 @@ public class JPConfirmarE extends javax.swing.JPanel {
     private BuyService buyService;
     private ProductService productService;
     private CategoryService categoryService;
-    private Invoker invoker;
+    private User user;
     
     //Constructor
-    public JPConfirmarE(ProductService productService, CategoryService categoryService, BuyService buyService) {
+    public JPConfirmarE(ProductService productService, CategoryService categoryService, BuyService buyService, User user) throws Exception {
         initComponents();
         this.productService = productService;
         this.categoryService = categoryService;
         this.buyService = buyService;
+        this.user = user; 
+        
+        fillTableConfirm(buyService.findBuyByCom(user.getUsername()));
     }
 
     //<editor-fold defaultstate="collapsed" desc="Metodo auxiliar para seleccionar producto">
@@ -60,7 +67,6 @@ public class JPConfirmarE extends javax.swing.JPanel {
         int selection = tblConfirmarE.getSelectedRow();
         String id = tblConfirmarE.getValueAt(selection, 0).toString();
         
-        //Obtener el producto seleccionado en la tabla con id
         Buy buy = buyService.findBuyById(Long.parseLong(id));
         //Se cambia el estado de compra a entregada para finalizar todo el proceso
         buy.setEstado("Entregada");
@@ -69,6 +75,28 @@ public class JPConfirmarE extends javax.swing.JPanel {
             Messages.showMessageDialog("El proceso de compra finalizo con exito", "Gracias por su compra");
         }else{
             Messages.showMessageDialog("Hubo un problema al confirmar la compra", "Atencion");
+        }
+    }
+    //</editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="Metodo para llenar la tabla de confirmacion">
+    private void fillTableConfirm(List<Buy> lstBuys)throws Exception{
+        DefaultTableModel model = (DefaultTableModel) tblConfirmarE.getModel();
+        
+        Object rowData[] = new Object[4];
+        for(int i = 0; i < lstBuys.size(); i++){
+            String estado = lstBuys.get(i).getEstado();
+            if(estado.equals("En camino")){
+                //Se obtiene el producto de la venta
+                Product product = productService.findProductById(lstBuys.get(i).getProductoId());
+                
+                rowData[0] = lstBuys.get(i).getId();
+                rowData[1] = product.getName();
+                rowData[2] = lstBuys.get(i).getEstado();
+                rowData[3] = product.getPrice();
+                
+                model.addColumn(rowData);
+            }
         }
     }
     //</editor-fold>
@@ -103,24 +131,24 @@ public class JPConfirmarE extends javax.swing.JPanel {
         tblConfirmarE.setBackground(new java.awt.Color(255, 255, 255));
         tblConfirmarE.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Id", "Nombre", "Precio"
+                "Id", "Nombre Producto", "Estado Compra", "Precio"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -166,7 +194,13 @@ public class JPConfirmarE extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnConfirmarEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarEActionPerformed
-        // TODO add your handling code here:
+        try {
+            //Esditar estado de compra
+            editBuy();
+            fillTableConfirm(buyService.findBuyByCom(user.getUsername()));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnConfirmarEActionPerformed
 
     private void tblConfirmarEMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblConfirmarEMouseClicked
