@@ -8,11 +8,10 @@ import co.unicauca.openmarket.client.access.Factory;
 import co.unicauca.openmarket.client.access.IBuyAccess;
 import co.unicauca.openmarket.client.access.ICategoryAccess;
 import co.unicauca.openmarket.client.access.IProductAccess;
-import co.unicauca.openmarket.client.domain.User;
 import co.unicauca.openmarket.client.domain.service.BuyService;
 import co.unicauca.openmarket.client.domain.service.CategoryService;
 import co.unicauca.openmarket.client.domain.service.ProductService;
-import co.unicauca.openmarket.client.presentation.vendedor.GUIVendedor;
+import co.unicauca.openmarket.commons.domain.User;
 
 /**
  *
@@ -28,7 +27,7 @@ public class NewClass {
         BuyService buyService = new BuyService(repositoryB);
         User user = new User("rscruz", "1234", "hola", 0, "vendedor");
         
-        GUIVendedor jp = new GUIVendedor(ProductService, categoryService, user);
+        GUIComprador jp = new GUIComprador(ProductService, categoryService, buyService, user);
         jp.setVisible(true);    
     }
 }

@@ -1,22 +1,25 @@
-
 package co.unicauca.openmarket.client.presentation.comprador;
 
-import co.unicauca.openmarket.client.domain.User;
 import co.unicauca.openmarket.client.domain.service.BuyService;
 import co.unicauca.openmarket.client.domain.service.CategoryService;
 import co.unicauca.openmarket.client.domain.service.ProductService;
+import co.unicauca.openmarket.commons.domain.User;
 import java.awt.BorderLayout;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JPanel;
 
 /**
  *
- * @author Hewlett Packard
+ * @author nimbachi
  */
 public class GUIComprador extends javax.swing.JFrame {
+
     private ProductService productService;
     private CategoryService categoryService;
     private BuyService buyService;
     private User user;
+
     /**
      * Creates new form GUIComprador
      */
@@ -28,8 +31,6 @@ public class GUIComprador extends javax.swing.JFrame {
         this.user = user;
     }
 
-    
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -103,10 +104,10 @@ public class GUIComprador extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBuscarPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarPActionPerformed
-        JPanel jpBuscar = new JPBuscarProductos(productService, categoryService, buyService);
+        JPanel jpBuscar = new JPBuscarProductos(productService, categoryService, buyService, user);
         jpBuscar.setSize(700, 600);
         jpBuscar.setLocation(0, 0);
-        
+
         jpCentralC.removeAll();
         jpCentralC.add(jpBuscar, BorderLayout.CENTER);
         jpCentralC.revalidate();
@@ -114,28 +115,33 @@ public class GUIComprador extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBuscarPActionPerformed
 
     private void btnConfirmarEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarEActionPerformed
-        JPanel jpConfirmarE = new JPConfirmarE(productService, categoryService, buyService);
-        jpConfirmarE.setSize(700, 600);
-        jpConfirmarE.setLocation(0, 0);
-        
-        jpCentralC.removeAll();
-        jpCentralC.add(jpConfirmarE, BorderLayout.CENTER);
-        jpCentralC.revalidate();
-        jpCentralC.repaint();
-        
-        //TODO que cuando oprime el boton se muestre en tabla las compras en estado de realizado
-        
+        JPanel jpConfirmarE;
+        try {
+            jpConfirmarE = new JPConfirmarE(productService, categoryService, buyService, user);
+            jpConfirmarE.setSize(700, 600);
+            jpConfirmarE.setLocation(0, 0);
+
+            jpCentralC.removeAll();
+            jpCentralC.add(jpConfirmarE, BorderLayout.CENTER);
+            jpCentralC.revalidate();
+            jpCentralC.repaint();
+        } catch (Exception ex) {
+            Logger.getLogger(GUIComprador.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnConfirmarEActionPerformed
 
     private void btnTusEntregasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTusEntregasActionPerformed
-        JPanel jpTusCompras = new JPTusCompras();
-        jpTusCompras.setSize(700, 600);
-        jpTusCompras.setLocation(0, 0);
-        
-        jpCentralC.removeAll();
-        jpCentralC.add(jpTusCompras, BorderLayout.CENTER);
-        jpCentralC.revalidate();
-        jpCentralC.repaint();
+        try {
+            JPanel jpTusCompras = new JPTusCompras(buyService, productService);
+            jpTusCompras.setSize(700, 600);
+            jpTusCompras.setLocation(0, 0);
+
+            jpCentralC.removeAll();
+            jpCentralC.add(jpTusCompras, BorderLayout.CENTER);
+            jpCentralC.revalidate();
+            jpCentralC.repaint();
+        } catch (Exception e) {
+        }
     }//GEN-LAST:event_btnTusEntregasActionPerformed
 
     /**

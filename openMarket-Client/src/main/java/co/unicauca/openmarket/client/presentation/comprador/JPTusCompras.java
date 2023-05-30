@@ -4,19 +4,53 @@
  */
 package co.unicauca.openmarket.client.presentation.comprador;
 
+import co.unicauca.openmarket.client.domain.service.BuyService;
+import co.unicauca.openmarket.client.domain.service.CategoryService;
+import co.unicauca.openmarket.client.domain.service.ProductService;
+import co.unicauca.openmarket.commons.domain.Buy;
+import co.unicauca.openmarket.commons.domain.Product;
+import co.unicauca.openmarket.commons.domain.User;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Hewlett Packard
  */
 public class JPTusCompras extends javax.swing.JPanel {
-
-    /**
-     * Creates new form JPTusCompras
-     */
-    public JPTusCompras() {
+    private BuyService buyService;
+    private ProductService productService;
+    private User user;
+    
+    public JPTusCompras(BuyService buyService, ProductService productService) throws Exception {
         initComponents();
+        this.buyService = buyService;
+        this.productService = productService;
+        llenarTablaEntregas(buyService.findBuyByCom(user.getUsername()));
     }
 
+    // <editor-fold defaultstate="collapsed" desc="Metodo para llenar la tabla de confirmacion">
+    public void llenarTablaEntregas(List<Buy> lstBuys)throws Exception{
+        DefaultTableModel model = (DefaultTableModel) tblEntregas.getModel();
+        
+        Object rowData[] = new Object[4];
+        for(int i = 0; i < lstBuys.size(); i++){
+            String estado = lstBuys.get(i).getEstado();
+            if(estado.equals("Entregada")){
+                //Se obtiene el producto de la venta
+                Product product = productService.findProductById(lstBuys.get(i).getProductoId());
+                
+                rowData[0] = lstBuys.get(i).getId();
+                rowData[1] = product.getName();
+                rowData[2] = product.getPrice();
+                rowData[3] = lstBuys.get(i).getFechaCompra();
+                
+                model.addColumn(rowData);
+            }
+        }
+    }
+    //</editor-fold>
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -29,7 +63,7 @@ public class JPTusCompras extends javax.swing.JPanel {
         JPCentralTusCompras = new javax.swing.JPanel();
         lblTitulo = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblEntregas = new javax.swing.JTable();
         lblTabla = new javax.swing.JLabel();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -42,8 +76,8 @@ public class JPTusCompras extends javax.swing.JPanel {
         lblTitulo.setText("CONSULTAR TUS COMPRAS");
         JPCentralTusCompras.add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 30, -1, -1));
 
-        jTable1.setBackground(new java.awt.Color(255, 255, 255));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblEntregas.setBackground(new java.awt.Color(255, 255, 255));
+        tblEntregas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -58,12 +92,20 @@ public class JPTusCompras extends javax.swing.JPanel {
                 {null, null, null, null}
             },
             new String [] {
-                "Id", "Nombre", "Precio", "Fecha Entrega"
+                "Id", "Nombre Producto", "Precio", "Fecha Entrega"
             }
-        ));
-        jTable1.setGridColor(new java.awt.Color(255, 255, 255));
-        jTable1.setSelectionBackground(new java.awt.Color(255, 255, 255));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblEntregas.setGridColor(new java.awt.Color(255, 255, 255));
+        tblEntregas.setSelectionBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane1.setViewportView(tblEntregas);
 
         JPCentralTusCompras.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, 640, 200));
 
@@ -79,8 +121,8 @@ public class JPTusCompras extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel JPCentralTusCompras;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblTabla;
     private javax.swing.JLabel lblTitulo;
+    private javax.swing.JTable tblEntregas;
     // End of variables declaration//GEN-END:variables
 }
