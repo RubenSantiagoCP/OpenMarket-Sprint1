@@ -75,7 +75,7 @@ public class ProductRepositoryImplMysql implements IProductRepository {
             }
             pstmt.executeUpdate();
             pstmt.close();
-            this.disconnect();
+            //this.disconnect();
 
         } catch (SQLException ex) {
             Logger.getLogger(ProductRepositoryImplMysql.class.getName()).log(Level.SEVERE, null, ex);
@@ -148,7 +148,7 @@ public class ProductRepositoryImplMysql implements IProductRepository {
             pstmt.setString(2, newProduct.getDescription());
             pstmt.executeUpdate();
             pstmt.close();
-            this.disconnect();
+           // this.disconnect();
 
         } catch (SQLException ex) {
             Logger.getLogger(ProductRepositoryImplMysql.class.getName()).log(Level.SEVERE, null, ex);
@@ -167,7 +167,7 @@ public class ProductRepositoryImplMysql implements IProductRepository {
             pstmt.setLong(1, id);
             pstmt.executeUpdate();
             pstmt.close();
-            this.disconnect();
+           // this.disconnect();
         } catch (SQLException ex) {
             Logger.getLogger(ProductRepositoryImplMysql.class.getName()).log(Level.SEVERE, null, ex);
             return false;
@@ -201,7 +201,7 @@ public class ProductRepositoryImplMysql implements IProductRepository {
                 return newProduct;
             }
             pstmt.close();
-            this.disconnect();
+            //this.disconnect();
 
         } catch (SQLException ex) {
             Logger.getLogger(ProductRepositoryImplMysql.class.getName()).log(Level.SEVERE, null, ex);
@@ -235,7 +235,7 @@ public class ProductRepositoryImplMysql implements IProductRepository {
             }
 
             stmt.close();
-            this.disconnect();
+           // this.disconnect();
 
         } catch (SQLException ex) {
             Logger.getLogger(ProductRepositoryImplMysql.class.getName()).log(Level.SEVERE, null, ex);
@@ -278,7 +278,7 @@ public class ProductRepositoryImplMysql implements IProductRepository {
             }
 
             categoryStmt.close();
-            this.disconnect();
+           // this.disconnect();
 
         } catch (SQLException ex) {
             Logger.getLogger(ProductRepositoryImplMysql.class.getName()).log(Level.SEVERE, null, ex);
@@ -303,7 +303,7 @@ public class ProductRepositoryImplMysql implements IProductRepository {
             pstmt.setLong(4, id);
             pstmt.executeUpdate();
             pstmt.close();
-            this.disconnect();
+            //this.disconnect();
         } catch (SQLException ex) {
             Logger.getLogger(ProductRepositoryImplMysql.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -9,7 +9,6 @@ import co.unicauca.openmarket.client.access.IBuyAccess;
 import co.unicauca.openmarket.client.access.ICategoryAccess;
 import co.unicauca.openmarket.client.access.IProductAccess;
 import co.unicauca.openmarket.client.access.IUserAccess;
-import co.unicauca.openmarket.client.domain.User;
 import co.unicauca.openmarket.client.domain.service.BuyService;
 import co.unicauca.openmarket.client.domain.service.CategoryService;
 import co.unicauca.openmarket.client.domain.service.ProductService;
@@ -18,6 +17,7 @@ import co.unicauca.openmarket.client.infra.Messages;
 import co.unicauca.openmarket.client.presentation.comprador.GUIComprador;
 import co.unicauca.openmarket.client.presentation.repartidor.GUIRepartidor;
 import co.unicauca.openmarket.client.presentation.vendedor.GUIVendedor;
+import co.unicauca.openmarket.commons.domain.User;
 import javax.swing.JOptionPane;
 
 /**
@@ -186,6 +186,9 @@ public class GUILogin extends javax.swing.JFrame {
 
     private User validarDatos(String login, String password) throws Exception {
         User user = userService.findUserByLogin(login);
+        if(user==null){
+            return null;
+        }
         if(user.getPassword().equals(password)){
             return user;
         }else{

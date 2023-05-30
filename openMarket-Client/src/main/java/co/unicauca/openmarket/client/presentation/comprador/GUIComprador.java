@@ -1,10 +1,11 @@
 
 package co.unicauca.openmarket.client.presentation.comprador;
 
-import co.unicauca.openmarket.client.domain.User;
+
 import co.unicauca.openmarket.client.domain.service.BuyService;
 import co.unicauca.openmarket.client.domain.service.CategoryService;
 import co.unicauca.openmarket.client.domain.service.ProductService;
+import co.unicauca.openmarket.commons.domain.User;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
 

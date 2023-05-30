@@ -2,7 +2,7 @@
 package co.unicauca.openmarket.client.domain.service;
 
 import co.unicauca.openmarket.client.access.IUserAccess;
-import co.unicauca.openmarket.client.domain.User;
+import co.unicauca.openmarket.commons.domain.User;
 import java.util.ArrayList;
 import java.util.List;
 

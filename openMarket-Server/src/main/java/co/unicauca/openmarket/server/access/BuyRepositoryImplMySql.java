@@ -44,6 +44,9 @@ public class BuyRepositoryImplMySql implements IBuyRepository {
     }
 
     public void connect() {
+        if (conn != null) {
+            return; // Ya hay una conexión establecida, no es necesario conectarse nuevamente
+        }
         // SQLite connection string
         //String url = "jdbc:sqlite:./myDatabase.db"; //Para Linux/Mac
         //String url = "jdbc:sqlite:C:/sqlite/db/myDatabase.db"; //Para Windows
@@ -53,7 +56,7 @@ public class BuyRepositoryImplMySql implements IBuyRepository {
             conn = DriverManager.getConnection(url);
 
         } catch (SQLException ex) {
-            Logger.getLogger(BuyRepositoryImplMySql.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger( BuyRepositoryImplMySql.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -61,11 +64,11 @@ public class BuyRepositoryImplMySql implements IBuyRepository {
         try {
             if (conn != null) {
                 conn.close();
+                conn = null; // Establecer a null después de cerrar la conexión
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-
     }
 
     @Override
@@ -82,7 +85,7 @@ public class BuyRepositoryImplMySql implements IBuyRepository {
             pstmt.setString(4, newBuy.getFechaCompra());
             pstmt.executeUpdate();
             pstmt.close();
-            this.disconnect();
+           // this.disconnect();
 
         } catch (SQLException ex) {
             Logger.getLogger(BuyRepositoryImplMySql.class.getName()).log(Level.SEVERE, null, ex);
@@ -102,7 +105,7 @@ public class BuyRepositoryImplMySql implements IBuyRepository {
             pstmt.setString(1, buy.getEstado());
             pstmt.setLong(2, id);
             pstmt.close();
-            this.disconnect();
+            //this.disconnect();
         } catch (SQLException ex) {
             Logger.getLogger(BuyRepositoryImplMySql.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -120,7 +123,7 @@ public class BuyRepositoryImplMySql implements IBuyRepository {
             pstmt.setLong(1, id);
             pstmt.executeUpdate();
             pstmt.close();
-            this.disconnect();
+            //this.disconnect();
         } catch (SQLException ex) {
             Logger.getLogger(BuyRepositoryImplMySql.class.getName()).log(Level.SEVERE, null, ex);
             return false;
@@ -153,7 +156,7 @@ public class BuyRepositoryImplMySql implements IBuyRepository {
                 return newBuy;
             }
             pstmt.close();
-            this.disconnect();
+            //this.disconnect();
 
         } catch (SQLException ex) {
             Logger.getLogger(BuyRepositoryImplMySql.class.getName()).log(Level.SEVERE, null, ex);
@@ -185,7 +188,7 @@ public class BuyRepositoryImplMySql implements IBuyRepository {
             }
               pstmt.executeUpdate();
             pstmt.close();
-            this.disconnect();
+            //this.disconnect();
 
         } catch (SQLException ex) {
             Logger.getLogger(BuyRepositoryImplMySql.class.getName()).log(Level.SEVERE, null, ex);
@@ -213,7 +216,7 @@ public class BuyRepositoryImplMySql implements IBuyRepository {
             }
               pstmt.executeUpdate();
             pstmt.close();
-            this.disconnect();
+            //this.disconnect();
 
         } catch (SQLException ex) {
             Logger.getLogger(UserRepositoryImplMySql.class.getName()).log(Level.SEVERE, null, ex);

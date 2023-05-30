@@ -12,6 +12,7 @@ import co.unicauca.openmarket.server.domain.services.CategoryService;
 import co.unicauca.openmarket.server.domain.services.ProductService;
 import co.unicauca.openmarket.commons.domain.Product;
 import co.unicauca.openmarket.commons.domain.User;
+import co.unicauca.openmarket.server.data.UserCreated;
 import co.unicauca.openmarket.server.domain.services.BuyService;
 import co.unicauca.openmarket.server.domain.services.UserService;
 import co.unicauca.openmarket.server.infra.Context;
@@ -425,11 +426,11 @@ public class OpenMarketHandler extends ServerHandler {
     }
 
     public void setBuyService(BuyService buyService) {
-        OpenMarketHandler.buyService = buyService;
+        this.buyService = buyService;
     }
 
     public  void setUserService(UserService userService) {
-        OpenMarketHandler.userService = userService;
+        this.userService = userService;
     }
     
     
@@ -500,8 +501,8 @@ public class OpenMarketHandler extends ServerHandler {
 
     private String processFindUserLogin(Protocol protocolRequest) throws Exception {
         String login = protocolRequest.getParameters().get(0).getValue();
-        List<User> users = getUserService().findAll();
-        return objectToJSON(users);
+        User user = getUserService().findByLogin(login);
+        return objectToJSON(user);
     }
 
     private String processFindUserType(Protocol protocolRequest) throws Exception {
@@ -514,4 +515,9 @@ public class OpenMarketHandler extends ServerHandler {
         List<User> users = getUserService().findAll();
         return objectToJSON(users);
     }
+    
+     public void cargarDatosUsuario(UserCreated user){
+        user.crearUsuarios();
+    }
+   
 }

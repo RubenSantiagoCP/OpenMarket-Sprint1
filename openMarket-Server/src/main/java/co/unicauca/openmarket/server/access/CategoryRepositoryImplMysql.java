@@ -48,7 +48,10 @@ public class CategoryRepositoryImplMysql implements ICategoryRepository{
         }
     }
      
-      public void connect() {
+       public void connect() {
+        if (conn != null) {
+            return; // Ya hay una conexión establecida, no es necesario conectarse nuevamente
+        }
         // SQLite connection string
         //String url = "jdbc:sqlite:./myDatabase.db"; //Para Linux/Mac
         //String url = "jdbc:sqlite:C:/sqlite/db/myDatabase.db"; //Para Windows
@@ -66,11 +69,11 @@ public class CategoryRepositoryImplMysql implements ICategoryRepository{
         try {
             if (conn != null) {
                 conn.close();
+                conn = null; // Establecer a null después de cerrar la conexión
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-
     }
 
     @Override
@@ -84,7 +87,7 @@ public class CategoryRepositoryImplMysql implements ICategoryRepository{
             pstmt.setString(1, newCategory.getName());
             pstmt.executeUpdate();
             pstmt.close();
-            this.disconnect();
+            //this.disconnect();
 
         } catch (SQLException ex) {
             Logger.getLogger(ProductRepositoryImplMysql.class.getName()).log(Level.SEVERE, null, ex);
@@ -105,7 +108,7 @@ public class CategoryRepositoryImplMysql implements ICategoryRepository{
             pstmt.setLong(2, id);
             pstmt.executeUpdate();
             pstmt.close();
-            this.disconnect();
+            //this.disconnect();
         } catch (SQLException ex) {
             Logger.getLogger(CategoryRepositoryImplMysql.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -123,7 +126,7 @@ public class CategoryRepositoryImplMysql implements ICategoryRepository{
             pstmt.setLong(1, id);
             pstmt.executeUpdate();
             pstmt.close();
-            this.disconnect();
+            //this.disconnect();
         } catch (SQLException ex) {
             Logger.getLogger(CategoryRepositoryImplMysql.class.getName()).log(Level.SEVERE, null, ex);
             return false;
@@ -154,7 +157,7 @@ public class CategoryRepositoryImplMysql implements ICategoryRepository{
                 return newCategory;
             }
             pstmt.close();
-            this.disconnect();
+            //this.disconnect();
 
         } catch (SQLException ex) {
             Logger.getLogger(CategoryRepositoryImplMysql.class.getName()).log(Level.SEVERE, null, ex);
@@ -179,7 +182,7 @@ public class CategoryRepositoryImplMysql implements ICategoryRepository{
             }
             pstmt.executeUpdate();
             pstmt.close();
-            this.disconnect();
+           // this.disconnect();
 
         } catch (SQLException ex) {
             Logger.getLogger(CategoryRepositoryImplMysql.class.getName()).log(Level.SEVERE, null, ex);
@@ -209,7 +212,7 @@ public class CategoryRepositoryImplMysql implements ICategoryRepository{
             }
 
             stmt.close();
-            this.disconnect();
+            //this.disconnect();
 
         } catch (SQLException ex) {
             Logger.getLogger(ProductRepositoryImplMysql.class.getName()).log(Level.SEVERE, null, ex);
