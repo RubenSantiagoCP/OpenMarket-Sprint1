@@ -18,7 +18,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author fre90
+ * @author juan
  */
 public class CategoryRepositoryImplMysql implements ICategoryRepository{
     /**
@@ -27,14 +27,15 @@ public class CategoryRepositoryImplMysql implements ICategoryRepository{
     private Connection conn;
 
     public CategoryRepositoryImplMysql() {
-
+        initDataBase();
+        crearCategorias();
     }
     
      private void initDataBase() {
          // SQL statement for creating a new table
-        String sql = "CREATE TABLE IF NOT EXISTS category (\n"
-                + "	cat_id integer PRIMARY KEY AUTOINCREMENT,\n"
-                + "	name text NOT NULL\n"
+        String sql = "CREATE TABLE category (\n"
+                + "	cat_id integer PRIMARY KEY,\n"
+                + "	cat_name text NOT NULL\n"
                 + ");";
 
         try {
@@ -49,42 +50,67 @@ public class CategoryRepositoryImplMysql implements ICategoryRepository{
     }
      
       public void connect() {
+        if (conn != null) {
+            return; // Ya hay una conexión establecida, no es necesario conectarse nuevamente
+        }
         // SQLite connection string
         //String url = "jdbc:sqlite:./myDatabase.db"; //Para Linux/Mac
         //String url = "jdbc:sqlite:C:/sqlite/db/myDatabase.db"; //Para Windows
         String url = "jdbc:sqlite::memory:";
 
         try {
-            conn = DriverManager.getConnection(url);
+        conn = DriverManager.getConnection(url);
 
         } catch (SQLException ex) {
             Logger.getLogger(CategoryRepositoryImplMysql.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
+    public void crearCategorias() {
+        String[] insertStatements = {
+            "INSERT INTO category (cat_id,cat_name) VALUES(1,'Bebidas')",
+            "INSERT INTO category (cat_id,cat_name) VALUES(2,'Paquetes')",
+            "INSERT INTO category (cat_id,cat_name) VALUES(3,'Enlatados')"
+        };
+
+        try {
+
+            for (String statement : insertStatements) {
+                PreparedStatement pstmt = conn.prepareStatement(statement);
+                pstmt.executeUpdate();
+                pstmt.close();
+            }
+
+        } catch (SQLException ex) {
+                Logger.getLogger(CategoryRepositoryImplMysql.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+      
+      
+      
     public void disconnect() {
         try {
             if (conn != null) {
                 conn.close();
+                conn = null; // Establecer a null después de cerrar la conexión
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-
     }
 
     @Override
     public boolean save(Category newCategory) {
           try {
             this.connect();
-            String sql = "INSERT INTO category ( name) "
+            String sql = "INSERT INTO category ( cat_name)"
                     + "VALUES (?)";
 
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, newCategory.getName());
             pstmt.executeUpdate();
             pstmt.close();
-            this.disconnect();
+            //this.disconnect();
 
         } catch (SQLException ex) {
             Logger.getLogger(ProductRepositoryImplMysql.class.getName()).log(Level.SEVERE, null, ex);
@@ -97,7 +123,7 @@ public class CategoryRepositoryImplMysql implements ICategoryRepository{
          try {
             this.connect();
             String sql = "UPDATE  category "
-                    + "SET name=?"
+                    + "SET cat_name = ?"
                     + "WHERE cat_id = ?";
 
             PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -105,7 +131,7 @@ public class CategoryRepositoryImplMysql implements ICategoryRepository{
             pstmt.setLong(2, id);
             pstmt.executeUpdate();
             pstmt.close();
-            this.disconnect();
+            //this.disconnect();
         } catch (SQLException ex) {
             Logger.getLogger(CategoryRepositoryImplMysql.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -123,7 +149,7 @@ public class CategoryRepositoryImplMysql implements ICategoryRepository{
             pstmt.setLong(1, id);
             pstmt.executeUpdate();
             pstmt.close();
-            this.disconnect();
+            //this.disconnect();
         } catch (SQLException ex) {
             Logger.getLogger(CategoryRepositoryImplMysql.class.getName()).log(Level.SEVERE, null, ex);
             return false;
@@ -149,12 +175,12 @@ public class CategoryRepositoryImplMysql implements ICategoryRepository{
             if (res.next()) {
                 Category newCategory = new Category();
                 newCategory.setCategoryId(res.getLong("cat_id"));
-                newCategory.setName(res.getString("name"));
+                newCategory.setName(res.getString("cat_name"));
    
                 return newCategory;
             }
             pstmt.close();
-            this.disconnect();
+            //this.disconnect();
 
         } catch (SQLException ex) {
             Logger.getLogger(CategoryRepositoryImplMysql.class.getName()).log(Level.SEVERE, null, ex);
@@ -174,12 +200,12 @@ public class CategoryRepositoryImplMysql implements ICategoryRepository{
             while (res.next()) {
                Category newCategory = new Category();
                 newCategory.setCategoryId(res.getLong("cat_id"));
-                newCategory.setName(res.getString("name"));
+                newCategory.setName(res.getString("cat_name"));
                 categories.add(newCategory);
             }
             pstmt.executeUpdate();
             pstmt.close();
-            this.disconnect();
+            //this.disconnect();
 
         } catch (SQLException ex) {
             Logger.getLogger(CategoryRepositoryImplMysql.class.getName()).log(Level.SEVERE, null, ex);
@@ -195,7 +221,7 @@ public class CategoryRepositoryImplMysql implements ICategoryRepository{
 
             this.connect();
             String sql = "SELECT * FROM category"
-                    + " WHERE name = ?";
+                    + " WHERE cat_name = ?";
 
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, name);
@@ -209,7 +235,7 @@ public class CategoryRepositoryImplMysql implements ICategoryRepository{
             }
 
             stmt.close();
-            this.disconnect();
+            //this.disconnect();
 
         } catch (SQLException ex) {
             Logger.getLogger(ProductRepositoryImplMysql.class.getName()).log(Level.SEVERE, null, ex);

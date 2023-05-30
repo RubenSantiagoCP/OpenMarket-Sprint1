@@ -1,5 +1,7 @@
+co\unicauca\openmarket\commons\domain\Buy.class
 co\unicauca\openmarket\commons\domain\Location.class
 co\unicauca\openmarket\commons\infra\Utilities.class
+co\unicauca\openmarket\commons\domain\User.class
 co\unicauca\openmarket\commons\infra\Parameter.class
 co\unicauca\openmarket\commons\domain\Product.class
 co\unicauca\openmarket\commons\infra\Protocol.class

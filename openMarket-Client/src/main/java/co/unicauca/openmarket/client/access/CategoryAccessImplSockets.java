@@ -207,7 +207,6 @@ public class CategoryAccessImplSockets implements ICategoryAccess {
                 Logger.getLogger(ProductAccessImplSockets.class.getName()).log(Level.INFO, jsonResponse);
                 throw new Exception(extractMessages(jsonResponse));
             } else {
-
                 List<Category> categories = jsonToCategoryList(jsonResponse);
                 Logger.getLogger(ProductAccessImplSockets.class.getName()).log(Level.INFO, "Lo que va en el JSon: (" + jsonResponse.toString() + ")");
                 return categories;
@@ -291,7 +290,7 @@ public class CategoryAccessImplSockets implements ICategoryAccess {
         protocol.setResource("category");
         protocol.setAction("post");
         protocol.addParameter("cat_id", String.valueOf(category.getCategoryId()));
-        protocol.addParameter("name", category.getName());
+        protocol.addParameter("cat_name", category.getName());
 
         Gson gson = new Gson();
         String requestJson = gson.toJson(protocol);
@@ -311,7 +310,7 @@ public class CategoryAccessImplSockets implements ICategoryAccess {
         protocol.setResource("category");
         protocol.setAction("edit");
         protocol.addParameter("cat_id", category.getCategoryId().toString());
-        protocol.addParameter("name", category.getName());
+        protocol.addParameter("cat_name", category.getName());
 
         Gson gson = new Gson();
         String requestJson = gson.toJson(protocol);

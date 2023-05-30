@@ -12,6 +12,7 @@ import co.unicauca.openmarket.client.domain.User;
 import co.unicauca.openmarket.client.domain.service.BuyService;
 import co.unicauca.openmarket.client.domain.service.CategoryService;
 import co.unicauca.openmarket.client.domain.service.ProductService;
+import co.unicauca.openmarket.client.presentation.vendedor.GUIVendedor;
 
 /**
  *
@@ -25,9 +26,9 @@ public class NewClass {
         ProductService ProductService = new ProductService(repositoryP);
         CategoryService categoryService = new CategoryService(repositoryC);
         BuyService buyService = new BuyService(repositoryB);
-        User user = new User("rscruz", "1234", "hola", 0, "comprador");
+        User user = new User("rscruz", "1234", "hola", 0, "vendedor");
         
-        GUIComprador jp = new GUIComprador(ProductService, categoryService, buyService, user);
-        jp.setVisible(true);
+        GUIVendedor jp = new GUIVendedor(ProductService, categoryService, user);
+        jp.setVisible(true);    
     }
 }
