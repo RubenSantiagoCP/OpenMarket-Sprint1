@@ -13,6 +13,7 @@ import co.unicauca.openmarket.server.access.IProductRepository;
 import co.unicauca.openmarket.server.access.IUserRepository;
 import co.unicauca.openmarket.server.access.ProductRepositoryImplMysql;
 import co.unicauca.openmarket.server.access.UserRepositoryImplMySql;
+import co.unicauca.openmarket.server.data.UserCreated;
 import co.unicauca.openmarket.server.domain.services.BuyService;
 import co.unicauca.openmarket.server.domain.services.CategoryService;
 import co.unicauca.openmarket.server.domain.services.ProductService;
@@ -36,15 +37,22 @@ public class OpenMarketServer {
         int port = teclado.nextInt();
         ServerSocketMultiThread myServer = new ServerSocketMultiThread(port);
         OpenMarketHandler myHandler = new OpenMarketHandler();
-        ICategoryRepository catRepo= new CategoryRepositoryImplMysql();
+        /*ICategoryRepository catRepo= new CategoryRepositoryImplMysql();
         IProductRepository prodRepo= new ProductRepositoryImplMysql();
         IUserRepository userRepo = new UserRepositoryImplMySql();
         IBuyRepository buyRepo = new BuyRepositoryImplMySql();
+        UserCreated users = new UserCreated();
 
         myHandler.setCategoryService(new CategoryService(catRepo));
         myHandler.setProductService(new ProductService(prodRepo));
         myHandler.setBuyService(new BuyService(buyRepo));
-        myHandler.setUserService(new UserService(userRepo));
+        myHandler.setUserService(new UserService(userRepo));*/
+       
+        myHandler.setCategoryService(new CategoryService(new CategoryRepositoryImplMysql() ));
+        myHandler.setProductService(new ProductService(new ProductRepositoryImplMysql()));
+        myHandler.setUserService(new UserService(new UserRepositoryImplMySql()));
+        myHandler.setBuyService(new BuyService(new BuyRepositoryImplMySql()));
+        myHandler.cargarDatosUsuario(new UserCreated());
         myServer.setServerHandler(myHandler);
         myServer.startServer();
     }

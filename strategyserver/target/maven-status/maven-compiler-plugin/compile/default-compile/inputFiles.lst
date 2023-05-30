@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 C:\Users\juank\OneDrive\Desktop\Sprint 1\OpenMarket-Sprint1\strategyserver\src\main\java\co\unicauca\strategyserver\infra\EchoServerExample.java
 C:\Users\juank\OneDrive\Desktop\Sprint 1\OpenMarket-Sprint1\strategyserver\src\main\java\co\unicauca\strategyserver\infra\ServerSocketMultiThread.java
 C:\Users\juank\OneDrive\Desktop\Sprint 1\OpenMarket-Sprint1\strategyserver\src\main\java\co\unicauca\strategyserver\helpers\Utilities.java
@@ -11,3 +12,10 @@ C:\Users\Hewlett Packard\Desktop\Naren Unicauca\SEXTO SEMESTRE\SOFTWARE II\SEGUN
 C:\Users\Hewlett Packard\Desktop\Naren Unicauca\SEXTO SEMESTRE\SOFTWARE II\SEGUNDO CORTE\OpenMarket-Sprint11\OpenMarket-Sprint1\strategyserver\src\main\java\co\unicauca\strategyserver\infra\ServerSocketMultiThread.java
 C:\Users\Hewlett Packard\Desktop\Naren Unicauca\SEXTO SEMESTRE\SOFTWARE II\SEGUNDO CORTE\OpenMarket-Sprint11\OpenMarket-Sprint1\strategyserver\src\main\java\co\unicauca\strategyserver\helpers\Utilities.java
 >>>>>>> feature/naren_imbachi/sprint1
+=======
+C:\Users\SANTIAGO\Desktop\ESCRITORIO\INGENIERIA DE SISTEMAS\SEXTO SEMESTRE\INGENIERIA DE SOFTWARE II\SEGUNDO CORTE\SPRINT\New CODIGO\OpenMarket-Sprint1\strategyserver\src\main\java\co\unicauca\strategyserver\infra\ServerHandler.java
+C:\Users\SANTIAGO\Desktop\ESCRITORIO\INGENIERIA DE SISTEMAS\SEXTO SEMESTRE\INGENIERIA DE SOFTWARE II\SEGUNDO CORTE\SPRINT\New CODIGO\OpenMarket-Sprint1\strategyserver\src\main\java\co\unicauca\strategyserver\infra\EchoServerExample.java
+C:\Users\SANTIAGO\Desktop\ESCRITORIO\INGENIERIA DE SISTEMAS\SEXTO SEMESTRE\INGENIERIA DE SOFTWARE II\SEGUNDO CORTE\SPRINT\New CODIGO\OpenMarket-Sprint1\strategyserver\src\main\java\co\unicauca\strategyserver\helpers\JsonError.java
+C:\Users\SANTIAGO\Desktop\ESCRITORIO\INGENIERIA DE SISTEMAS\SEXTO SEMESTRE\INGENIERIA DE SOFTWARE II\SEGUNDO CORTE\SPRINT\New CODIGO\OpenMarket-Sprint1\strategyserver\src\main\java\co\unicauca\strategyserver\infra\ServerSocketMultiThread.java
+C:\Users\SANTIAGO\Desktop\ESCRITORIO\INGENIERIA DE SISTEMAS\SEXTO SEMESTRE\INGENIERIA DE SOFTWARE II\SEGUNDO CORTE\SPRINT\New CODIGO\OpenMarket-Sprint1\strategyserver\src\main\java\co\unicauca\strategyserver\helpers\Utilities.java
+>>>>>>> feature/ruben_cruz/sprint1

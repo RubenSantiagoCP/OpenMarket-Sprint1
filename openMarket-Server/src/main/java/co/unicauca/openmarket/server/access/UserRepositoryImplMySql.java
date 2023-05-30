@@ -1,4 +1,3 @@
-
 package co.unicauca.openmarket.server.access;
 
 import co.unicauca.openmarket.commons.domain.User;
@@ -14,21 +13,43 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class UserRepositoryImplMySql implements IUserRepository{
-    
-      private Connection conn;
+public class UserRepositoryImplMySql implements IUserRepository {
+
+    private Connection conn;
 
     public UserRepositoryImplMySql() {
         initDatabase();
+        //crearUsuarios();
+    }
+
+    public void crearUsuarios() {
+        String[] insertStatements = {
+            "INSERT INTO users (user_id, user_password, user_username, user_login, user_tipo) VALUES(1, '12345', 'rscruz', 'ruben@unicauca.co', 'repartidor')",
+            "INSERT INTO users (user_id, user_password, user_username, user_login, user_tipo) VALUES(2, 'naren', 'naren', 'naren@unicauca.co', 'comprador')",
+            "INSERT INTO users (user_id, user_password, user_username, user_login, user_tipo) VALUES(3, 'juan', 'juan camilo', 'juan@unicauca.co', 'vendedor')",
+            "INSERT INTO users (user_id, user_password, user_username, user_login, user_tipo) VALUES(4, 'laura', 'laura i', 'laura@unicauca.co', 'comprador')",
+            "INSERT INTO users (user_id, user_password, user_username, user_login, user_tipo) VALUES(5, 'maria', 'ana maria', 'ana@unicauca.co', 'vendedor')"
+        };
+
+        try {
+
+            for (String statement : insertStatements) {
+                PreparedStatement pstmt = conn.prepareStatement(statement);
+                pstmt.executeUpdate();
+                pstmt.close();
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UserRepositoryImplMySql.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
     public User findByLogin(String login) throws Exception {
         User user = null;
-        
-     
+
         try {
-                this.connect();
+            this.connect();
 
             String sql = "SELECT * FROM users  "
                     + "WHERE user_login = ?";
@@ -48,15 +69,15 @@ public class UserRepositoryImplMySql implements IUserRepository{
                 return newUser;
             }
             pstmt.close();
-            this.disconnect();
+            //this.disconnect();
 
         } catch (SQLException ex) {
             Logger.getLogger(UserRepositoryImplMySql.class.getName()).log(Level.SEVERE, null, ex);
         }
         return user;
     }
-    
-      private void initDatabase() {
+
+    private void initDatabase() {
         // SQL statement for creating a new table
         String sql = "CREATE TABLE IF NOT EXISTS users (\n"
                 + " user_id integer PRIMARY KEY,\n"
@@ -77,14 +98,13 @@ public class UserRepositoryImplMySql implements IUserRepository{
         }
     }
 
-
     @Override
     public List<User> findAll() throws Exception {
-         List<User> users = new ArrayList<>();
+        List<User> users = new ArrayList<>();
         try {
             this.connect();
             String sql = "SELECT * FROM users";
-           
+
             PreparedStatement pstmt = conn.prepareStatement(sql);
             ResultSet res = pstmt.executeQuery();
             while (res.next()) {
@@ -97,9 +117,9 @@ public class UserRepositoryImplMySql implements IUserRepository{
 
                 users.add(newUser);
             }
-              pstmt.executeUpdate();
+            pstmt.executeUpdate();
             pstmt.close();
-            this.disconnect();
+            //this.disconnect();
 
         } catch (SQLException ex) {
             Logger.getLogger(UserRepositoryImplMySql.class.getName()).log(Level.SEVERE, null, ex);
@@ -113,8 +133,7 @@ public class UserRepositoryImplMySql implements IUserRepository{
         try {
             this.connect();
             String sql = "SELECT * FROM users where user_tipo = ?";
-           
-            
+
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, type);
             ResultSet res = pstmt.executeQuery();
@@ -128,16 +147,16 @@ public class UserRepositoryImplMySql implements IUserRepository{
 
                 users.add(newUser);
             }
-              pstmt.executeUpdate();
+            pstmt.executeUpdate();
             pstmt.close();
-            this.disconnect();
+            //this.disconnect();
 
         } catch (SQLException ex) {
             Logger.getLogger(UserRepositoryImplMySql.class.getName()).log(Level.SEVERE, null, ex);
         }
         return users;
     }
-    
+
     /*
      public int connect() {
         try {
@@ -158,7 +177,7 @@ public class UserRepositoryImplMySql implements IUserRepository{
      * Cierra la conexion con la base de datos
      *
      */
-    /*
+ /*
     public void disconnect() {
         try {
             conn.close();
@@ -166,8 +185,10 @@ public class UserRepositoryImplMySql implements IUserRepository{
             Logger.getLogger(UserRepositoryImplMySql.class.getName()).log(Level.FINER, "Error al cerrar Connection", ex);
         }
     }*/
-    
-     public void connect() {
+    public void connect() {
+        if (conn != null) {
+            return; // Ya hay una conexión establecida, no es necesario conectarse nuevamente
+        }
         // SQLite connection string
         //String url = "jdbc:sqlite:./myDatabase.db"; //Para Linux/Mac
         //String url = "jdbc:sqlite:C:/sqlite/db/myDatabase.db"; //Para Windows
@@ -185,11 +206,11 @@ public class UserRepositoryImplMySql implements IUserRepository{
         try {
             if (conn != null) {
                 conn.close();
+                conn = null; // Establecer a null después de cerrar la conexión
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-
     }
-    
+
 }

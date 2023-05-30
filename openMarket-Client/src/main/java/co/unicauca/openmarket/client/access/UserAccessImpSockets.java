@@ -1,8 +1,8 @@
 
 package co.unicauca.openmarket.client.access;
 
-import co.unicauca.openmarket.client.domain.User;
 import co.unicauca.openmarket.client.infra.OpenMarketSocket;
+import co.unicauca.openmarket.commons.domain.User;
 import co.unicauca.openmarket.commons.infra.JsonError;
 import co.unicauca.openmarket.commons.infra.Protocol;
 import com.google.gson.Gson;
@@ -20,6 +20,12 @@ import java.util.logging.Logger;
 public class UserAccessImpSockets implements IUserAccess{
 
     private OpenMarketSocket mySocket;
+
+    public UserAccessImpSockets() {
+        this.mySocket = new OpenMarketSocket();
+    }
+    
+    
     
     
     @Override

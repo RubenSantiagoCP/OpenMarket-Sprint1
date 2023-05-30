@@ -4,6 +4,14 @@
  */
 package co.unicauca.openmarket.client.presentation.repartidor;
 
+import co.unicauca.openmarket.client.domain.service.BuyService;
+import co.unicauca.openmarket.commons.domain.Buy;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
+
 /**
  *
  * @author SANTIAGO
@@ -13,8 +21,66 @@ public class jpRecogerProducto extends javax.swing.JPanel {
     /**
      * Creates new form jpRecogerProducto
      */
-    public jpRecogerProducto() {
+    private BuyService buyService;
+    public jpRecogerProducto(BuyService buyService) {
         initComponents();
+        initializeTableVentas();
+        this.buyService = buyService;
+        //cargarDatos();
+    }
+    
+    private void addCheckbox(int column, JTable table) {
+        TableColumn tb = table.getColumnModel().getColumn(column);
+        tb.setCellEditor(table.getDefaultEditor(Boolean.class));
+        tb.setCellRenderer(table.getDefaultRenderer(Boolean.class));
+    }
+
+    private boolean isSelected(int row, int column, JTable table) {
+        return table.getValueAt(row, column) != null;
+    }
+        
+   private void initializeTableVentas()  {
+
+        tblRecogerProducto.setModel(new javax.swing.table.DefaultTableModel(
+                new Object[][]{},
+                new String[]{
+                    "Id Producto", "Id Comprador", "Id Venta", "Estado", "fecha", "Seleccionar"
+                }
+        ));
+        
+        addCheckbox(5, tblRecogerProducto);
+    }
+   
+   private List<Buy> getLsyBuyEnviadas() throws Exception{
+       List<Buy> buys = buyService.findAllBuys();
+       List<Buy> buysEnviadas = new ArrayList<>();
+       
+       for(Buy buy: buys){
+           if(buy.getEstado().equalsIgnoreCase("enviado")){
+               buysEnviadas.add(buy);
+           }
+       }
+       
+       return buysEnviadas;
+   }
+   
+   public void cargarDatos() throws Exception{
+       fillTableVentas(getLsyBuyEnviadas());
+   }
+   
+   private void fillTableVentas(List<Buy> listVentas) {
+        initializeTableVentas();
+        DefaultTableModel model = (DefaultTableModel) tblRecogerProducto.getModel();
+
+        Object rowData[] = new Object[3];//No columnas
+        for (int i = 0; i < listVentas.size(); i++) {
+            rowData[0] = listVentas.get(i).getProductoId();
+            rowData[1] = listVentas.get(i).getCompradorId();
+            rowData[2] = listVentas.get(i).getId();
+            rowData[3] = listVentas.get(i).getEstado();
+            rowData[4] = listVentas.get(i).getFechaCompra();
+            model.addRow(rowData);
+        }
     }
 
     /**
@@ -31,6 +97,7 @@ public class jpRecogerProducto extends javax.swing.JPanel {
         lblMessage2 = new javax.swing.JLabel();
         lblMessage1 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        btnEntregar = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(61, 64, 91));
 
@@ -60,6 +127,16 @@ public class jpRecogerProducto extends javax.swing.JPanel {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Seleccione las compras que desea entregar:");
 
+        btnEntregar.setBackground(new java.awt.Color(224, 122, 95));
+        btnEntregar.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
+        btnEntregar.setForeground(new java.awt.Color(255, 255, 255));
+        btnEntregar.setText("Entregar");
+        btnEntregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEntregarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -77,13 +154,16 @@ public class jpRecogerProducto extends javax.swing.JPanel {
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(100, 100, 100)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 529, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 529, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(313, 313, 313)
+                        .addComponent(btnEntregar)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(78, Short.MAX_VALUE)
+                .addContainerGap(76, Short.MAX_VALUE)
                 .addComponent(lblMessage1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblMessage2)
@@ -91,12 +171,19 @@ public class jpRecogerProducto extends javax.swing.JPanel {
                 .addComponent(jLabel1)
                 .addGap(36, 36, 36)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(99, 99, 99))
+                .addGap(30, 30, 30)
+                .addComponent(btnEntregar)
+                .addGap(46, 46, 46))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnEntregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntregarActionPerformed
+        
+    }//GEN-LAST:event_btnEntregarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnEntregar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblMessage1;

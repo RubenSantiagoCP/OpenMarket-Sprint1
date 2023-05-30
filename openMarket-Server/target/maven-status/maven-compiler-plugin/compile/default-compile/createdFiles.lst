@@ -3,9 +3,13 @@ co\unicauca\openmarket\server\infra\tcpip\OpenMarketServer.class
 co\unicauca\openmarket\server\infra\Context.class
 co\unicauca\openmarket\server\access\ProductRepositoryImplMysql.class
 co\unicauca\openmarket\server\infra\tcpip\OpenMarketHandler$1.class
+<<<<<<< HEAD
 co\unicauca\openmarket\server\access\IBuyRepository.class
 co\unicauca\openmarket\server\infra\ErrorResponse.class
 co\unicauca\openmarket\server\access\BuyRepositoryImplMySql.class
+=======
+co\unicauca\openmarket\server\infra\ErrorResponse.class
+>>>>>>> feature/ruben_cruz/sprint1
 co\unicauca\openmarket\server\infra\tcpip\OpenMarketHandler.class
 co\unicauca\openmarket\server\domain\services\BuyService.class
 co\unicauca\openmarket\server\access\CategoryRepositoryImplMysql.class

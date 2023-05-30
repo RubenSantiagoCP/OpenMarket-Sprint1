@@ -1,9 +1,9 @@
 package co.unicauca.openmarket.client.presentation.vendedor;
 
 import co.unicauca.openmaket.client.command.Invoker;
-import co.unicauca.openmarket.client.domain.User;
 import co.unicauca.openmarket.client.domain.service.CategoryService;
 import co.unicauca.openmarket.client.domain.service.ProductService;
+import co.unicauca.openmarket.commons.domain.User;
 import co.unicauca.openmarket.commons.observer.Observer;
 
 /**
