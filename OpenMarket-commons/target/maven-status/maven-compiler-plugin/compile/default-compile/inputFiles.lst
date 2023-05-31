@@ -1,32 +1,3 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-C:\Users\juank\OneDrive\Desktop\Sprint 1\OpenMarket-Sprint1\OpenMarket-commons\src\main\java\co\unicauca\openmarket\commons\infra\Parameters.java
-C:\Users\juank\OneDrive\Desktop\Sprint 1\OpenMarket-Sprint1\OpenMarket-commons\src\main\java\co\unicauca\openmarket\commons\infra\Utilities.java
-C:\Users\juank\OneDrive\Desktop\Sprint 1\OpenMarket-Sprint1\OpenMarket-commons\src\main\java\co\unicauca\openmarket\commons\infra\Protocol.java
-C:\Users\juank\OneDrive\Desktop\Sprint 1\OpenMarket-Sprint1\OpenMarket-commons\src\main\java\co\unicauca\openmarket\commons\observer\Subject.java
-C:\Users\juank\OneDrive\Desktop\Sprint 1\OpenMarket-Sprint1\OpenMarket-commons\src\main\java\co\unicauca\openmarket\commons\domain\Category.java
-C:\Users\juank\OneDrive\Desktop\Sprint 1\OpenMarket-Sprint1\OpenMarket-commons\src\main\java\co\unicauca\openmarket\commons\domain\Product.java
-C:\Users\juank\OneDrive\Desktop\Sprint 1\OpenMarket-Sprint1\OpenMarket-commons\src\main\java\co\unicauca\openmarket\commons\observer\Observer.java
-C:\Users\juank\OneDrive\Desktop\Sprint 1\OpenMarket-Sprint1\OpenMarket-commons\src\main\java\co\unicauca\openmarket\commons\domain\Location.java
-C:\Users\juank\OneDrive\Desktop\Sprint 1\OpenMarket-Sprint1\OpenMarket-commons\src\main\java\co\unicauca\openmarket\commons\infra\JsonError.java
-C:\Users\juank\OneDrive\Desktop\Sprint 1\OpenMarket-Sprint1\OpenMarket-commons\src\main\java\co\unicauca\openmarket\commons\domain\Buy.java
-C:\Users\juank\OneDrive\Desktop\Sprint 1\OpenMarket-Sprint1\OpenMarket-commons\src\main\java\co\unicauca\openmarket\commons\infra\Parameter.java
-C:\Users\juank\OneDrive\Desktop\Sprint 1\OpenMarket-Sprint1\OpenMarket-commons\src\main\java\co\unicauca\openmarket\commons\domain\User.java
-=======
-C:\Users\Hewlett Packard\Desktop\Naren Unicauca\SEXTO SEMESTRE\SOFTWARE II\SEGUNDO CORTE\OpenMarket-Sprint11\OpenMarket-Sprint1\OpenMarket-commons\src\main\java\co\unicauca\openmarket\commons\domain\Buy.java
-C:\Users\Hewlett Packard\Desktop\Naren Unicauca\SEXTO SEMESTRE\SOFTWARE II\SEGUNDO CORTE\OpenMarket-Sprint11\OpenMarket-Sprint1\OpenMarket-commons\src\main\java\co\unicauca\openmarket\commons\infra\JsonError.java
-C:\Users\Hewlett Packard\Desktop\Naren Unicauca\SEXTO SEMESTRE\SOFTWARE II\SEGUNDO CORTE\OpenMarket-Sprint11\OpenMarket-Sprint1\OpenMarket-commons\src\main\java\co\unicauca\openmarket\commons\observer\Subject.java
-C:\Users\Hewlett Packard\Desktop\Naren Unicauca\SEXTO SEMESTRE\SOFTWARE II\SEGUNDO CORTE\OpenMarket-Sprint11\OpenMarket-Sprint1\OpenMarket-commons\src\main\java\co\unicauca\openmarket\commons\domain\Product.java
-C:\Users\Hewlett Packard\Desktop\Naren Unicauca\SEXTO SEMESTRE\SOFTWARE II\SEGUNDO CORTE\OpenMarket-Sprint11\OpenMarket-Sprint1\OpenMarket-commons\src\main\java\co\unicauca\openmarket\commons\domain\User.java
-C:\Users\Hewlett Packard\Desktop\Naren Unicauca\SEXTO SEMESTRE\SOFTWARE II\SEGUNDO CORTE\OpenMarket-Sprint11\OpenMarket-Sprint1\OpenMarket-commons\src\main\java\co\unicauca\openmarket\commons\infra\Parameter.java
-C:\Users\Hewlett Packard\Desktop\Naren Unicauca\SEXTO SEMESTRE\SOFTWARE II\SEGUNDO CORTE\OpenMarket-Sprint11\OpenMarket-Sprint1\OpenMarket-commons\src\main\java\co\unicauca\openmarket\commons\observer\Observer.java
-C:\Users\Hewlett Packard\Desktop\Naren Unicauca\SEXTO SEMESTRE\SOFTWARE II\SEGUNDO CORTE\OpenMarket-Sprint11\OpenMarket-Sprint1\OpenMarket-commons\src\main\java\co\unicauca\openmarket\commons\infra\Parameters.java
-C:\Users\Hewlett Packard\Desktop\Naren Unicauca\SEXTO SEMESTRE\SOFTWARE II\SEGUNDO CORTE\OpenMarket-Sprint11\OpenMarket-Sprint1\OpenMarket-commons\src\main\java\co\unicauca\openmarket\commons\infra\Utilities.java
-C:\Users\Hewlett Packard\Desktop\Naren Unicauca\SEXTO SEMESTRE\SOFTWARE II\SEGUNDO CORTE\OpenMarket-Sprint11\OpenMarket-Sprint1\OpenMarket-commons\src\main\java\co\unicauca\openmarket\commons\infra\Protocol.java
-C:\Users\Hewlett Packard\Desktop\Naren Unicauca\SEXTO SEMESTRE\SOFTWARE II\SEGUNDO CORTE\OpenMarket-Sprint11\OpenMarket-Sprint1\OpenMarket-commons\src\main\java\co\unicauca\openmarket\commons\domain\Category.java
-C:\Users\Hewlett Packard\Desktop\Naren Unicauca\SEXTO SEMESTRE\SOFTWARE II\SEGUNDO CORTE\OpenMarket-Sprint11\OpenMarket-Sprint1\OpenMarket-commons\src\main\java\co\unicauca\openmarket\commons\domain\Location.java
->>>>>>> feature/naren_imbachi/sprint1
-=======
 C:\Users\SANTIAGO\Desktop\ESCRITORIO\INGENIERIA DE SISTEMAS\SEXTO SEMESTRE\INGENIERIA DE SOFTWARE II\SEGUNDO CORTE\SPRINT\New CODIGO\OpenMarket-Sprint1\OpenMarket-commons\src\main\java\co\unicauca\openmarket\commons\domain\Product.java
 C:\Users\SANTIAGO\Desktop\ESCRITORIO\INGENIERIA DE SISTEMAS\SEXTO SEMESTRE\INGENIERIA DE SOFTWARE II\SEGUNDO CORTE\SPRINT\New CODIGO\OpenMarket-Sprint1\OpenMarket-commons\src\main\java\co\unicauca\openmarket\commons\infra\Parameter.java
 C:\Users\SANTIAGO\Desktop\ESCRITORIO\INGENIERIA DE SISTEMAS\SEXTO SEMESTRE\INGENIERIA DE SOFTWARE II\SEGUNDO CORTE\SPRINT\New CODIGO\OpenMarket-Sprint1\OpenMarket-commons\src\main\java\co\unicauca\openmarket\commons\infra\JsonError.java
@@ -39,4 +10,3 @@ C:\Users\SANTIAGO\Desktop\ESCRITORIO\INGENIERIA DE SISTEMAS\SEXTO SEMESTRE\INGEN
 C:\Users\SANTIAGO\Desktop\ESCRITORIO\INGENIERIA DE SISTEMAS\SEXTO SEMESTRE\INGENIERIA DE SOFTWARE II\SEGUNDO CORTE\SPRINT\New CODIGO\OpenMarket-Sprint1\OpenMarket-commons\src\main\java\co\unicauca\openmarket\commons\domain\User.java
 C:\Users\SANTIAGO\Desktop\ESCRITORIO\INGENIERIA DE SISTEMAS\SEXTO SEMESTRE\INGENIERIA DE SOFTWARE II\SEGUNDO CORTE\SPRINT\New CODIGO\OpenMarket-Sprint1\OpenMarket-commons\src\main\java\co\unicauca\openmarket\commons\domain\Location.java
 C:\Users\SANTIAGO\Desktop\ESCRITORIO\INGENIERIA DE SISTEMAS\SEXTO SEMESTRE\INGENIERIA DE SOFTWARE II\SEGUNDO CORTE\SPRINT\New CODIGO\OpenMarket-Sprint1\OpenMarket-commons\src\main\java\co\unicauca\openmarket\commons\observer\Observer.java
->>>>>>> feature/ruben_cruz/sprint1

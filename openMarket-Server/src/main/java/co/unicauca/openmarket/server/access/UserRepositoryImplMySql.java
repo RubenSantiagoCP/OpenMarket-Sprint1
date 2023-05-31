@@ -19,7 +19,7 @@ public class UserRepositoryImplMySql implements IUserRepository {
 
     public UserRepositoryImplMySql() {
         initDatabase();
-        //crearUsuarios();
+        crearUsuarios();
     }
 
     public void crearUsuarios() {

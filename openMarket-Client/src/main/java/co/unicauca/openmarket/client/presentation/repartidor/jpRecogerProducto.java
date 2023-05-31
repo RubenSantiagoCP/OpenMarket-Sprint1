@@ -8,6 +8,8 @@ import co.unicauca.openmarket.client.domain.service.BuyService;
 import co.unicauca.openmarket.commons.domain.Buy;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
@@ -22,13 +24,14 @@ public class jpRecogerProducto extends javax.swing.JPanel {
      * Creates new form jpRecogerProducto
      */
     private BuyService buyService;
+
     public jpRecogerProducto(BuyService buyService) {
         initComponents();
         initializeTableVentas();
         this.buyService = buyService;
         //cargarDatos();
     }
-    
+
     private void addCheckbox(int column, JTable table) {
         TableColumn tb = table.getColumnModel().getColumn(column);
         tb.setCellEditor(table.getDefaultEditor(Boolean.class));
@@ -38,8 +41,8 @@ public class jpRecogerProducto extends javax.swing.JPanel {
     private boolean isSelected(int row, int column, JTable table) {
         return table.getValueAt(row, column) != null;
     }
-        
-   private void initializeTableVentas()  {
+
+    private void initializeTableVentas() {
 
         tblRecogerProducto.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][]{},
@@ -47,28 +50,28 @@ public class jpRecogerProducto extends javax.swing.JPanel {
                     "Id Producto", "Id Comprador", "Id Venta", "Estado", "fecha", "Seleccionar"
                 }
         ));
-        
+
         addCheckbox(5, tblRecogerProducto);
     }
-   
-   private List<Buy> getLsyBuyEnviadas() throws Exception{
-       List<Buy> buys = buyService.findAllBuys();
-       List<Buy> buysEnviadas = new ArrayList<>();
-       
-       for(Buy buy: buys){
-           if(buy.getEstado().equalsIgnoreCase("enviado")){
-               buysEnviadas.add(buy);
-           }
-       }
-       
-       return buysEnviadas;
-   }
-   
-   public void cargarDatos() throws Exception{
-       fillTableVentas(getLsyBuyEnviadas());
-   }
-   
-   private void fillTableVentas(List<Buy> listVentas) {
+
+    private List<Buy> getLsyBuyEnviadas() throws Exception {
+        List<Buy> buys = buyService.findAllBuys();
+        List<Buy> buysEnviadas = new ArrayList<>();
+
+        for (Buy buy : buys) {
+            if (buy.getEstado().equalsIgnoreCase("enviado")) {
+                buysEnviadas.add(buy);
+            }
+        }
+
+        return buysEnviadas;
+    }
+
+    public void cargarDatos() throws Exception {
+        fillTableVentas(getLsyBuyEnviadas());
+    }
+
+    private void fillTableVentas(List<Buy> listVentas) {
         initializeTableVentas();
         DefaultTableModel model = (DefaultTableModel) tblRecogerProducto.getModel();
 
@@ -97,7 +100,9 @@ public class jpRecogerProducto extends javax.swing.JPanel {
         lblMessage2 = new javax.swing.JLabel();
         lblMessage1 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        btnEntregar = new javax.swing.JButton();
+        btnVerCompras = new javax.swing.JButton();
+        btnEntregar1 = new javax.swing.JButton();
+        lblTitulo = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(61, 64, 91));
 
@@ -127,67 +132,121 @@ public class jpRecogerProducto extends javax.swing.JPanel {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Seleccione las compras que desea entregar:");
 
-        btnEntregar.setBackground(new java.awt.Color(224, 122, 95));
-        btnEntregar.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
-        btnEntregar.setForeground(new java.awt.Color(255, 255, 255));
-        btnEntregar.setText("Entregar");
-        btnEntregar.addActionListener(new java.awt.event.ActionListener() {
+        btnVerCompras.setBackground(new java.awt.Color(224, 122, 95));
+        btnVerCompras.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
+        btnVerCompras.setForeground(new java.awt.Color(255, 255, 255));
+        btnVerCompras.setText("Ver Compras");
+        btnVerCompras.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEntregarActionPerformed(evt);
+                btnVerComprasActionPerformed(evt);
             }
         });
+
+        btnEntregar1.setBackground(new java.awt.Color(224, 122, 95));
+        btnEntregar1.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
+        btnEntregar1.setForeground(new java.awt.Color(255, 255, 255));
+        btnEntregar1.setText("Entregar");
+        btnEntregar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEntregar1ActionPerformed(evt);
+            }
+        });
+
+        lblTitulo.setFont(new java.awt.Font("Arial Black", 0, 24)); // NOI18N
+        lblTitulo.setForeground(new java.awt.Color(242, 204, 143));
+        lblTitulo.setText("ENTREGAR COMPRAS");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(50, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblMessage2, javax.swing.GroupLayout.PREFERRED_SIZE, 645, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblMessage1))
-                .addGap(38, 38, 38))
+                .addContainerGap(220, Short.MAX_VALUE)
+                .addComponent(btnEntregar1)
+                .addGap(38, 38, 38)
+                .addComponent(btnVerCompras)
+                .addGap(311, 311, 311))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(120, 120, 120)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(100, 100, 100)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 529, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 529, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(313, 313, 313)
-                        .addComponent(btnEntregar)))
+                        .addGap(44, 44, 44)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblMessage2, javax.swing.GroupLayout.PREFERRED_SIZE, 645, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblMessage1)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(193, 193, 193)
+                        .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(76, Short.MAX_VALUE)
+                .addContainerGap(82, Short.MAX_VALUE)
+                .addComponent(lblTitulo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblMessage1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblMessage2)
-                .addGap(53, 53, 53)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel1)
-                .addGap(36, 36, 36)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addComponent(btnEntregar)
-                .addGap(46, 46, 46))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnEntregar1)
+                    .addComponent(btnVerCompras))
+                .addGap(58, 58, 58))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnEntregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntregarActionPerformed
+    private void btnVerComprasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerComprasActionPerformed
+        try {
+            cargarDatos();
+        } catch (Exception ex) {
+            Logger.getLogger(jpRecogerProducto.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnVerComprasActionPerformed
+
+    private void btnEntregar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntregar1ActionPerformed
+        List<Buy> lstComprasSel = new ArrayList<>();
+        List<Buy> lstCompras = null;
+        try {
+            lstCompras = getLsyBuyEnviadas();
+        } catch (Exception ex) {
+            Logger.getLogger(jpRecogerProducto.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        for (int i = 0; i < tblRecogerProducto.getRowCount(); i++) {
+            if (isSelected(i, 5, tblRecogerProducto)) {
+                Buy buy = lstCompras.get(i);
+                buy.setEstado("entregado");
+                lstComprasSel.add(buy);
+            }
+        }
         
-    }//GEN-LAST:event_btnEntregarActionPerformed
+        for(int i = 0; i <lstComprasSel.size(); i++){
+            Buy buy = lstComprasSel.get(i);
+            try {
+                buyService.editBuy(buy.getId(), buy);
+            } catch (Exception ex) {
+                Logger.getLogger(jpRecogerProducto.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_btnEntregar1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnEntregar;
+    private javax.swing.JButton btnEntregar1;
+    private javax.swing.JButton btnVerCompras;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblMessage1;
     private javax.swing.JLabel lblMessage2;
+    private javax.swing.JLabel lblTitulo;
     private javax.swing.JTable tblRecogerProducto;
     // End of variables declaration//GEN-END:variables
 }

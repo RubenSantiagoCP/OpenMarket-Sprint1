@@ -230,7 +230,6 @@ public class JPBuscarProductos extends javax.swing.JPanel {
         lblBuscarPor.setText("Buscar por:");
         JPCentralBuscarP.add(lblBuscarPor, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 80, -1, -1));
 
-        cbxTipoBusqueda.setBackground(new java.awt.Color(255, 255, 255));
         cbxTipoBusqueda.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         cbxTipoBusqueda.setForeground(new java.awt.Color(224, 122, 95));
         cbxTipoBusqueda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "Nombre", "Identificador", "Categoria", "Precio" }));
@@ -241,7 +240,6 @@ public class JPBuscarProductos extends javax.swing.JPanel {
         });
         JPCentralBuscarP.add(cbxTipoBusqueda, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 100, 320, 30));
 
-        tblProductosO.setBackground(new java.awt.Color(255, 255, 255));
         tblProductosO.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"1", "Frijoles", "1000", "Granos"},
@@ -324,11 +322,9 @@ public class JPBuscarProductos extends javax.swing.JPanel {
         });
         JPCentralBuscarP.add(btnBuscarTodos, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 100, 110, 30));
 
-        txtValorIngresado1.setBackground(new java.awt.Color(255, 255, 255));
         txtValorIngresado1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         JPCentralBuscarP.add(txtValorIngresado1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 140, 160, 30));
 
-        txtValorIngresado2.setBackground(new java.awt.Color(255, 255, 255));
         txtValorIngresado2.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         JPCentralBuscarP.add(txtValorIngresado2, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 180, 160, 30));
 

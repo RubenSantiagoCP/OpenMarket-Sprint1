@@ -45,6 +45,7 @@ public class GUILogin extends javax.swing.JFrame {
         this.categoryService=new CategoryService(repository2);
         this.userService = new UserService(repository3);
         this.buyService = new BuyService(repository4);
+        
     }
 
     /**
@@ -59,11 +60,12 @@ public class GUILogin extends javax.swing.JFrame {
         pnlCentral = new javax.swing.JPanel();
         txtPassword = new javax.swing.JTextField();
         txtEmail = new javax.swing.JTextField();
-        cmbTipoUsuario = new javax.swing.JComboBox<>();
         btnIngresar = new javax.swing.JButton();
         lblEmail = new javax.swing.JLabel();
         lblPassword = new javax.swing.JLabel();
         lblImagen = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        lblIniciarSesion = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(61, 64, 91));
@@ -73,8 +75,8 @@ public class GUILogin extends javax.swing.JFrame {
 
         txtEmail.setToolTipText("");
 
-        cmbTipoUsuario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Vendedor", "Comprador", "Repartidor" }));
-
+        btnIngresar.setBackground(new java.awt.Color(224, 122, 95));
+        btnIngresar.setForeground(new java.awt.Color(255, 255, 255));
         btnIngresar.setText("Ingresar");
         btnIngresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -88,6 +90,15 @@ public class GUILogin extends javax.swing.JFrame {
         lblPassword.setForeground(new java.awt.Color(255, 255, 255));
         lblPassword.setText("Contraseña:");
 
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/unicauca/openmarket/client/presentation/inicioSesion/Imagen1.png"))); // NOI18N
+        jLabel1.setAlignmentY(0.1F);
+        jLabel1.setIconTextGap(2);
+        jLabel1.setPreferredSize(new java.awt.Dimension(200, 200));
+
+        lblIniciarSesion.setFont(new java.awt.Font("Arial Black", 0, 24)); // NOI18N
+        lblIniciarSesion.setForeground(new java.awt.Color(242, 204, 143));
+        lblIniciarSesion.setText("INICIAR SESIÓN");
+
         javax.swing.GroupLayout pnlCentralLayout = new javax.swing.GroupLayout(pnlCentral);
         pnlCentral.setLayout(pnlCentralLayout);
         pnlCentralLayout.setHorizontalGroup(
@@ -95,40 +106,48 @@ public class GUILogin extends javax.swing.JFrame {
             .addGroup(pnlCentralLayout.createSequentialGroup()
                 .addGroup(pnlCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlCentralLayout.createSequentialGroup()
-                        .addGap(374, 374, 374)
-                        .addGroup(pnlCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(cmbTipoUsuario, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnIngresar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(pnlCentralLayout.createSequentialGroup()
-                        .addGap(266, 266, 266)
+                        .addGap(60, 60, 60)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(68, 68, 68)
                         .addGroup(pnlCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblPassword)
-                            .addComponent(lblEmail)))
+                            .addComponent(lblEmail)
+                            .addGroup(pnlCentralLayout.createSequentialGroup()
+                                .addGap(91, 91, 91)
+                                .addComponent(btnIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(pnlCentralLayout.createSequentialGroup()
+                        .addGap(283, 283, 283)
+                        .addComponent(lblIniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlCentralLayout.createSequentialGroup()
                         .addGap(396, 396, 396)
                         .addComponent(lblImagen)))
-                .addContainerGap(330, Short.MAX_VALUE))
+                .addContainerGap(142, Short.MAX_VALUE))
         );
         pnlCentralLayout.setVerticalGroup(
             pnlCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlCentralLayout.createSequentialGroup()
                 .addGap(118, 118, 118)
                 .addComponent(lblImagen)
-                .addGap(83, 83, 83)
-                .addComponent(lblEmail)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(lblPassword)
-                .addGap(9, 9, 9)
-                .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(49, 49, 49)
-                .addComponent(cmbTipoUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(116, 116, 116)
+                .addComponent(lblIniciarSesion)
+                .addGroup(pnlCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlCentralLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(lblEmail)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblPassword)
+                        .addGap(9, 9, 9)
+                        .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlCentralLayout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(27, 27, 27)
                 .addComponent(btnIngresar)
-                .addContainerGap(154, Short.MAX_VALUE))
+                .addContainerGap(280, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -139,7 +158,10 @@ public class GUILogin extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlCentral, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(pnlCentral, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(26, 26, 26))
         );
 
         pack();
@@ -175,9 +197,10 @@ public class GUILogin extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnIngresar;
-    private javax.swing.JComboBox<String> cmbTipoUsuario;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lblEmail;
     private javax.swing.JLabel lblImagen;
+    private javax.swing.JLabel lblIniciarSesion;
     private javax.swing.JLabel lblPassword;
     private javax.swing.JPanel pnlCentral;
     private javax.swing.JTextField txtEmail;
