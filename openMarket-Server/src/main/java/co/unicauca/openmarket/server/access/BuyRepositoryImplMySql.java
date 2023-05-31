@@ -104,6 +104,7 @@ public class BuyRepositoryImplMySql implements IBuyRepository {
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, buy.getEstado());
             pstmt.setLong(2, id);
+            pstmt.executeUpdate();
             pstmt.close();
             //this.disconnect();
         } catch (SQLException ex) {

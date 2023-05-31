@@ -88,7 +88,6 @@ public class JPTusCompras extends javax.swing.JPanel {
         lblTitulo.setText("CONSULTAR TUS COMPRAS");
         JPCentralTusCompras.add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 30, -1, -1));
 
-        tblEntregas.setBackground(new java.awt.Color(255, 255, 255));
         tblEntregas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},

@@ -395,6 +395,7 @@ public class OpenMarketHandler extends ServerHandler {
             switch (context) {
             case PRODUCT -> message="Error, un producto con ese id no existe";
             case CATEGORY ->message= "Error, una categoria con ese id no existe";
+            case BANK ->message= "Error, una cuenta con ese id no existe";
             // Añade más casos aquí en el futuro
             default -> throw new IllegalArgumentException("Contexto desconocido: " + context);
         }
@@ -558,10 +559,10 @@ public class OpenMarketHandler extends ServerHandler {
     }
 
     private String processEditBankType(Protocol protocolRequest) throws Exception {
-        Long id = Long.valueOf(protocolRequest.getParameters().get(0).getValue());
+        Long id = Long.valueOf(protocolRequest.getParameters().get(1).getValue());
          BankAccount bank = getBankService().findByIdUser(id);
         if (bank== null) {
-            return generateNotFoundErrorJson(Context.BUY);
+            return generateNotFoundErrorJson(Context.BANK);
         }
 
         double saldo = Double.valueOf(protocolRequest.getParameters().get(0).getValue());

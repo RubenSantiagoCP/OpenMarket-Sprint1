@@ -6,10 +6,12 @@ package co.unicauca.openmarket.client.presentation.comprador;
 
 import co.unicauca.openmaket.client.command.AddBuyCommand;
 import co.unicauca.openmaket.client.command.Invoker;
+import co.unicauca.openmarket.client.domain.service.BankAccountService;
 import co.unicauca.openmarket.client.domain.service.BuyService;
 import co.unicauca.openmarket.client.domain.service.CategoryService;
 import co.unicauca.openmarket.client.domain.service.ProductService;
 import co.unicauca.openmarket.client.infra.Messages;
+import co.unicauca.openmarket.commons.domain.BankAccount;
 import co.unicauca.openmarket.commons.domain.Buy;
 import co.unicauca.openmarket.commons.domain.Product;
 import co.unicauca.openmarket.commons.domain.User;
@@ -29,18 +31,21 @@ public class JPBuscarProductos extends javax.swing.JPanel {
     private BuyService buyService;
     private ProductService productService;
     private CategoryService categoryService;
+    private BankAccountService bankService;
     private User user;
     private Invoker invoker;
 
     //Constructor
-    public JPBuscarProductos(ProductService productService, CategoryService categoryService, BuyService buyService, User user) {
+    public JPBuscarProductos(ProductService productService, CategoryService categoryService, BuyService buyService, User user, BankAccountService bankService) {
         initComponents();
         this.productService = productService;
         this.categoryService = categoryService;
         this.buyService = buyService;
+        this.bankService = bankService;
         this.user = user;
         this.invoker = new Invoker();
-        //this.deshabilitarFunciones();
+        this.deshabilitarFunciones();
+        actualizarSaldo();
 
         //<editor-fold defaultstate="collapsed" desc="Metodo auxiliar para seleccionar filas">
         /*tblProductosO.addMouseListener(new MouseAdapter(){
@@ -66,9 +71,21 @@ public class JPBuscarProductos extends javax.swing.JPanel {
         });*/
         //</editor-fold>
     }
+
+    private void deshabilitarFunciones() {
+        if (user == null) {
+            this.btnCrearCompra.setVisible(false);
+            this.lblSaldo.setVisible(false);
+        }
+    }
     
-    private void deshabilitarFunciones(){
-        this.btnCrearCompra.setVisible(false);
+    private void actualizarSaldo(){
+        if(user!=null){
+            BankAccount myBank = buscarCuenta();
+            if(myBank!=null){
+                 this.lblSaldo.setText("Saldo: $"+ myBank.getSaldo());
+            }
+        }
     }
 
     //<editor-fold defaultstate="collapsed" desc="Metodo auxiliar para seleccionar producto">
@@ -167,23 +184,53 @@ public class JPBuscarProductos extends javax.swing.JPanel {
 
     private Integer cantBuy() throws Exception {
         int tamCompras = buyService.findAllBuys().size();
-        
-        if(tamCompras >= 0){
+
+        if (tamCompras >= 0) {
             return tamCompras;
         }
         return 0;
     }
 
-    //<editor-fold defaultstate="collapsed" desc="Metodo para crear compra">
-    private void addBuy() {
-        try {
-            int selection = tblProductosO.getSelectedRow();
+    private void realizarCompra() {
+        int selection = tblProductosO.getSelectedRow();
+        double price = Double.parseDouble(tblProductosO.getValueAt(selection, 2).toString());
+        //Validar que tenga cuenta
+        BankAccount myBank = buscarCuenta();
+        if(myBank==null){
+             Messages.showMessageDialog("No tienes ninguna cuenta asociada", "Atencion");
+             return;
+        }
+        //Valida el saldo del comprador
+        if (validarSaldo(myBank, price)) {
+            //Si tiene saldo realiza la compra
+            //Si se realiza la compra con exito, se descuenta el saldo de la cuenta
+            if(addBuy()){
+                descontarSaldo(user.getId(), myBank.getSaldo()- price);
+                actualizarSaldo();
+            }
+        } else {
+            Messages.showMessageDialog("No tienes saldo disponible", "Atencion");
+        }
+    }
 
+    private void descontarSaldo(Long id, double price) {
+        try {
+            bankService.editBankAccount(id, price);
+        } catch (Exception ex) {
+            Logger.getLogger(JPBuscarProductos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    //<editor-fold defaultstate="collapsed" desc="Metodo para crear compra">
+    private boolean addBuy() {
+        try {
             //Creacion de la compra
+            int selection = tblProductosO.getSelectedRow();
             Buy newBuy = new Buy();
-            newBuy.setId(cantBuy()+1L);
+            newBuy.setId(cantBuy() + 1L);
             newBuy.setCompradorId(user.getId());
             String id = tblProductosO.getValueAt(selection, 0).toString();
+
             newBuy.setProductoId(Long.parseLong(id));
             newBuy.setEstado("Realizada");
             Date fechaActual = new Date();
@@ -193,15 +240,32 @@ public class JPBuscarProductos extends javax.swing.JPanel {
 
             if (invoker.executeCommand(comm)) {
                 Messages.showMessageDialog("La compra se grabo con exito", "Atencion");
+                return true;
             } else {
                 Messages.showMessageDialog("No fue posible realizar la compra", "Cuidado");
+                return false;
             }
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error al grabar la compra", JOptionPane.ERROR_MESSAGE);
         }
+        
+        return false;
     }
+
     //</editor-fold>
+    public BankAccount buscarCuenta() {
+        try {
+            return bankService.findByIdUser(user.getId());
+        } catch (Exception ex) {
+            Logger.getLogger(JPBuscarProductos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public boolean validarSaldo(BankAccount myBank, double precio) {
+        return myBank.getSaldo() >= precio;
+    }
 
     private void initializeTable() {
         tblProductosO.setModel(new javax.swing.table.DefaultTableModel(
@@ -235,6 +299,7 @@ public class JPBuscarProductos extends javax.swing.JPanel {
         txtValorIngresado1 = new javax.swing.JTextField();
         txtValorIngresado2 = new javax.swing.JTextField();
         btnBuscarP = new javax.swing.JButton();
+        lblSaldo = new javax.swing.JLabel();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -361,6 +426,11 @@ public class JPBuscarProductos extends javax.swing.JPanel {
         });
         JPCentralBuscarP.add(btnBuscarP, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 140, 110, 30));
 
+        lblSaldo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblSaldo.setForeground(new java.awt.Color(255, 255, 255));
+        lblSaldo.setText("Saldo: $0");
+        JPCentralBuscarP.add(lblSaldo, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 240, -1, -1));
+
         add(JPCentralBuscarP, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 700, 600));
     }// </editor-fold>//GEN-END:initComponents
 
@@ -394,7 +464,7 @@ public class JPBuscarProductos extends javax.swing.JPanel {
     private void btnCrearCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearCompraActionPerformed
         try {
             //Agregar o crear compra
-            addBuy();
+            realizarCompra();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -490,6 +560,7 @@ public class JPBuscarProductos extends javax.swing.JPanel {
     private javax.swing.JLabel lblInformacion;
     private javax.swing.JLabel lblMensajeVI1;
     private javax.swing.JLabel lblMensajeVI2;
+    private javax.swing.JLabel lblSaldo;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JTable tblProductosO;
     private javax.swing.JTextField txtValorIngresado1;

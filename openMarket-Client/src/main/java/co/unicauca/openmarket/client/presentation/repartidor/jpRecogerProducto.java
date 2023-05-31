@@ -29,6 +29,7 @@ public class jpRecogerProducto extends javax.swing.JPanel {
         initComponents();
         initializeTableVentas();
         this.buyService = buyService;
+        cargarDatos();
         //cargarDatos();
     }
 
@@ -59,7 +60,7 @@ public class jpRecogerProducto extends javax.swing.JPanel {
         List<Buy> buysEnviadas = new ArrayList<>();
 
         for (Buy buy : buys) {
-            if (buy.getEstado().equalsIgnoreCase("enviado")) {
+            if (buy.getEstado().equalsIgnoreCase("Realizada")) {
                 buysEnviadas.add(buy);
             }
         }
@@ -67,8 +68,12 @@ public class jpRecogerProducto extends javax.swing.JPanel {
         return buysEnviadas;
     }
 
-    public void cargarDatos() throws Exception {
-        fillTableVentas(getLsyBuyEnviadas());
+    public void cargarDatos() {
+        try {
+            fillTableVentas(getLsyBuyEnviadas());
+        } catch (Exception ex) {
+            Logger.getLogger(jpRecogerProducto.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private void fillTableVentas(List<Buy> listVentas) {

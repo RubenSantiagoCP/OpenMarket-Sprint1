@@ -19,6 +19,7 @@ public class BankAccountImplMySql implements IBankAccountRepository{
 
     public BankAccountImplMySql() {
         initDatabase();
+        createBankAccounts();
     }
 
     private void initDatabase() {
@@ -26,8 +27,7 @@ public class BankAccountImplMySql implements IBankAccountRepository{
         String sql = "CREATE TABLE IF NOT EXISTS bankAccount (\n"
                 + "  bank_id integer AUTO_INCREMENT PRIMARY KEY,\n"
                 + "  user_id integer NOT NULL,\n"
-                + "  bank_saldo integer NOT NULL,\n"
-                + "  CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users (user_id)\n"
+                + "  bank_saldo integer NOT NULL"
                 + ");";
 
         try {
@@ -43,19 +43,20 @@ public class BankAccountImplMySql implements IBankAccountRepository{
     
     public void createBankAccounts(){
          // SQL statement for creating a new table
-        String sql = "INSERT INTO BANKACCOUNT(bank_id, user_id, bank_saldo) "
-                + " values (1,2,1000000);"
-                + "INSERT INTO BANKACCOUNT(bank_id, user_id, bank_saldo) "
-                + " values (2,4,1000000);";
+         String[] insertStatements = {  
+               "INSERT INTO BANKACCOUNT(bank_id, user_id, bank_saldo)  values (1,2,10000)",
+               "INSERT INTO BANKACCOUNT(bank_id, user_id, bank_saldo) values (2,4,1000000)"};
 
-        try {
-            this.connect();
-            Statement stmt = conn.createStatement();
-            stmt.execute(sql);
-            //this.disconnect();
+          try {
+
+            for (String statement : insertStatements) {
+                PreparedStatement pstmt = conn.prepareStatement(statement);
+                pstmt.executeUpdate();
+                pstmt.close();
+            }
 
         } catch (SQLException ex) {
-            Logger.getLogger(BuyRepositoryImplMySql.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UserRepositoryImplMySql.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -95,9 +96,7 @@ public class BankAccountImplMySql implements IBankAccountRepository{
                 this.connect();
 
             String sql = "SELECT * FROM bankAccount "
-                    + " inner join users"
-                    + " on users.user_id = bankAccount.user_id  "
-                    + "WHERE user_id = ?";
+                    + " WHERE user_id = ?";
 
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setLong(1, id);
@@ -108,14 +107,7 @@ public class BankAccountImplMySql implements IBankAccountRepository{
                 BankAccount newBank = new BankAccount();
                 newBank.setBankId(res.getLong("bank_id"));
                 newBank.setSaldo(res.getLong("bank_saldo"));
-                
-                User newUser = new User();
-                newUser.setId(res.getLong("users.user_id"));
-                newUser.setLogin(res.getString("user_login"));
-                newUser.setPassword(res.getString("user_password"));
-                newUser.setTipo(res.getString("user_tipo"));
-                newUser.setUsername(res.getString("user_username"));
-                newBank.setUser(newUser);
+                newBank.setUserId(res.getLong("user_id"));
                 return newBank;
             }
             pstmt.close();
@@ -133,11 +125,12 @@ public class BankAccountImplMySql implements IBankAccountRepository{
             this.connect();
             String sql = "UPDATE  bankAccount "
                     + "SET bank_saldo = ? "
-                    + "WHERE bank_id = ?";
+                    + "WHERE user_id = ?";
 
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setDouble(1, balance);
             pstmt.setLong(2, id);
+            pstmt.executeUpdate();
             pstmt.close();
             //this.disconnect();
         } catch (SQLException ex) {
