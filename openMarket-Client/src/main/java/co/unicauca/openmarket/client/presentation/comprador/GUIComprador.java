@@ -29,6 +29,14 @@ public class GUIComprador extends javax.swing.JFrame {
         this.categoryService = categoryService;
         this.buyService = buyService;
         this.user = user;
+        this.deshabilitarFunciones();
+    }
+    
+    private void deshabilitarFunciones(){
+        if(user==null){
+            this.btnConfirmarE.setVisible(false);
+            this.btnTusEntregas.setVisible(false);
+        }
     }
 
     /**

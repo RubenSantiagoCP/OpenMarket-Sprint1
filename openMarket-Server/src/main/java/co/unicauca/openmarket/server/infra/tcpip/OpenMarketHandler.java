@@ -5,6 +5,7 @@
  */
 package co.unicauca.openmarket.server.infra.tcpip;
 
+import co.unicauca.openmarket.commons.domain.BankAccount;
 import co.unicauca.openmarket.commons.domain.Buy;
 import co.unicauca.openmarket.commons.domain.Category;
 import co.unicauca.openmarket.commons.infra.*;
@@ -12,7 +13,7 @@ import co.unicauca.openmarket.server.domain.services.CategoryService;
 import co.unicauca.openmarket.server.domain.services.ProductService;
 import co.unicauca.openmarket.commons.domain.Product;
 import co.unicauca.openmarket.commons.domain.User;
-import co.unicauca.openmarket.server.data.UserCreated;
+import co.unicauca.openmarket.server.domain.services.BankAccountService;
 import co.unicauca.openmarket.server.domain.services.BuyService;
 import co.unicauca.openmarket.server.domain.services.UserService;
 import co.unicauca.openmarket.server.infra.Context;
@@ -34,6 +35,7 @@ public class OpenMarketHandler extends ServerHandler {
     private static CategoryService categoryService;
     private static BuyService buyService;
     private static UserService userService;
+    private static BankAccountService bankService;
 
 
     public OpenMarketHandler() {
@@ -172,6 +174,24 @@ public class OpenMarketHandler extends ServerHandler {
                  if (protocolRequest.getAction().equals("getListUsers")) {
                      try {
                          response = processFindAllUsers();
+                     } catch (Exception ex) {
+                         Logger.getLogger(OpenMarketHandler.class.getName()).log(Level.SEVERE, null, ex);
+                     }
+                 }
+             }
+             
+             case "bankAccount" ->{
+                 if (protocolRequest.getAction().equals("get")) {
+                     try {
+                         response = processFindBankAccount(protocolRequest);
+                     } catch (Exception ex) {
+                         Logger.getLogger(OpenMarketHandler.class.getName()).log(Level.SEVERE, null, ex);
+                     }
+                 }
+                 
+                 if (protocolRequest.getAction().equals("edit")) {
+                     try {
+                         response = processEditBankType(protocolRequest);
                      } catch (Exception ex) {
                          Logger.getLogger(OpenMarketHandler.class.getName()).log(Level.SEVERE, null, ex);
                      }
@@ -425,6 +445,15 @@ public class OpenMarketHandler extends ServerHandler {
        return userService;
     }
 
+    public  BankAccountService getBankService() {
+        return bankService;
+    }
+
+    public  void setBankService(BankAccountService bankService) {
+        OpenMarketHandler.bankService = bankService;
+    }
+    
+
     public void setBuyService(BuyService buyService) {
         this.buyService = buyService;
     }
@@ -521,8 +550,24 @@ public class OpenMarketHandler extends ServerHandler {
         return objectToJSON(users);
     }
     
-     public void cargarDatosUsuario(UserCreated user){
-        user.crearUsuarios();
+
+    private String processFindBankAccount(Protocol protocolRequest) throws Exception {
+        Long id = Long.valueOf(protocolRequest.getParameters().get(0).getValue());
+        BankAccount bank = getBankService().findByIdUser(id);
+        return objectToJSON(bank);
+    }
+
+    private String processEditBankType(Protocol protocolRequest) throws Exception {
+        Long id = Long.valueOf(protocolRequest.getParameters().get(0).getValue());
+         BankAccount bank = getBankService().findByIdUser(id);
+        if (bank== null) {
+            return generateNotFoundErrorJson(Context.BUY);
+        }
+
+        double saldo = Double.valueOf(protocolRequest.getParameters().get(0).getValue());
+
+        boolean response = getBankService().editBalanc(id,saldo);
+        return String.valueOf(response);
     }
    
 }

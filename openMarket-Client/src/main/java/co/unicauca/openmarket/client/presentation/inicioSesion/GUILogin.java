@@ -66,6 +66,7 @@ public class GUILogin extends javax.swing.JFrame {
         lblImagen = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         lblIniciarSesion = new javax.swing.JLabel();
+        btnIngresarSinCuenta = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(61, 64, 91));
@@ -99,6 +100,15 @@ public class GUILogin extends javax.swing.JFrame {
         lblIniciarSesion.setForeground(new java.awt.Color(242, 204, 143));
         lblIniciarSesion.setText("INICIAR SESIÓN");
 
+        btnIngresarSinCuenta.setBackground(new java.awt.Color(224, 122, 95));
+        btnIngresarSinCuenta.setForeground(new java.awt.Color(255, 255, 255));
+        btnIngresarSinCuenta.setText("Ingresar sin cuenta");
+        btnIngresarSinCuenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIngresarSinCuentaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlCentralLayout = new javax.swing.GroupLayout(pnlCentral);
         pnlCentral.setLayout(pnlCentralLayout);
         pnlCentralLayout.setHorizontalGroup(
@@ -115,8 +125,10 @@ public class GUILogin extends javax.swing.JFrame {
                             .addComponent(lblPassword)
                             .addComponent(lblEmail)
                             .addGroup(pnlCentralLayout.createSequentialGroup()
-                                .addGap(91, 91, 91)
-                                .addComponent(btnIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(12, 12, 12)
+                                .addComponent(btnIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(27, 27, 27)
+                                .addComponent(btnIngresarSinCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(pnlCentralLayout.createSequentialGroup()
                         .addGap(283, 283, 283)
                         .addComponent(lblIniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -145,9 +157,11 @@ public class GUILogin extends javax.swing.JFrame {
                     .addGroup(pnlCentralLayout.createSequentialGroup()
                         .addGap(28, 28, 28)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(27, 27, 27)
-                .addComponent(btnIngresar)
-                .addContainerGap(280, Short.MAX_VALUE))
+                .addGap(30, 30, 30)
+                .addGroup(pnlCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnIngresar)
+                    .addComponent(btnIngresarSinCuenta))
+                .addContainerGap(277, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -194,9 +208,15 @@ public class GUILogin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnIngresarActionPerformed
 
+    private void btnIngresarSinCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarSinCuentaActionPerformed
+          GUIComprador vtnComprador = new GUIComprador(productService, categoryService,buyService, null);
+           vtnComprador.setVisible(true);
+    }//GEN-LAST:event_btnIngresarSinCuentaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnIngresar;
+    private javax.swing.JButton btnIngresarSinCuenta;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lblEmail;
     private javax.swing.JLabel lblImagen;

@@ -88,5 +88,18 @@ public class Factory {
         }
         return result;
     }
+      
+     public IBankAccountAccess getBankAccountAccess() {
+
+        IBankAccountAccess result = null;
+        String type = Utilities.loadProperty("bank.service");
+
+        switch (type) {
+            case "default":
+                result = new BankAccountImplSockets();
+                break;
+        }
+        return result;
+    }
 
 }
