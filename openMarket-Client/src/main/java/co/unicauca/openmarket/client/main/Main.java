@@ -7,6 +7,7 @@ import co.unicauca.openmarket.client.domain.service.CategoryService;
 import co.unicauca.openmarket.client.domain.service.ProductService;
 import co.unicauca.openmarket.client.access.IProductAccess;
 import co.unicauca.openmarket.client.presentation.inicioSesion.GUILogin;
+import co.unicauca.openmarket.client.presentation.inicioSesion.GUILogin;
 import co.unicauca.openmarket.commons.observer.Observer;
 
 /**

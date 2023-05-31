@@ -23,7 +23,7 @@ public class BuyRepositoryImplMySql implements IBuyRepository {
     private void initDatabase() {
         // SQL statement for creating a new table
         String sql = "CREATE TABLE IF NOT EXISTS buys (\n"
-                + "  buy_id integer AUTO_INCREMENT PRIMARY KEY,\n"
+                + "  buy_id integer PRIMARY KEY AUTOINCREMENT,\n"
                 + "  user_id integer NOT NULL,\n"
                 + "  productId integer NOT NULL,\n"
                 + "  buy_estado text NOT NULL,\n"
@@ -99,7 +99,7 @@ public class BuyRepositoryImplMySql implements IBuyRepository {
             this.connect();
             String sql = "UPDATE  buys "
                     + "SET buy_estado = ? "
-                    + "WHERE productId = ?";
+                    + "WHERE buy_id = ?";
 
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, buy.getEstado());

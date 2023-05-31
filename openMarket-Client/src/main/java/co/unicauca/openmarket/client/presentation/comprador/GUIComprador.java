@@ -29,7 +29,7 @@ public class GUIComprador extends javax.swing.JFrame {
         this.categoryService = categoryService;
         this.buyService = buyService;
         this.user = user;
-        this.deshabilitarFunciones();
+        //this.deshabilitarFunciones();
     }
     
     private void deshabilitarFunciones(){
@@ -139,8 +139,9 @@ public class GUIComprador extends javax.swing.JFrame {
     }//GEN-LAST:event_btnConfirmarEActionPerformed
 
     private void btnTusEntregasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTusEntregasActionPerformed
+        JPanel jpTusCompras;
         try {
-            JPanel jpTusCompras = new JPTusCompras(buyService, productService);
+            jpTusCompras = new JPTusCompras(buyService, productService, user);
             jpTusCompras.setSize(700, 600);
             jpTusCompras.setLocation(0, 0);
 
@@ -148,7 +149,8 @@ public class GUIComprador extends javax.swing.JFrame {
             jpCentralC.add(jpTusCompras, BorderLayout.CENTER);
             jpCentralC.revalidate();
             jpCentralC.repaint();
-        } catch (Exception e) {
+        } catch (Exception ex) {
+            Logger.getLogger(GUIComprador.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnTusEntregasActionPerformed
 

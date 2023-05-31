@@ -38,7 +38,7 @@ public class JPConfirmarE extends javax.swing.JPanel {
         this.buyService = buyService;
         this.user = user; 
         
-        //fillTableConfirm(buyService.findBuyByCom(user.getId()));
+        fillTableConfirm(buyService.findBuyByCom(user.getId()));
     }
 
     //<editor-fold defaultstate="collapsed" desc="Metodo auxiliar para seleccionar producto">
@@ -69,11 +69,12 @@ public class JPConfirmarE extends javax.swing.JPanel {
         int selection = tblConfirmarE.getSelectedRow();
         String id = tblConfirmarE.getValueAt(selection, 0).toString();
         
-        Buy buy = buyService.findBuyById(Long.parseLong(id));
+        Buy buy = buyService.findBuyById(Long.valueOf(id));
         //Se cambia el estado de compra a entregada para finalizar todo el proceso
         buy.setEstado("Entregada");
         
-        if(buyService.editBuy(Long.parseLong(id), buy)){
+        //Aqui se envia el id de la compra y en el BuyRepositoryMySql lo compara con el idProduct
+        if(buyService.editBuy(Long.valueOf(id), buy)){
             Messages.showMessageDialog("El proceso de compra finalizo con exito", "Gracias por su compra");
         }else{
             Messages.showMessageDialog("Hubo un problema al confirmar la compra", "Atencion");
@@ -98,7 +99,7 @@ public class JPConfirmarE extends javax.swing.JPanel {
                 rowData[2] = lstBuys.get(i).getEstado();
                 rowData[3] = product.getPrice();
                 
-                model.addColumn(rowData);
+                model.addRow(rowData);
             }
         }
     }
@@ -108,7 +109,7 @@ public class JPConfirmarE extends javax.swing.JPanel {
         tblConfirmarE.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][]{},
                 new String[]{
-                    "Id", "Nombre Producto", "Estado Compra", "Precio"
+                    "Id Producto", "Nombre Producto", "Estado Compra", "Precio"
                 }
         ));
     }
@@ -128,7 +129,6 @@ public class JPConfirmarE extends javax.swing.JPanel {
         lblInformacion = new javax.swing.JLabel();
         btnConfirmarE = new javax.swing.JButton();
         lblTabla1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -183,7 +183,7 @@ public class JPConfirmarE extends javax.swing.JPanel {
         lblInformacion.setForeground(new java.awt.Color(255, 255, 255));
         lblInformacion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblInformacion.setText("Seleccione la compra que desea confirmar");
-        JPCentralConfirmarE.add(lblInformacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 410, 330, -1));
+        JPCentralConfirmarE.add(lblInformacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 360, 540, -1));
 
         btnConfirmarE.setBackground(new java.awt.Color(242, 204, 143));
         btnConfirmarE.setFont(new java.awt.Font("Arial Black", 0, 11)); // NOI18N
@@ -195,20 +195,12 @@ public class JPConfirmarE extends javax.swing.JPanel {
                 btnConfirmarEActionPerformed(evt);
             }
         });
-        JPCentralConfirmarE.add(btnConfirmarE, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 360, 140, 30));
+        JPCentralConfirmarE.add(btnConfirmarE, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 390, 140, 30));
 
         lblTabla1.setFont(new java.awt.Font("Arial Black", 0, 11)); // NOI18N
         lblTabla1.setForeground(new java.awt.Color(255, 255, 255));
         lblTabla1.setText("Seleccione los productos que ya le han sido entregados");
         JPCentralConfirmarE.add(lblTabla1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, -1, -1));
-
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        JPCentralConfirmarE.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 360, -1, -1));
 
         add(JPCentralConfirmarE, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 700, 600));
     }// </editor-fold>//GEN-END:initComponents
@@ -227,19 +219,10 @@ public class JPConfirmarE extends javax.swing.JPanel {
         rowSelection();
     }//GEN-LAST:event_tblConfirmarEMouseClicked
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try {
-            fillTableConfirm(buyService.findBuyByCom(user.getId()));
-        } catch (Exception ex) {
-            Logger.getLogger(JPConfirmarE.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel JPCentralConfirmarE;
     private javax.swing.JButton btnConfirmarE;
-    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblInformacion;
     private javax.swing.JLabel lblTabla1;

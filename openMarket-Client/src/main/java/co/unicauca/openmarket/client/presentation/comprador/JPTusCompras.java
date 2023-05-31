@@ -11,6 +11,8 @@ import co.unicauca.openmarket.commons.domain.Buy;
 import co.unicauca.openmarket.commons.domain.Product;
 import co.unicauca.openmarket.commons.domain.User;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -22,15 +24,25 @@ public class JPTusCompras extends javax.swing.JPanel {
     private ProductService productService;
     private User user;
     
-    public JPTusCompras(BuyService buyService, ProductService productService) throws Exception {
+    public JPTusCompras(BuyService buyService, ProductService productService, User user) throws Exception {
         initComponents();
         this.buyService = buyService;
         this.productService = productService;
         llenarTablaEntregas(buyService.findBuyByCom(user.getId()));
     }
 
+    private void initializeTable() {
+        tblEntregas.setModel(new javax.swing.table.DefaultTableModel(
+                new Object[][]{},
+                new String[]{
+                    "Id", "Nombre Producto", "Precio", "Fecha entrega"
+                }
+        ));
+    }
+    
     // <editor-fold defaultstate="collapsed" desc="Metodo para llenar la tabla de confirmacion">
     public void llenarTablaEntregas(List<Buy> lstBuys)throws Exception{
+        initializeTable();
         DefaultTableModel model = (DefaultTableModel) tblEntregas.getModel();
         
         Object rowData[] = new Object[4];
@@ -45,7 +57,7 @@ public class JPTusCompras extends javax.swing.JPanel {
                 rowData[2] = product.getPrice();
                 rowData[3] = lstBuys.get(i).getFechaCompra();
                 
-                model.addColumn(rowData);
+                model.addRow(rowData);
             }
         }
     }

@@ -250,7 +250,7 @@ public class BuyAccessImplSocket implements IBuyAccess{
         protocol.addParameter("compId", buy.getCompradorId().toString());
         protocol.addParameter("prodId", buy.getProductoId().toString());
         protocol.addParameter("comprEstado", buy.getEstado());
-        protocol.addParameter("compFecha", buy.getFechaCompra().toString());
+        protocol.addParameter("compFecha", buy.getFechaCompra());
         
         Gson gson = new Gson();
         String requestJson = gson.toJson(protocol);
@@ -262,11 +262,12 @@ public class BuyAccessImplSocket implements IBuyAccess{
         protocol.setResource("buy");
         protocol.setAction("edit");
         
+        protocol.addParameter("compId", buyId.toString());
         protocol.addParameter("comprId", buy.getId().toString());
         protocol.addParameter("compId", buy.getCompradorId().toString());
         protocol.addParameter("prodId", buy.getProductoId().toString());
         protocol.addParameter("comprEstado", buy.getEstado());
-        protocol.addParameter("compFecha", buy.getFechaCompra().toString());
+        protocol.addParameter("compFecha", buy.getFechaCompra());
         
         Gson gson = new Gson();
         String requestJson = gson.toJson(protocol);

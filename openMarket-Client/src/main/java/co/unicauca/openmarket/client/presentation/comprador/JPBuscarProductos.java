@@ -40,7 +40,7 @@ public class JPBuscarProductos extends javax.swing.JPanel {
         this.buyService = buyService;
         this.user = user;
         this.invoker = new Invoker();
-        this.deshabilitarFunciones();
+        //this.deshabilitarFunciones();
 
         //<editor-fold defaultstate="collapsed" desc="Metodo auxiliar para seleccionar filas">
         /*tblProductosO.addMouseListener(new MouseAdapter(){
@@ -78,14 +78,6 @@ public class JPBuscarProductos extends javax.swing.JPanel {
             String id = tblProductosO.getValueAt(selection, 0).toString();
             String name = tblProductosO.getValueAt(selection, 1).toString();
             lblInformacion.setText("¿Desea comprar el producto " + name + " con id " + id + "?");
-
-            //Creacion de la compra
-            Buy newBuy = new Buy();
-            newBuy.setCompradorId(Long.MIN_VALUE);
-            newBuy.setProductoId(Long.parseLong(id));
-            newBuy.setEstado("Realizada");
-            Date fechaActual = new Date();
-            newBuy.setFechaCompra(fechaActual.toString());
         } catch (Exception e) {
             lblInformacion.setText("Seleccione un producto a comprar");
         }
@@ -173,15 +165,13 @@ public class JPBuscarProductos extends javax.swing.JPanel {
     }
     //</editor-fold>
 
-    private Long cantBuy() throws Exception {
-        try {
-            List<Buy> lstBuys = buyService.findAllBuys();
-            
-            return Long.valueOf(lstBuys.size());
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Esta sera la primera compra que se realiza", JOptionPane.ERROR_MESSAGE);
+    private Integer cantBuy() throws Exception {
+        int tamCompras = buyService.findAllBuys().size();
+        
+        if(tamCompras >= 0){
+            return tamCompras;
         }
-        return 0L;
+        return 0;
     }
 
     //<editor-fold defaultstate="collapsed" desc="Metodo para crear compra">
@@ -191,7 +181,7 @@ public class JPBuscarProductos extends javax.swing.JPanel {
 
             //Creacion de la compra
             Buy newBuy = new Buy();
-            newBuy.setId(cantBuy() + 1L);
+            newBuy.setId(cantBuy()+1L);
             newBuy.setCompradorId(user.getId());
             String id = tblProductosO.getValueAt(selection, 0).toString();
             newBuy.setProductoId(Long.parseLong(id));
