@@ -14,6 +14,8 @@ import co.unicauca.openmarket.commons.domain.Product;
 import co.unicauca.openmarket.commons.domain.User;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -36,7 +38,7 @@ public class JPConfirmarE extends javax.swing.JPanel {
         this.buyService = buyService;
         this.user = user; 
         
-        fillTableConfirm(buyService.findBuyByCom(user.getUsername()));
+        //fillTableConfirm(buyService.findBuyByCom(user.getId()));
     }
 
     //<editor-fold defaultstate="collapsed" desc="Metodo auxiliar para seleccionar producto">
@@ -81,12 +83,13 @@ public class JPConfirmarE extends javax.swing.JPanel {
     
     // <editor-fold defaultstate="collapsed" desc="Metodo para llenar la tabla de confirmacion">
     private void fillTableConfirm(List<Buy> lstBuys)throws Exception{
+        initializeTable();
         DefaultTableModel model = (DefaultTableModel) tblConfirmarE.getModel();
         
         Object rowData[] = new Object[4];
         for(int i = 0; i < lstBuys.size(); i++){
             String estado = lstBuys.get(i).getEstado();
-            if(estado.equals("En camino")){
+            if(estado.equals("Realizada")){
                 //Se obtiene el producto de la venta
                 Product product = productService.findProductById(lstBuys.get(i).getProductoId());
                 
@@ -101,6 +104,14 @@ public class JPConfirmarE extends javax.swing.JPanel {
     }
     //</editor-fold>
     
+    private void initializeTable() {
+        tblConfirmarE.setModel(new javax.swing.table.DefaultTableModel(
+                new Object[][]{},
+                new String[]{
+                    "Id", "Nombre Producto", "Estado Compra", "Precio"
+                }
+        ));
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -117,6 +128,7 @@ public class JPConfirmarE extends javax.swing.JPanel {
         lblInformacion = new javax.swing.JLabel();
         btnConfirmarE = new javax.swing.JButton();
         lblTabla1 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -190,6 +202,14 @@ public class JPConfirmarE extends javax.swing.JPanel {
         lblTabla1.setText("Seleccione los productos que ya le han sido entregados");
         JPCentralConfirmarE.add(lblTabla1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, -1, -1));
 
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        JPCentralConfirmarE.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 360, -1, -1));
+
         add(JPCentralConfirmarE, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 700, 600));
     }// </editor-fold>//GEN-END:initComponents
 
@@ -197,7 +217,7 @@ public class JPConfirmarE extends javax.swing.JPanel {
         try {
             //Esditar estado de compra
             editBuy();
-            fillTableConfirm(buyService.findBuyByCom(user.getUsername()));
+            fillTableConfirm(buyService.findBuyByCom(user.getId()));
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -207,10 +227,19 @@ public class JPConfirmarE extends javax.swing.JPanel {
         rowSelection();
     }//GEN-LAST:event_tblConfirmarEMouseClicked
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try {
+            fillTableConfirm(buyService.findBuyByCom(user.getId()));
+        } catch (Exception ex) {
+            Logger.getLogger(JPConfirmarE.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel JPCentralConfirmarE;
     private javax.swing.JButton btnConfirmarE;
+    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblInformacion;
     private javax.swing.JLabel lblTabla1;

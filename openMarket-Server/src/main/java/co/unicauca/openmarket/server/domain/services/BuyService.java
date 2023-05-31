@@ -36,8 +36,8 @@ public class BuyService {
         return repository.findById(id);
     }
     
-    public synchronized List<Buy> findByComp(String nombreComprador) throws Exception{
-        return repository.findByComp(nombreComprador);
+    public synchronized List<Buy> findByComp(Long idComp) throws Exception{
+        return repository.findByComp(idComp);
     }
     
     public synchronized  List<Buy> findAll() throws Exception{

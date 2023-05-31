@@ -39,6 +39,7 @@ public class JPBuscarProductos extends javax.swing.JPanel {
         this.categoryService = categoryService;
         this.buyService = buyService;
         this.user = user;
+        this.invoker = new Invoker();
 
         //<editor-fold defaultstate="collapsed" desc="Metodo auxiliar para seleccionar filas">
         /*tblProductosO.addMouseListener(new MouseAdapter(){
@@ -89,6 +90,7 @@ public class JPBuscarProductos extends javax.swing.JPanel {
 
     //<editor-fold defaultstate="collapsed" desc="Metodo para imprimir todos lo productos">
     private void fillTable(List<Product> lstProducts) throws Exception {
+        initializeTable();
         DefaultTableModel model = (DefaultTableModel) tblProductosO.getModel();
         Object rowData[] = new Object[4];
 
@@ -108,6 +110,7 @@ public class JPBuscarProductos extends javax.swing.JPanel {
 
     //<editor-fold defaultstate="collapsed" desc="Metodo para imprimir con Id">
     private void fillTableId(Product product) throws Exception {
+        initializeTable();
         DefaultTableModel model = (DefaultTableModel) tblProductosO.getModel();
         Object rowData[] = new Object[4];
 
@@ -125,6 +128,7 @@ public class JPBuscarProductos extends javax.swing.JPanel {
 
     //<editor-fold defaultstate="collapsed" desc="Metodo para imprimir con Categoria">
     private void fillTableCategory(List<Product> lstProducts) throws Exception {
+        initializeTable();
         DefaultTableModel model = (DefaultTableModel) tblProductosO.getModel();
         Object rowData[] = new Object[4];
 
@@ -145,6 +149,7 @@ public class JPBuscarProductos extends javax.swing.JPanel {
 
     //<editor-fold defaultstate="collapsed" desc="Metodo para imprimir con Nombre">
     private void fillTableName(List<Product> lstProducts) throws Exception {
+        initializeTable();
         DefaultTableModel model = (DefaultTableModel) tblProductosO.getModel();
         Object rowData[] = new Object[4];
 
@@ -163,6 +168,17 @@ public class JPBuscarProductos extends javax.swing.JPanel {
     }
     //</editor-fold>
 
+    private Long cantBuy() throws Exception {
+        try {
+            List<Buy> lstBuys = buyService.findAllBuys();
+            
+            return Long.valueOf(lstBuys.size());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Esta sera la primera compra que se realiza", JOptionPane.ERROR_MESSAGE);
+        }
+        return 0L;
+    }
+
     //<editor-fold defaultstate="collapsed" desc="Metodo para crear compra">
     private void addBuy() {
         try {
@@ -170,7 +186,7 @@ public class JPBuscarProductos extends javax.swing.JPanel {
 
             //Creacion de la compra
             Buy newBuy = new Buy();
-            
+            newBuy.setId(cantBuy() + 1L);
             newBuy.setCompradorId(user.getId());
             String id = tblProductosO.getValueAt(selection, 0).toString();
             newBuy.setProductoId(Long.parseLong(id));
@@ -179,16 +195,27 @@ public class JPBuscarProductos extends javax.swing.JPanel {
             newBuy.setFechaCompra(fechaActual.toString());
 
             AddBuyCommand comm = new AddBuyCommand(buyService, newBuy);
-            
-            if(invoker.executeCommand(comm)){
+
+            if (invoker.executeCommand(comm)) {
                 Messages.showMessageDialog("La compra se grabo con exito", "Atencion");
+            } else {
+                Messages.showMessageDialog("No fue posible realizar la compra", "Cuidado");
             }
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Error al grabar", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error al grabar la compra", JOptionPane.ERROR_MESSAGE);
         }
     }
     //</editor-fold>
+
+    private void initializeTable() {
+        tblProductosO.setModel(new javax.swing.table.DefaultTableModel(
+                new Object[][]{},
+                new String[]{
+                    "Id", "Nombre Producto", "Precio", "Categoria"
+                }
+        ));
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -242,7 +269,6 @@ public class JPBuscarProductos extends javax.swing.JPanel {
 
         tblProductosO.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"1", "Frijoles", "1000", "Granos"},
                 {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null},

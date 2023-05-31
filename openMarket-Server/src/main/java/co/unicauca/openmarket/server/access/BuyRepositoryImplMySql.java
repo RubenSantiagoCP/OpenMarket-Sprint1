@@ -24,12 +24,12 @@ public class BuyRepositoryImplMySql implements IBuyRepository {
         // SQL statement for creating a new table
         String sql = "CREATE TABLE IF NOT EXISTS buys (\n"
                 + "  buy_id integer AUTO_INCREMENT PRIMARY KEY,\n"
-                + "	user_id integer NOT NULL,\n"
-                + "	productId integer NOT NULL,\n"
+                + "  user_id integer NOT NULL,\n"
+                + "  productId integer NOT NULL,\n"
                 + "  buy_estado text NOT NULL,\n"
-                + "	buy_fecha text NOT NULL,\n"
-                + "	CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users (user_id),\n"
-                + "	CONSTRAINT fk_product FOREIGN KEY (productId) REFERENCES products (productId)\n"
+                + "  buy_fecha text NOT NULL,\n"
+                + "  CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users (user_id),\n"
+                + "  CONSTRAINT fk_product FOREIGN KEY (productId) REFERENCES products (productId)\n"
                 + ");";
 
         try {
@@ -166,16 +166,15 @@ public class BuyRepositoryImplMySql implements IBuyRepository {
 
 
     @Override
-    public List<Buy> findByComp(String nombreComprador) throws Exception {
+    public List<Buy> findByComp(Long idComp) throws Exception {
         List<Buy> buys= new ArrayList<>();
         try {
             this.connect();
             String sql = "SELECT * FROM buys "
-                    + "inner join users on users.user_id = buys.user_id"
-                    + "where user_username = ?";
+                    + " where user_id = ?";
            
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, nombreComprador);
+            pstmt.setLong(1, idComp);
             ResultSet res = pstmt.executeQuery();
             while (res.next()) {
                 Buy newBuy = new Buy();
@@ -186,7 +185,7 @@ public class BuyRepositoryImplMySql implements IBuyRepository {
                 newBuy.setEstado(res.getString("buy_estado"));
                 buys.add(newBuy);
             }
-              pstmt.executeUpdate();
+              //pstmt.executeUpdate();
             pstmt.close();
             //this.disconnect();
 
@@ -214,7 +213,7 @@ public class BuyRepositoryImplMySql implements IBuyRepository {
                 newBuy.setEstado(res.getString("buy_estado"));
                 buys.add(newBuy);
             }
-              pstmt.executeUpdate();
+              pstmt.executeQuery();
             pstmt.close();
             //this.disconnect();
 

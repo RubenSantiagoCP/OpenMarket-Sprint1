@@ -26,7 +26,7 @@ public class JPTusCompras extends javax.swing.JPanel {
         initComponents();
         this.buyService = buyService;
         this.productService = productService;
-        llenarTablaEntregas(buyService.findBuyByCom(user.getUsername()));
+        llenarTablaEntregas(buyService.findBuyByCom(user.getId()));
     }
 
     // <editor-fold defaultstate="collapsed" desc="Metodo para llenar la tabla de confirmacion">

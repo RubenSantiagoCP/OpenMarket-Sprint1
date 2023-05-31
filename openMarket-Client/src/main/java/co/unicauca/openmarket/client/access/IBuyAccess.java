@@ -20,7 +20,7 @@ public interface IBuyAccess {
     
     Buy findById(Long id) throws Exception;
     
-    List<Buy> findByComp(String nombreComprador) throws Exception;
+    List<Buy> findByComp(Long idComp) throws Exception;
     
     List<Buy> findAll() throws Exception;
             

@@ -76,9 +76,9 @@ public class BuyService implements Subject{
         return repository.findById(idBuy);
     }
     
-    public List<Buy> findBuyByCom(String nombreComprador) throws Exception{
+    public List<Buy> findBuyByCom(Long idComp) throws Exception{
         List<Buy> buys = new ArrayList<>();
-        buys = repository.findByComp(nombreComprador);
+        buys = repository.findByComp(idComp);
         return buys;
     }
     
@@ -92,17 +92,19 @@ public class BuyService implements Subject{
     //<editor-fold defaultstate="collapsed" desc="Metodos abtractos Subject">
     @Override
     public void registerObserver(Observer observer) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        observers.add(observer);
     }
 
     @Override
     public void removeObserver(Observer observer) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        observers.remove(observer);
     }
 
     @Override
     public void notifyObservers() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        for(Observer observer : observers){
+            observer.update();
+        }
     }
     //</editor-fold>
 }

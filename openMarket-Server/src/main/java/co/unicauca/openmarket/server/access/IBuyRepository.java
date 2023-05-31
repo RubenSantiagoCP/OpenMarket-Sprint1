@@ -19,7 +19,7 @@ public interface IBuyRepository {
     
     //Metodos de busqueda
     
-    List<Buy> findByComp(String nombreComprador)throws Exception;
+    List<Buy> findByComp(Long idComp)throws Exception;
     
     List<Buy> findAll() throws Exception;
 }
