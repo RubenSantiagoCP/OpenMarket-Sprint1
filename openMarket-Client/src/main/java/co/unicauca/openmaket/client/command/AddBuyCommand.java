@@ -28,6 +28,7 @@ public class AddBuyCommand implements Command{
         String fechaCompra = buy.getFechaCompra();
         
         try {
+            System.out.println("Retorna verdadero hasta addBuyCommand");
             return buyService.saveBuy(compraId, estadoCompra, fechaCompra, compradorId, productoId);
         } catch (Exception e) {
             Logger.getLogger(AddBuyCommand.class.getName()).log(Level.SEVERE, null, e);

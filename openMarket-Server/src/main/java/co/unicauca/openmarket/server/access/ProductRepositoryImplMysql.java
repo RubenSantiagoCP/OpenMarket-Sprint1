@@ -94,7 +94,7 @@ public class ProductRepositoryImplMysql implements IProductRepository {
                 newProduct.setVendedorId(res.getLong("user_id"));
                 products.add(newProduct);
             }
-            pstmt.executeUpdate();
+            //pstmt.executeUpdate();
             pstmt.close();
             //this.disconnect();
 

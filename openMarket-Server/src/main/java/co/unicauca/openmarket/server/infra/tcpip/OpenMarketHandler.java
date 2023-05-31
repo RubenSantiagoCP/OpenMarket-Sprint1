@@ -228,7 +228,7 @@ public class OpenMarketHandler extends ServerHandler {
         if (product == null) {
             return generateNotFoundErrorJson(Context.PRODUCT);
         }
-        Long catId= Long.parseLong(protocolRequest.getParameters().get(4).getValue());
+        Long catId= Long.valueOf(protocolRequest.getParameters().get(4).getValue());
         Category category = getCategoryService().findById(catId);
 
         if(category==null){
@@ -236,14 +236,14 @@ public class OpenMarketHandler extends ServerHandler {
             generateNotFoundErrorJson(Context.CATEGORY);
         }
         product = new Product();
-        product.setProductId(Long.parseLong(protocolRequest.getParameters().get(0).getValue()));
+        product.setProductId(Long.valueOf(protocolRequest.getParameters().get(0).getValue()));
         product.setName(protocolRequest.getParameters().get(1).getValue());
         product.setDescription(protocolRequest.getParameters().get(2).getValue());
         product.setPrice(Double.parseDouble(protocolRequest.getParameters().get(3).getValue()));
-        product.setCategoryId(Long.parseLong(protocolRequest.getParameters().get(4).getValue()));
+        product.setCategoryId(Long.valueOf(protocolRequest.getParameters().get(4).getValue()));
 
 
-        boolean response = getProductService().edit(Long.parseLong(protocolRequest.getParameters().get(0).getValue()),product);
+        boolean response = getProductService().edit(Long.valueOf(protocolRequest.getParameters().get(0).getValue()),product);
         return String.valueOf(response);
     }
 
@@ -441,6 +441,11 @@ public class OpenMarketHandler extends ServerHandler {
       
           Buy buy = new Buy();
         // Reconstruir el producto a partir de lo que viene en los parámetros
+        
+        //buy.setProductoId(Long.valueOf(protocolRequest.getParameters().get(2).getValue()));
+        //buy.setEstado(protocolRequest.getParameters().get(3).getValue());
+        
+        
         buy.setId(Long.valueOf(protocolRequest.getParameters().get(0).getValue()));
         buy.setCompradorId(Long.valueOf(protocolRequest.getParameters().get(1).getValue()));
         buy.setProductoId(Long.valueOf(protocolRequest.getParameters().get(2).getValue()));
@@ -489,8 +494,8 @@ public class OpenMarketHandler extends ServerHandler {
     }
 
     private String processFindBuyComp(Protocol protocolRequest) throws Exception {
-        String compName = protocolRequest.getParameters().get(0).getValue();
-        List<Buy> buys = getBuyService().findByComp(compName);
+        Long idComp = Long.valueOf(protocolRequest.getParameters().get(0).getValue());
+        List<Buy> buys = getBuyService().findByComp(idComp);
         return objectToJSON(buys);
     }
 

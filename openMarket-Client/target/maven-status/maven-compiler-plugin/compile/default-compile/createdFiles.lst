@@ -1,8 +1,6 @@
-<<<<<<< HEAD
 co\unicauca\openmarket\client\access\CategoryAccessImplSockets.class
 co\unicauca\openmarket\client\presentation\comprador\JPConfirmarE$1.class
 co\unicauca\openmaket\client\command\AddBuyCommand.class
-co\unicauca\openmarket\client\presentation\repartidor\jpTusEntregas.class
 co\unicauca\openmarket\client\presentation\comprador\GUIComprador$1.class
 co\unicauca\openmarket\client\presentation\repartidor\Main.class
 co\unicauca\openmarket\client\presentation\vendedor\JpPrincipal$1.class
@@ -19,7 +17,6 @@ co\unicauca\openmarket\client\presentation\vendedor\JpAgregarProducto.class
 co\unicauca\openmarket\client\presentation\comprador\GUIComprador$2.class
 co\unicauca\openmarket\client\presentation\vendedor\JpPrincipal.class
 co\unicauca\openmarket\client\access\BuyAccessImplSocket$1.class
-co\unicauca\openmarket\client\presentation\repartidor\GUIRepartidor$2.class
 co\unicauca\openmarket\client\access\IProductAccess.class
 co\unicauca\openmarket\client\presentation\vendedor\JpCategoria$3.class
 co\unicauca\openmaket\client\command\AddProductCommand.class
@@ -27,10 +24,6 @@ co\unicauca\openmarket\client\presentation\vendedor\GUIVendedor$7.class
 co\unicauca\openmarket\client\presentation\comprador\JPBuscarProductos.class
 co\unicauca\openmarket\client\presentation\comprador\JPConfirmarE$2.class
 co\unicauca\openmarket\client\presentation\comprador\GUIComprador.class
-=======
-co\unicauca\openmarket\client\infra\OpenMarketSocket.class
-co\unicauca\openmarket\client\access\IProductAccess.class
->>>>>>> feature/ruben_cruz/sprint1
 co\unicauca\openmarket\client\access\ICategoryAccess.class
 co\unicauca\openmarket\client\presentation\vendedor\GUIVendedor$4.class
 co\unicauca\openmarket\client\presentation\comprador\JPBuscarProductos$3.class
@@ -44,15 +37,12 @@ co\unicauca\openmarket\client\presentation\vendedor\JpAgregarProducto$1.class
 co\unicauca\openmarket\client\presentation\repartidor\GUIRepartidor.class
 co\unicauca\openmarket\client\access\BuyAccessImplSocket.class
 co\unicauca\openmarket\client\presentation\comprador\JPBuscarProductos$1.class
-co\unicauca\openmarket\client\presentation\vendedor\JpAgregarCategoria.class
 co\unicauca\openmarket\client\presentation\vendedor\JpCategoria$2.class
 co\unicauca\openmarket\client\presentation\vendedor\JpEditar$1.class
 co\unicauca\openmarket\client\domain\User.class
 co\unicauca\openmarket\client\presentation\vendedor\JpPrincipal$6.class
 co\unicauca\openmarket\client\presentation\vendedor\GUIVendedor$3.class
 co\unicauca\openmarket\client\infra\Messages.class
-<<<<<<< HEAD
-co\unicauca\openmarket\client\presentation\vendedor\JpBorrar$1.class
 co\unicauca\openmarket\client\presentation\comprador\JPBuscarProductos$5.class
 co\unicauca\openmarket\client\presentation\comprador\NewClass.class
 co\unicauca\openmarket\client\presentation\comprador\JPConfirmarE$3.class
@@ -68,7 +58,6 @@ co\unicauca\openmarket\client\presentation\inicioSesion\GUILogin.class
 co\unicauca\openmarket\client\presentation\vendedor\JpEditar$2.class
 co\unicauca\openmaket\client\command\Invoker.class
 co\unicauca\openmarket\client\access\IBuyAccess.class
-co\unicauca\openmarket\client\presentation\vendedor\JpBorrar.class
 co\unicauca\openmarket\client\main\Main.class
 co\unicauca\openmarket\client\domain\service\ProductService.class
 co\unicauca\openmarket\client\access\ProductAccessImplSockets.class
@@ -83,10 +72,3 @@ co\unicauca\openmarket\client\presentation\vendedor\GUIVendedor$6.class
 co\unicauca\openmarket\client\presentation\comprador\GUIComprador$3.class
 co\unicauca\openmarket\client\access\ProductAccessImplSockets$1.class
 co\unicauca\openmarket\client\presentation\vendedor\JpCategoria$1.class
-=======
-co\unicauca\openmarket\client\domain\service\CategoryService.class
-co\unicauca\openmarket\client\main\Main.class
-co\unicauca\openmarket\client\domain\service\ProductService.class
-co\unicauca\openmarket\client\access\ProductAccessImplSockets.class
-co\unicauca\openmarket\client\access\Factory.class
->>>>>>> feature/ruben_cruz/sprint1

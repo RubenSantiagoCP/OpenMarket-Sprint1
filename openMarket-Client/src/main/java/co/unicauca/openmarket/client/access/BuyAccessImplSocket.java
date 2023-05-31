@@ -145,9 +145,9 @@ public class BuyAccessImplSocket implements IBuyAccess{
     }
 
     @Override
-    public List<Buy> findByComp(String nombreComprador) throws Exception {
+    public List<Buy> findByComp(Long idComp) throws Exception {
         String jsonResponse = null;
-        String requestJson = doFindBuyCompJson(nombreComprador);
+        String requestJson = doFindBuyCompJson(idComp);
         System.out.println(requestJson);
         
         try {
@@ -250,7 +250,7 @@ public class BuyAccessImplSocket implements IBuyAccess{
         protocol.addParameter("compId", buy.getCompradorId().toString());
         protocol.addParameter("prodId", buy.getProductoId().toString());
         protocol.addParameter("comprEstado", buy.getEstado());
-        protocol.addParameter("compFecha", buy.getFechaCompra().toString());
+        protocol.addParameter("compFecha", buy.getFechaCompra());
         
         Gson gson = new Gson();
         String requestJson = gson.toJson(protocol);
@@ -295,10 +295,11 @@ public class BuyAccessImplSocket implements IBuyAccess{
         return jsonRequest;
     }
     
-    private String doFindBuyCompJson(String compName){
+    private String doFindBuyCompJson(Long  idComp){
         Protocol protocol = new Protocol();
         protocol.setResource("buy");
         protocol.setAction("getBuyByComprador");
+        protocol.addParameter("compName", idComp.toString());
         
         Gson gson = new Gson();
         String jsonRequest = gson.toJson(protocol);
