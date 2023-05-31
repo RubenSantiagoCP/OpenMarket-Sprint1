@@ -74,6 +74,9 @@ public class OpenMarketHandler extends ServerHandler {
                     // Editar un producto
                     response = processEditProduct(protocolRequest);
                 }
+                if(protocolRequest.getAction().equals("getProductByPrice")){
+                    response = processGetProductsByPrice(protocolRequest);
+                }
             }
             case "category" -> {
                 if (protocolRequest.getAction().equals("get")) {
@@ -148,7 +151,7 @@ public class OpenMarketHandler extends ServerHandler {
                  
                  if (protocolRequest.getAction().equals("getListBuys")) {
                      try {
-                         response = processFindAllBuysBuy();
+                         response = processFindAllBuysBuy(protocolRequest);
                      } catch (Exception ex) {
                          Logger.getLogger(OpenMarketHandler.class.getName()).log(Level.SEVERE, null, ex);
                      }
@@ -205,6 +208,13 @@ public class OpenMarketHandler extends ServerHandler {
 
     }
 
+    private String processGetProductsByPrice(Protocol protocolRequest) {
+        Double minPrice = Double.valueOf(protocolRequest.getParameters().get(0).getValue());
+        Double maxPrice = Double.valueOf(protocolRequest.getParameters().get(1).getValue());
+        List<Product> products = getProductService().findByPrice(minPrice, maxPrice);
+        return objectToJSON(products);
+    }
+    
     private String processGetProductsByCategory(Protocol protocolRequest) {
         Long categoryId = Long.parseLong(protocolRequest.getParameters().get(0).getValue());
         List<Product> products=getProductService().findByCategory(categoryId);
@@ -528,7 +538,7 @@ public class OpenMarketHandler extends ServerHandler {
         return objectToJSON(buys);
     }
 
-    private String processFindAllBuysBuy() throws Exception {
+    private String processFindAllBuysBuy(Protocol protocolRequest) throws Exception {
         List<Buy> buys = getBuyService().findAll();
         return objectToJSON(buys);
     }
@@ -569,5 +579,7 @@ public class OpenMarketHandler extends ServerHandler {
         boolean response = getBankService().editBalanc(id,saldo);
         return String.valueOf(response);
     }
+
+    
    
 }

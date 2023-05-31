@@ -21,6 +21,6 @@ public interface IProductRepository {
    List<Product> findByName(String pname);
    List<Product> findByCategory(Long categoryId);
    List<Product> findAll();
-    
+   List<Product> finByPrice(double minPrice, double maxPrice);
 
 }

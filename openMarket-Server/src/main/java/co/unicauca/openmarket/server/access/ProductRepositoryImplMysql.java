@@ -332,4 +332,35 @@ public class ProductRepositoryImplMysql implements IProductRepository {
         return true;
     }
 
+    @Override
+    public List<Product> finByPrice(double minPrice, double maxPrice) {
+        List<Product> products = new ArrayList<>();
+        try {
+            this.connect();
+            String sql = "SELECT * FROM products"
+                    + " WHERE prod_price >= ? AND prod_price <= ?";
+            PreparedStatement pstm = conn.prepareStatement(sql);
+            pstm.setDouble(1, minPrice);
+            pstm.setDouble(2, maxPrice);
+            ResultSet rs = pstm.executeQuery();
+            
+            while(rs.next()){
+                Product newProduct = new Product();
+                newProduct.setProductId(rs.getLong("productId"));
+                newProduct.setName(rs.getString("name"));
+                newProduct.setDescription(rs.getString("description"));
+                newProduct.setPrice(rs.getDouble("prod_price"));
+                newProduct.setCategoryId(rs.getLong("cat_id"));
+                newProduct.setVendedorId(rs.getLong("user_id"));
+                products.add(newProduct);
+            }
+            
+            pstm.close();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductRepositoryImplMysql.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return products;
+    }
+
 }

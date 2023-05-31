@@ -77,5 +77,7 @@ public class ProductService {
         return repo.findByName(name);
     };
 
-      
+    public synchronized List<Product> findByPrice(double minPrice, double maxPrice){
+        return repo.finByPrice(minPrice, maxPrice);
+    }
 }
