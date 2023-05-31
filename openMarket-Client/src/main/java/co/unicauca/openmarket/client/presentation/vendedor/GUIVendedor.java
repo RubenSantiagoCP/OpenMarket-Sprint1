@@ -18,8 +18,8 @@ public class GUIVendedor extends javax.swing.JFrame implements Observer{
     private static JpPrincipal jpPrincipal;
     private static JpAgregarProducto jpAgregar;
     private static JpCategoria jpCategoria;
-    
     private User vendedor;
+    
     /** Creates new form GUIVendedor */
     public GUIVendedor(ProductService productService, CategoryService categoryService, User user) {
         initComponents();
@@ -32,7 +32,7 @@ public class GUIVendedor extends javax.swing.JFrame implements Observer{
         
         
         //Panel principal
-        jpPrincipal = new JpPrincipal(jpContent, productService, categoryService, invoker);
+        jpPrincipal = new JpPrincipal(jpContent, productService, categoryService, invoker, this.vendedor);
         productService.registerObserver(jpPrincipal);
         categoryService.registerObserver(jpPrincipal);
         jpPrincipal.setSize(700, 600);
@@ -43,7 +43,7 @@ public class GUIVendedor extends javax.swing.JFrame implements Observer{
         jpContent.repaint();
         
         //Panel Agregar producto
-        jpAgregar = new JpAgregarProducto(jpContent, productService, categoryService, invoker, vendedor.getId());
+        jpAgregar = new JpAgregarProducto(jpContent, productService, categoryService, invoker, vendedor);
         productService.registerObserver(jpAgregar);
         categoryService.registerObserver(jpAgregar);
         
@@ -65,13 +65,9 @@ public class GUIVendedor extends javax.swing.JFrame implements Observer{
         jpGestionVendedor = new javax.swing.JPanel();
         btnAgregarCategoria = new javax.swing.JButton();
         btnAgregarProducto = new javax.swing.JButton();
-        btnAgregarUbicacion = new javax.swing.JButton();
-        btnVerProductos = new javax.swing.JButton();
         lbVendedor = new javax.swing.JLabel();
         jpContent = new javax.swing.JPanel();
         btnPrincipal = new javax.swing.JButton();
-        btnRehacer = new javax.swing.JButton();
-        btnDeshacer = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(900, 600));
@@ -89,7 +85,7 @@ public class GUIVendedor extends javax.swing.JFrame implements Observer{
                 btnAgregarCategoriaActionPerformed(evt);
             }
         });
-        jpGestionVendedor.add(btnAgregarCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, 140, -1));
+        jpGestionVendedor.add(btnAgregarCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(32, 400, 140, -1));
 
         btnAgregarProducto.setBackground(new java.awt.Color(242, 204, 143));
         btnAgregarProducto.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
@@ -100,34 +96,12 @@ public class GUIVendedor extends javax.swing.JFrame implements Observer{
                 btnAgregarProductoActionPerformed(evt);
             }
         });
-        jpGestionVendedor.add(btnAgregarProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 280, 140, -1));
-
-        btnAgregarUbicacion.setBackground(new java.awt.Color(242, 204, 143));
-        btnAgregarUbicacion.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
-        btnAgregarUbicacion.setForeground(new java.awt.Color(255, 255, 255));
-        btnAgregarUbicacion.setText("Añadir Locación");
-        btnAgregarUbicacion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAgregarUbicacionActionPerformed(evt);
-            }
-        });
-        jpGestionVendedor.add(btnAgregarUbicacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 340, 140, -1));
-
-        btnVerProductos.setBackground(new java.awt.Color(242, 204, 143));
-        btnVerProductos.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
-        btnVerProductos.setForeground(new java.awt.Color(255, 255, 255));
-        btnVerProductos.setText("Ver mis productos");
-        btnVerProductos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVerProductosActionPerformed(evt);
-            }
-        });
-        jpGestionVendedor.add(btnVerProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 400, 140, -1));
+        jpGestionVendedor.add(btnAgregarProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(32, 300, 140, -1));
 
         lbVendedor.setFont(new java.awt.Font("Arial Black", 1, 24)); // NOI18N
-        lbVendedor.setForeground(new java.awt.Color(255, 255, 255));
+        lbVendedor.setForeground(new java.awt.Color(242, 204, 143));
         lbVendedor.setText("Vendedor");
-        jpGestionVendedor.add(lbVendedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, -1, -1));
+        jpGestionVendedor.add(lbVendedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 100, -1, -1));
 
         jpContent.setBackground(new java.awt.Color(61, 64, 91));
 
@@ -147,29 +121,13 @@ public class GUIVendedor extends javax.swing.JFrame implements Observer{
         btnPrincipal.setBackground(new java.awt.Color(242, 204, 143));
         btnPrincipal.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
         btnPrincipal.setForeground(new java.awt.Color(255, 255, 255));
-        btnPrincipal.setText("Inicio");
+        btnPrincipal.setText("Ver mis productos");
         btnPrincipal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPrincipalActionPerformed(evt);
             }
         });
-        jpGestionVendedor.add(btnPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, 140, -1));
-
-        btnRehacer.setText("Rehacer");
-        btnRehacer.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRehacerActionPerformed(evt);
-            }
-        });
-        jpGestionVendedor.add(btnRehacer, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 470, -1, -1));
-
-        btnDeshacer.setText("Deshacer");
-        btnDeshacer.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDeshacerActionPerformed(evt);
-            }
-        });
-        jpGestionVendedor.add(btnDeshacer, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 470, -1, -1));
+        jpGestionVendedor.add(btnPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, 150, -1));
 
         getContentPane().add(jpGestionVendedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, 600));
 
@@ -203,14 +161,6 @@ public class GUIVendedor extends javax.swing.JFrame implements Observer{
         jpContent.repaint();
     }//GEN-LAST:event_btnAgregarProductoActionPerformed
 
-    private void btnAgregarUbicacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarUbicacionActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnAgregarUbicacionActionPerformed
-
-    private void btnVerProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerProductosActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnVerProductosActionPerformed
-
     private void btnPrincipalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrincipalActionPerformed
 
         productService.registerObserver(jpPrincipal);
@@ -224,29 +174,11 @@ public class GUIVendedor extends javax.swing.JFrame implements Observer{
         jpContent.repaint();
     }//GEN-LAST:event_btnPrincipalActionPerformed
 
-    private void btnRehacerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRehacerActionPerformed
-        invoker.redoLastCommand();
-        if (!invoker.hasMoreRedoCommands()) {
-            this.btnRehacer.setVisible(false);
-        }
-    }//GEN-LAST:event_btnRehacerActionPerformed
-
-    private void btnDeshacerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeshacerActionPerformed
-        invoker.undoLastCommand();
-        if (!invoker.hasMoreUndoCommands()) {
-            this.btnDeshacer.setVisible(false);
-        }
-    }//GEN-LAST:event_btnDeshacerActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarCategoria;
     private javax.swing.JButton btnAgregarProducto;
-    private javax.swing.JButton btnAgregarUbicacion;
-    private javax.swing.JButton btnDeshacer;
     private javax.swing.JButton btnPrincipal;
-    private javax.swing.JButton btnRehacer;
-    private javax.swing.JButton btnVerProductos;
     private javax.swing.JPanel jpContent;
     private javax.swing.JPanel jpGestionVendedor;
     private javax.swing.JLabel lbVendedor;
@@ -256,9 +188,7 @@ public class GUIVendedor extends javax.swing.JFrame implements Observer{
     
     @Override
     public void update() {
-  
-            btnDeshacer.setVisible(invoker.hasMoreUndoCommands());
-            btnRehacer.setVisible(invoker.hasMoreRedoCommands());
-        
+            //btnDeshacer.setVisible(invoker.hasMoreUndoCommands());
+            //btnRehacer.setVisible(invoker.hasMoreRedoCommands());
     }
 }

@@ -57,9 +57,12 @@ public class ProductRepositoryImplMysql implements IProductRepository {
     
     public void crearProductos() {
         String[] insertStatements = {
-            "INSERT INTO products (productId,name,description,prod_price,cat_id,user_id) VALUES(1,'Margarita','Paquete',2000,1,1)",
-            "INSERT INTO products (productId,name,description,prod_price,cat_id,user_id) VALUES(2,'Margarita','Paquete',3000,1,1)",
-            "INSERT INTO products (productId,name,description,prod_price,cat_id,user_id) VALUES(3,'Margarita','Paquete',4000,1,1)"
+            "INSERT INTO products (productId,name,description,prod_price,cat_id,user_id) VALUES(1,'Margarita limon','Paquete',2000,1,1)",
+            "INSERT INTO products (productId,name,description,prod_price,cat_id,user_id) VALUES(2,'Margarita picante','Paquete',3000,1,1)",
+            "INSERT INTO products (productId,name,description,prod_price,cat_id,user_id) VALUES(3,'Margarita pollo','Paquete',4000,2,1)",
+            "INSERT INTO products (productId,name,description,prod_price,cat_id,user_id) VALUES(4,'Margarita','Paquete',2400,1,2)",
+            "INSERT INTO products (productId,name,description,prod_price,cat_id,user_id) VALUES(5,'Margarita','Paquete',3500,1,3)",
+            "INSERT INTO products (productId,name,description,prod_price,cat_id,user_id) VALUES(6,'Margarita','Paquete',4700,1,4)"
         };
 
         try {
@@ -223,7 +226,7 @@ public class ProductRepositoryImplMysql implements IProductRepository {
                 newProduct.setProductId(res.getLong("productId"));
                 newProduct.setName(res.getString("name"));
                 newProduct.setDescription(res.getString("description"));
-                newProduct.setPrice(res.getDouble("price"));
+                newProduct.setPrice(res.getDouble("prod_price"));
                 newProduct.setCategoryId(res.getLong("cat_id"));
                 newProduct.setVendedorId(res.getLong("user_id"));
                 return newProduct;
@@ -255,7 +258,7 @@ public class ProductRepositoryImplMysql implements IProductRepository {
                 newProduct.setProductId(rs.getLong("productId"));
                 newProduct.setName(rs.getString("name"));
                 newProduct.setDescription(rs.getString("description"));
-                newProduct.setPrice(rs.getDouble("price"));
+                newProduct.setPrice(rs.getDouble("prod_price"));
                 newProduct.setCategoryId(rs.getLong("cat_id"));
                 newProduct.setVendedorId(rs.getLong("user_id"));;
 
@@ -273,39 +276,29 @@ public class ProductRepositoryImplMysql implements IProductRepository {
     }
 
     @Override
-    public List<Product> findByCategory(String categoryName) {
+    public List<Product> findByCategory(Long categoryId) {
         List<Product> products = new ArrayList<>();
 
         try {
             this.connect();
-            // Get the categoryId for the given categoryName
-            String categorySql = "SELECT cat_id FROM categories WHERE name = ?";
-            PreparedStatement categoryStmt = conn.prepareStatement(categorySql);
-            categoryStmt.setString(1, categoryName);
-            ResultSet categoryRs = categoryStmt.executeQuery();
+            String sql = "SELECT * FROM products"
+                    + " WHERE cat_id = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setLong(1, categoryId);
+            ResultSet rs = pstmt.executeQuery();
 
-            if (categoryRs.next()) {
-                long categoryId = categoryRs.getLong("cat_id");
-
-                // Find products with the given categoryId
-                String productSql = "SELECT * FROM products WHERE cat_id = ?";
-                PreparedStatement productStmt = conn.prepareStatement(productSql);
-                productStmt.setLong(1, categoryId);
-                ResultSet res = productStmt.executeQuery();
-
-                while (res.next()) {
-                    Product newProduct = new Product();
-                    newProduct.setProductId(res.getLong("productId"));
-                    newProduct.setName(res.getString("name"));
-                    newProduct.setDescription(res.getString("description"));
-                    newProduct.setPrice(res.getDouble("price"));
-                    newProduct.setCategoryId(res.getLong("cat_id"));
-                    newProduct.setVendedorId(res.getLong("user_id"));
-                    products.add(newProduct);
-                }
+            while (rs.next()) {
+                Product newProduct = new Product();
+                newProduct.setProductId(rs.getLong("productId"));
+                newProduct.setName(rs.getString("name"));
+                newProduct.setDescription(rs.getString("description"));
+                newProduct.setPrice(rs.getDouble("prod_price"));
+                newProduct.setCategoryId(rs.getLong("cat_id"));
+                newProduct.setVendedorId(rs.getLong("user_id"));
+                products.add(newProduct);
             }
 
-            categoryStmt.close();
+            pstmt.close();
             //this.disconnect();
 
         } catch (SQLException ex) {
@@ -321,14 +314,15 @@ public class ProductRepositoryImplMysql implements IProductRepository {
         try {
             this.connect();
             String sql = "UPDATE  products "
-                    + "SET name=?, description=?, cat_id=? "
+                    + "SET name = ?, description = ?, prod_price = ?, cat_id = ? "
                     + "WHERE productId = ?";
 
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, product.getName());
             pstmt.setString(2, product.getDescription());
-            pstmt.setLong(3, product.getCategoryId());
-            pstmt.setLong(4, id);
+            pstmt.setDouble(3, product.getPrice());
+            pstmt.setLong(4, product.getCategoryId());
+            pstmt.setLong(5, id);
             pstmt.executeUpdate();
             pstmt.close();
             //this.disconnect();

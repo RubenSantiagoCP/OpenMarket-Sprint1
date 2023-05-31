@@ -6,7 +6,9 @@ import co.unicauca.openmarket.client.domain.service.CategoryService;
 import co.unicauca.openmarket.client.domain.service.ProductService;
 import co.unicauca.openmarket.client.infra.Messages;
 import co.unicauca.openmarket.commons.domain.Product;
+import co.unicauca.openmarket.commons.domain.User;
 import co.unicauca.openmarket.commons.observer.Observer;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,12 +25,12 @@ public class JpAgregarProducto extends javax.swing.JPanel implements Observer{
     private ProductService productService;
     private CategoryService categoryService;
     private Invoker invoker;
-    private Long vendedorId;
+    private User vendedor;
     
     /**
      * Creates new form JpAgregarProducto
      */
-    public JpAgregarProducto(javax.swing.JPanel parent, ProductService productService, CategoryService categoryService, Invoker invoker, Long vendedorId) {
+    public JpAgregarProducto(javax.swing.JPanel parent, ProductService productService, CategoryService categoryService, Invoker invoker, User vendedor) {
         initComponents();  
         initializeTable();
         this.productService = productService;
@@ -36,7 +38,7 @@ public class JpAgregarProducto extends javax.swing.JPanel implements Observer{
         this.invoker = new Invoker();
         this.invoker.registerObserver(this);
         this.jpContent = parent;
-        this.vendedorId = vendedorId;
+        this.vendedor = vendedor;
     }
 
     
@@ -210,7 +212,7 @@ public class JpAgregarProducto extends javax.swing.JPanel implements Observer{
             String description = txtADescripcion.getText().trim();
             Long categoryId = Long.valueOf(this.txtIdCategoria.getText().trim());
             Double price = Double.valueOf(txtPrecio.getText().trim());
-            Product prod = new Product(Long.valueOf(id), name, description, price, categoryId, vendedorId);
+            Product prod = new Product(Long.valueOf(id), name, description, price, categoryId, vendedor.getId());
 
             AddProductCommand comm = new AddProductCommand(productService, prod);
 
@@ -229,7 +231,20 @@ public class JpAgregarProducto extends javax.swing.JPanel implements Observer{
                     JOptionPane.ERROR_MESSAGE);
         }
     }
+
         
+    //Obtener solo los productos del vendedor
+    private List<Product> getProductsVendedor(List<Product> products){
+        List<Product> productsVendedor = new ArrayList<>(); 
+        
+        for(int i = 0; i < products.size();i++){
+            if (products.get(i).getVendedorId() == vendedor.getId()) {
+                productsVendedor.add(products.get(i));
+            }
+        }
+        return productsVendedor;
+    }
+    
     private void cleanControls() {
         txtIdProducto.setText("");
         txtNombreProducto.setText("");
@@ -241,10 +256,17 @@ public class JpAgregarProducto extends javax.swing.JPanel implements Observer{
     @Override
     public void update() {
         try {
-            fillTable(productService.findAllProducts());
+            //Encontrar todos los productos
+            List<Product> products = new ArrayList<>();
+            products = productService.findAllProducts();
+            
+            //Filtrar los productos del vendedor
+            List<Product> productsVendedor = new ArrayList<>();
+            productsVendedor = getProductsVendedor(products);
+            
+            fillTable(productsVendedor);
         } catch (Exception ex) {
             Logger.getLogger(GUIVendedor.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
 }

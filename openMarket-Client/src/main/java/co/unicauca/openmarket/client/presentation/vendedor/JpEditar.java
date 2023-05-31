@@ -7,7 +7,9 @@ import co.unicauca.openmarket.client.domain.service.ProductService;
 import co.unicauca.openmarket.client.infra.Messages;
 import co.unicauca.openmarket.commons.domain.Category;
 import co.unicauca.openmarket.commons.domain.Product;
+import co.unicauca.openmarket.commons.domain.User;
 import co.unicauca.openmarket.commons.observer.Observer;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,11 +27,12 @@ public class JpEditar extends javax.swing.JPanel implements Observer {
     private ProductService productService;
     private CategoryService categoryService;
     private Invoker invoker;
+    private User vendedor;
     
     /**
      * Creates new form JpEditar
      */
-    public JpEditar(javax.swing.JPanel jpContent, javax.swing.JPanel jpPrincipal, ProductService productService, CategoryService categoryService, Invoker invoker) {
+    public JpEditar(javax.swing.JPanel jpContent, javax.swing.JPanel jpPrincipal, ProductService productService, CategoryService categoryService, Invoker invoker, User vendedor) {
         initComponents();  
         initializeTable();
         this.productService = productService;
@@ -38,6 +41,7 @@ public class JpEditar extends javax.swing.JPanel implements Observer {
         this.invoker.registerObserver(this);
         this.jpPrincipal = jpPrincipal;
         this.jpContent = jpContent;
+        this.vendedor = vendedor;
         update();
         
     }
@@ -80,15 +84,12 @@ public class JpEditar extends javax.swing.JPanel implements Observer {
         lbNombreProducto = new javax.swing.JLabel();
         lbPrecio = new javax.swing.JLabel();
         lbIdCategoria = new javax.swing.JLabel();
-        lbLocacion = new javax.swing.JLabel();
         lbDescripcion = new javax.swing.JLabel();
-        btnDeshacer = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
         btnVolver = new javax.swing.JButton();
         txtNombreProducto = new javax.swing.JTextField();
         txtPrecio = new javax.swing.JTextField();
         txtIdCategoria = new javax.swing.JTextField();
-        txtLocacion = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtADescripcion = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -102,33 +103,22 @@ public class JpEditar extends javax.swing.JPanel implements Observer {
         lbNombreProducto.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
         lbNombreProducto.setForeground(new java.awt.Color(255, 255, 255));
         lbNombreProducto.setText("Nombre");
-        add(lbNombreProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, -1, -1));
+        add(lbNombreProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 90, -1, -1));
 
         lbPrecio.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
         lbPrecio.setForeground(new java.awt.Color(255, 255, 255));
         lbPrecio.setText("Precio");
-        add(lbPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 100, -1, -1));
+        add(lbPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 140, -1, -1));
 
         lbIdCategoria.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
         lbIdCategoria.setForeground(new java.awt.Color(255, 255, 255));
         lbIdCategoria.setText("Id categoria");
-        add(lbIdCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 150, -1, -1));
-
-        lbLocacion.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
-        lbLocacion.setForeground(new java.awt.Color(255, 255, 255));
-        lbLocacion.setText("Locación");
-        add(lbLocacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 200, -1, -1));
+        add(lbIdCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 200, -1, -1));
 
         lbDescripcion.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
         lbDescripcion.setForeground(new java.awt.Color(255, 255, 255));
         lbDescripcion.setText("Descripción");
         add(lbDescripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 250, -1, -1));
-
-        btnDeshacer.setBackground(new java.awt.Color(224, 122, 95));
-        btnDeshacer.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
-        btnDeshacer.setForeground(new java.awt.Color(255, 255, 255));
-        btnDeshacer.setText("Deshacer");
-        add(btnDeshacer, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 150, 100, -1));
 
         btnGuardar.setBackground(new java.awt.Color(224, 122, 95));
         btnGuardar.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
@@ -139,7 +129,7 @@ public class JpEditar extends javax.swing.JPanel implements Observer {
                 btnGuardarActionPerformed(evt);
             }
         });
-        add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 90, 100, -1));
+        add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 120, 100, -1));
 
         btnVolver.setBackground(new java.awt.Color(224, 122, 95));
         btnVolver.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
@@ -150,11 +140,10 @@ public class JpEditar extends javax.swing.JPanel implements Observer {
                 btnVolverActionPerformed(evt);
             }
         });
-        add(btnVolver, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 210, 100, -1));
-        add(txtNombreProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 50, 220, -1));
-        add(txtPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 100, 220, -1));
-        add(txtIdCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 150, 220, -1));
-        add(txtLocacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 200, 220, -1));
+        add(btnVolver, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 180, 100, -1));
+        add(txtNombreProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 80, 220, -1));
+        add(txtPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 130, 220, -1));
+        add(txtIdCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 190, 220, -1));
 
         txtADescripcion.setColumns(20);
         txtADescripcion.setRows(5);
@@ -180,8 +169,8 @@ public class JpEditar extends javax.swing.JPanel implements Observer {
         lbIdProducto.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
         lbIdProducto.setForeground(new java.awt.Color(255, 255, 255));
         lbIdProducto.setText("Id producto");
-        add(lbIdProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, -1, -1));
-        add(txtIdProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 10, 220, -1));
+        add(lbIdProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 40, -1, -1));
+        add(txtIdProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 30, 220, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
@@ -214,7 +203,6 @@ public class JpEditar extends javax.swing.JPanel implements Observer {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnDeshacer;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnVolver;
     private javax.swing.JScrollPane jScrollPane1;
@@ -222,53 +210,82 @@ public class JpEditar extends javax.swing.JPanel implements Observer {
     private javax.swing.JLabel lbDescripcion;
     private javax.swing.JLabel lbIdCategoria;
     private javax.swing.JLabel lbIdProducto;
-    private javax.swing.JLabel lbLocacion;
     private javax.swing.JLabel lbNombreProducto;
     private javax.swing.JLabel lbPrecio;
     private javax.swing.JTable tblEditar;
     private javax.swing.JTextArea txtADescripcion;
     private javax.swing.JTextField txtIdCategoria;
     private javax.swing.JTextField txtIdProducto;
-    private javax.swing.JTextField txtLocacion;
     private javax.swing.JTextField txtNombreProducto;
     private javax.swing.JTextField txtPrecio;
     // End of variables declaration//GEN-END:variables
 
     private void editProduct() throws Exception {
+        //Obtener dato del id
         Long productId = Long.valueOf(txtIdProducto.getText().trim());
-
+        
+        //Encontrar el producto por id
         Product prod = productService.findProductById(productId);
-
-        if (!txtNombreProducto.getText().isEmpty()) {
-            prod.setName(txtNombreProducto.getText().trim());
-        }
-        if (!txtADescripcion.getText().isEmpty()) {
-            prod.setDescription(txtADescripcion.getText().trim());
-        }
-        if (!txtPrecio.getText().isEmpty()) {
-            prod.setPrice(Double.parseDouble(txtPrecio.getText().trim()));
-        }
-        if (!txtIdCategoria.getText().isEmpty()) {
-
-            Category cat = categoryService.findCategoryById(Long.valueOf(txtIdCategoria.getText()));
-            if (cat == null) {
-                JOptionPane.showMessageDialog(null,
-                        "La categoria no existe, ingrese una valida",
-                        "Error",
-                        JOptionPane.ERROR_MESSAGE);
-                return;
+        
+        if (isProductVendedor(prod)) {
+            if (!txtNombreProducto.getText().isEmpty()) {
+                prod.setName(txtNombreProducto.getText().trim());
             }
-            prod.setCategoryId(cat.getCategoryId());
+            if (!txtADescripcion.getText().isEmpty()) {
+                prod.setDescription(txtADescripcion.getText().trim());
+            }
+            if (!txtPrecio.getText().isEmpty()) {
+                prod.setPrice(Double.parseDouble(txtPrecio.getText().trim()));
+            }
+            if (!txtIdCategoria.getText().isEmpty()) {
 
-        }
+                Category cat = categoryService.findCategoryById(Long.valueOf(txtIdCategoria.getText()));
+                if (cat == null) {
+                    JOptionPane.showMessageDialog(null,
+                            "La categoria no existe, ingrese una valida",
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                prod.setCategoryId(cat.getCategoryId());
 
-        if (productService.editProduct(productId, prod)) {
-            Messages.showMessageDialog("Se editó con éxito", "Atención");
-            cleanControls();
-            update();
-        } else {
-            Messages.showMessageDialog("Error al editar, lo siento mucho", "Atención");
+            }
+
+            if (productService.editProduct(productId, prod)) {
+                Messages.showMessageDialog("Se editó con éxito", "Atención");
+                cleanControls();
+                update();
+            } else {
+                Messages.showMessageDialog("Error al editar, lo siento mucho", "Atención");
+            }
+        }else {
+        
+            JOptionPane.showMessageDialog(null,
+            "No tienes permiso para editar este producto.",
+            "Errro product id",
+            JOptionPane.ERROR_MESSAGE);
         }
+    }
+    
+    //Obtener solo los productos del vendedor
+    private List<Product> getProductsVendedor(List<Product> products){
+        List<Product> productsVendedor = new ArrayList<>(); 
+        
+        for(int i = 0; i < products.size();i++){
+            if (products.get(i).getVendedorId() == vendedor.getId()) {
+                productsVendedor.add(products.get(i));
+            }
+        }
+        return productsVendedor;
+    }
+    
+    //Validar si es un producto del vendedor
+    private boolean isProductVendedor(Product productVendedor) {
+        boolean bandera = false;
+        if (productVendedor.getVendedorId() == vendedor.getId()) {
+            bandera = true;
+        }
+        return bandera;
     }
     
     private void cleanControls() {
@@ -277,13 +294,20 @@ public class JpEditar extends javax.swing.JPanel implements Observer {
         txtADescripcion.setText("");
         txtIdCategoria.setText("");
         txtPrecio.setText("");
-        txtLocacion.setText("");
     }
     
     @Override
     public void update() {
         try {
-            fillTable(productService.findAllProducts());
+            //Encontrar todos los productos
+            List<Product> products = new ArrayList<>();
+            products = productService.findAllProducts();
+            
+            //Filtrar los productos del vendedor
+            List<Product> productsVendedor = new ArrayList<>();
+            productsVendedor = getProductsVendedor(products);
+            
+            fillTable(productsVendedor);
         } catch (Exception ex) {
             Logger.getLogger(JpEditar.class.getName()).log(Level.SEVERE, null, ex);
         }

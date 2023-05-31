@@ -444,7 +444,7 @@ public class JPBuscarProductos extends javax.swing.JPanel {
 
                 } else if (seleccion.equals("Categoria")) {
 
-                    fillTableCategory(productService.findProductsByCategory(txtValorIngresado1.getText()));
+                    fillTableCategory(productService.findProductsByCategory(Long.parseLong(txtValorIngresado1.getText())));
 
                 } else if (seleccion.equals("Precio")) {
 

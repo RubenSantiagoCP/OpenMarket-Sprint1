@@ -186,8 +186,8 @@ public class OpenMarketHandler extends ServerHandler {
     }
 
     private String processGetProductsByCategory(Protocol protocolRequest) {
-        String categoryName = protocolRequest.getParameters().get(0).getValue();
-        List<Product> products=getProductService().findByCategory(categoryName);
+        Long categoryId = Long.parseLong(protocolRequest.getParameters().get(0).getValue());
+        List<Product> products=getProductService().findByCategory(categoryId);
         return objectToJSON(products);
     }
     

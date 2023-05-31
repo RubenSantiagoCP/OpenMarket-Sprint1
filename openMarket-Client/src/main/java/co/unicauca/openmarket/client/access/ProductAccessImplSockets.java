@@ -261,9 +261,9 @@ public class ProductAccessImplSockets implements IProductAccess {
      * @throws Exception cuando no pueda conectarse con el servidor
      */
     @Override
-    public List<Product> findByCategory(String categoryName) throws Exception {
+    public List<Product> findByCategory(Long categoryId) throws Exception {
         String jsonResponse = null;
-        String requestJson = doFindProductByCategoryRequestJson(categoryName);
+        String requestJson = doFindProductByCategoryRequestJson(categoryId);
         System.out.println(requestJson);
         try {
             mySocket.connect();
@@ -474,11 +474,11 @@ public class ProductAccessImplSockets implements IProductAccess {
      * @return solicitud de consulta del producto en formato Json, algo como:
      * {"resource":"product","action":"get","parameters":[{"name":"pname","value":"salsa"}]}
      */
-    private String doFindProductByCategoryRequestJson(String categoryName) {
+    private String doFindProductByCategoryRequestJson(Long categoryId) {
         Protocol protocol = new Protocol();
         protocol.setResource("product");
         protocol.setAction("getProductsByCategory");
-        protocol.addParameter("productName", categoryName);
+        protocol.addParameter("categoryId", categoryId.toString());
         Gson gson = new Gson();
         String requestJson = gson.toJson(protocol);
         return requestJson;

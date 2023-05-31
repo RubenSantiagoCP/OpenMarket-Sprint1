@@ -7,6 +7,8 @@ import co.unicauca.openmarket.commons.observer.Observer;
 import co.unicauca.openmaket.client.command.Invoker;
 import co.unicauca.openmaket.client.command.RemoveProductCommand;
 import co.unicauca.openmarket.client.infra.Messages;
+import co.unicauca.openmarket.commons.domain.User;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,10 +26,12 @@ public class JpPrincipal extends javax.swing.JPanel implements Observer{
     private CategoryService categoryService;
     private Invoker invoker;
     private static JpEditar jpEditar;
+    private User vendedor;
+    
     /**
      * Creates new form jpPrincipal
      */
-    public JpPrincipal(javax.swing.JPanel parent, ProductService productService, CategoryService categoryService, Invoker invoker) {
+    public JpPrincipal(javax.swing.JPanel parent, ProductService productService, CategoryService categoryService, Invoker invoker, User vendedor) {
         initComponents();  
         initializeTable();
         this.productService = productService;
@@ -35,9 +39,10 @@ public class JpPrincipal extends javax.swing.JPanel implements Observer{
         this.invoker = new Invoker();
         this.invoker.registerObserver(this);
         this.jpContent = parent;
+        this.vendedor = vendedor;
         
         //Panel Editar producto
-        jpEditar = new JpEditar(jpContent, this, productService, categoryService, invoker);
+        jpEditar = new JpEditar(jpContent, this, productService, categoryService, invoker, this.vendedor);
         productService.registerObserver(jpEditar);
         categoryService.registerObserver(jpEditar);
 
@@ -264,17 +269,26 @@ public class JpPrincipal extends javax.swing.JPanel implements Observer{
             }
             Long productId = Long.valueOf(id);
             if (Messages.showConfirmDialog("Está seguro que desea eliminar este producto?", "Confirmación") == JOptionPane.YES_NO_OPTION) {
+                //Obtener producto
                 Product product = productService.findProductById(productId);
-                RemoveProductCommand comm = new RemoveProductCommand(productService, product);
+                //Confirmar que el producto es del vendedor
+                if (isProductVendedor(product)){
+                    RemoveProductCommand comm = new RemoveProductCommand(productService, product);
 
-                if (invoker.executeCommand(comm)) {
-                    Messages.showMessageDialog("Producto eliminado con éxito", "Atención");
-                    stateInitial();
-                    txtProducto.setText("");
+                    if (invoker.executeCommand(comm)) {
+                        Messages.showMessageDialog("Producto eliminado con éxito", "Atención");
+                        stateInitial();
+                        txtProducto.setText("");
+                    } else {
+                        Messages.showMessageDialog("Error al eliminar, lo siento mucho", "Atención");
+                    }
+                //Sino lanza error
                 } else {
-                    Messages.showMessageDialog("Error al eliminar, lo siento mucho", "Atención");
+                    JOptionPane.showMessageDialog(null,
+                         "No tienes permiso para eliminar este producto.",
+                         "Errro product id",
+                         JOptionPane.ERROR_MESSAGE);
                 }
-
             }
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null,
@@ -293,7 +307,17 @@ public class JpPrincipal extends javax.swing.JPanel implements Observer{
 
     private void btnBuscarTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarTodosActionPerformed
         try {
-            fillTable(productService.findAllProducts());
+            //Encontrar todos los productos
+            List<Product> products = new ArrayList<>();
+            products = productService.findAllProducts();
+            
+            //Filtrar los productos del vendedor
+            List<Product> productsVendedor = new ArrayList<>();
+            productsVendedor = getProductsVendedor(products);
+            
+            //Mostrar los productos del vendedor
+            fillTable(productsVendedor);
+            
         } catch (Exception ex) {
             Logger.getLogger(JpPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -308,16 +332,45 @@ public class JpPrincipal extends javax.swing.JPanel implements Observer{
                     JOptionPane.ERROR_MESSAGE);
                 return;
             }
+            //Para encontrar todos los productos sin filtrar
+            List<Product> products = new ArrayList<>();
+            
+            //Para obtener lista filtrada de productos del vendedor
+            List<Product> productsVendedor = new ArrayList<>();
+            
+            //Para obtener producto filtrado del vendedor
+            Product productVendedor = new Product();
+            
 
             if (this.cmbBuscar.getSelectedItem().toString() == "Id") {
-                fillTableId(productService.findProductById(Long.valueOf(this.txtProducto.getText())));
+                //Obtener el producto
+                productVendedor = productService.findProductById(Long.valueOf(this.txtProducto.getText()));
+                //Filtrar producto
+                if (isProductVendedor(productVendedor)) {
+                    fillTableId(productVendedor);
+                }else {
+                    JOptionPane.showMessageDialog(null,
+                        "Producto no encontrado",
+                        "Errro product id",
+                        JOptionPane.ERROR_MESSAGE);
+                }
             } else if (this.cmbBuscar.getSelectedItem().toString() == "Categoria") {
-
-                fillTableCategory(productService.findProductsByCategory(this.txtProducto.getText()));
+                //Obtener todos los productos
+                products = productService.findProductsByCategory(Long.parseLong(this.txtProducto.getText()));
+                //Obtener los productos del vendedor
+                productsVendedor = getProductsVendedor(products);
+                //Llenar tabla
+                fillTableCategory(productsVendedor);
             } else if (this.cmbBuscar.getSelectedItem().toString() == "Nombre") {
-                fillTableName(productService.findProductsByName(this.txtProducto.getText()));
+                //Obtener todos los productos
+                products = productService.findProductsByName(this.txtProducto.getText());
+                //Obtener los productos del vendedor
+                productsVendedor = getProductsVendedor(products);
+                //Llenar tabla
+                fillTableCategory(productsVendedor);
             }
             txtProducto.setText("");
+            
         } catch (NullPointerException ex) {
             JOptionPane.showMessageDialog(null,
                 "Envia la informacion correspondiente",
@@ -363,6 +416,27 @@ public class JpPrincipal extends javax.swing.JPanel implements Observer{
     private javax.swing.JTextField txtProducto;
     // End of variables declaration//GEN-END:variables
     
+    //Obtener solo los productos del vendedor
+    private List<Product> getProductsVendedor(List<Product> products){
+        List<Product> productsVendedor = new ArrayList<>(); 
+        
+        for(int i = 0; i < products.size();i++){
+            if (products.get(i).getVendedorId() == vendedor.getId()) {
+                productsVendedor.add(products.get(i));
+            }
+        }
+        return productsVendedor;
+    }
+    
+    //Validar si es un producto del vendedor
+    private boolean isProductVendedor(Product productVendedor) {
+        boolean bandera = false;
+        if (productVendedor.getVendedorId() == vendedor.getId()) {
+            bandera = true;
+        }
+        return bandera;
+    }
+
     
     private void stateInitial() {
        
@@ -391,7 +465,15 @@ public class JpPrincipal extends javax.swing.JPanel implements Observer{
     @Override
     public void update() {
         try {
-            fillTable(productService.findAllProducts());
+            //Encontrar todos los productos
+            List<Product> products = new ArrayList<>();
+            products = productService.findAllProducts();
+            
+            //Filtrar los productos del vendedor
+            List<Product> productsVendedor = new ArrayList<>();
+            productsVendedor = getProductsVendedor(products);
+            
+            fillTable(productsVendedor);
         } catch (Exception ex) {
             Logger.getLogger(JpPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }

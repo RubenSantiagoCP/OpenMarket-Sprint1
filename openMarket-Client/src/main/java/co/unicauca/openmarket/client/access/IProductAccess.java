@@ -20,7 +20,7 @@ public interface IProductAccess {
     Product findById(Long id) throws Exception;
     
     List<Product> findByName(String pname) throws Exception;
-    List<Product> findByCategory(String categoryName) throws Exception;
+    List<Product> findByCategory(Long categoryId) throws Exception;
     List<Product> findAll() throws Exception;
 
     List<Product> finByPrice(Long minPrice, Long maxPrice) throws Exception;

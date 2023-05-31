@@ -77,9 +77,9 @@ public class ProductService implements Subject {
         return products;
     }
 
-    public List<Product> findProductsByCategory(String categoryName) throws Exception {
+    public List<Product> findProductsByCategory(Long categoryId) throws Exception {
         List<Product> products = new ArrayList<>();
-        products = repository.findByCategory(categoryName);
+        products = repository.findByCategory(categoryId);
 
         return products;
     }
