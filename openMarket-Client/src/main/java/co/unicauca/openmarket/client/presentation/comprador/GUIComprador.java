@@ -33,6 +33,7 @@ public class GUIComprador extends javax.swing.JFrame {
         this.bankService = bankService;
         this.user = user;
         this.deshabilitarFunciones();
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
     
     private void deshabilitarFunciones(){

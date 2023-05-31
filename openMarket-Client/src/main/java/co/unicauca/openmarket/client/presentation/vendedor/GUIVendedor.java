@@ -23,7 +23,7 @@ public class GUIVendedor extends javax.swing.JFrame implements Observer{
     /** Creates new form GUIVendedor */
     public GUIVendedor(ProductService productService, CategoryService categoryService, User user) {
         initComponents();
-        
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.productService = productService;
         this.categoryService = categoryService;
         invoker = new Invoker();

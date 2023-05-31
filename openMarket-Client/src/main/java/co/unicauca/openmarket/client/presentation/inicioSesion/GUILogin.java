@@ -39,7 +39,7 @@ public class GUILogin extends javax.swing.JFrame {
             
     public GUILogin() {
         initComponents();
-        this.userService = userService;
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         IProductAccess repository = Factory.getInstance().getProductAccess();
         ICategoryAccess repository2 =  Factory.getInstance().getCategoryAccess();
         IUserAccess repository3 = Factory.getInstance().getUserAccess();
@@ -236,7 +236,7 @@ public class GUILogin extends javax.swing.JFrame {
             GUIComprador vtnComprador = new GUIComprador(productService, categoryService,buyService, user, bankService);
             vtnComprador.setVisible(true);
         }else if(user.getTipo().equalsIgnoreCase("repartidor")){
-            GUIRepartidor vtnRepartidor = new GUIRepartidor();
+            GUIRepartidor vtnRepartidor = new GUIRepartidor(buyService);
             vtnRepartidor.setVisible(true);
         }else{
            Messages.showMessageDialog("No se han implementado otros tipos de usuario", "Atención");
