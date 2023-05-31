@@ -40,6 +40,7 @@ public class JPBuscarProductos extends javax.swing.JPanel {
         this.buyService = buyService;
         this.user = user;
         this.invoker = new Invoker();
+        this.deshabilitarFunciones();
 
         //<editor-fold defaultstate="collapsed" desc="Metodo auxiliar para seleccionar filas">
         /*tblProductosO.addMouseListener(new MouseAdapter(){
@@ -64,6 +65,10 @@ public class JPBuscarProductos extends javax.swing.JPanel {
             
         });*/
         //</editor-fold>
+    }
+    
+    private void deshabilitarFunciones(){
+        this.btnCrearCompra.setVisible(false);
     }
 
     //<editor-fold defaultstate="collapsed" desc="Metodo auxiliar para seleccionar producto">
