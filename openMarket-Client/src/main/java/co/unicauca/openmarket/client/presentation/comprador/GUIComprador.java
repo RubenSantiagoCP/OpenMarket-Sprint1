@@ -1,5 +1,6 @@
 package co.unicauca.openmarket.client.presentation.comprador;
 
+import co.unicauca.openmarket.client.domain.service.BankAccountService;
 import co.unicauca.openmarket.client.domain.service.BuyService;
 import co.unicauca.openmarket.client.domain.service.CategoryService;
 import co.unicauca.openmarket.client.domain.service.ProductService;
@@ -18,18 +19,21 @@ public class GUIComprador extends javax.swing.JFrame {
     private ProductService productService;
     private CategoryService categoryService;
     private BuyService buyService;
+    private BankAccountService bankService;
     private User user;
 
     /**
      * Creates new form GUIComprador
      */
-    public GUIComprador(ProductService productService, CategoryService categoryService, BuyService buyService, User user) {
+    public GUIComprador(ProductService productService, CategoryService categoryService, BuyService buyService, User user, BankAccountService bankService) {
         initComponents();
         this.productService = productService;
         this.categoryService = categoryService;
         this.buyService = buyService;
+        this.bankService = bankService;
         this.user = user;
-        //this.deshabilitarFunciones();
+        this.deshabilitarFunciones();
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
     
     private void deshabilitarFunciones(){
@@ -112,7 +116,7 @@ public class GUIComprador extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBuscarPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarPActionPerformed
-        JPanel jpBuscar = new JPBuscarProductos(productService, categoryService, buyService, user);
+        JPanel jpBuscar = new JPBuscarProductos(productService, categoryService, buyService, user, bankService);
         jpBuscar.setSize(700, 600);
         jpBuscar.setLocation(0, 0);
 

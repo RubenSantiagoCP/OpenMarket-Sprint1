@@ -11,7 +11,6 @@ co\unicauca\openmarket\server\domain\services\BuyService.class
 co\unicauca\openmarket\server\access\CategoryRepositoryImplMysql.class
 co\unicauca\openmarket\server\access\UserRepositoryImplMySql.class
 co\unicauca\openmarket\server\access\Factory.class
-co\unicauca\openmarket\server\data\UserCreated.class
 co\unicauca\openmarket\server\access\IProductRepository.class
 co\unicauca\openmarket\server\domain\services\ProductService.class
 co\unicauca\openmarket\server\access\ICategoryRepository.class

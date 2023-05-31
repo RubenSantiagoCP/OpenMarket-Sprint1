@@ -15,6 +15,12 @@ import java.util.logging.Logger;
 public class BankAccountImplSockets implements IBankAccountAccess{
     private OpenMarketSocket mySocket;
 
+    public BankAccountImplSockets() {
+        this.mySocket = new OpenMarketSocket();
+    }
+    
+    
+
     @Override
     public BankAccount findByUser(Long id) throws Exception {
          String jsonResponse = null;

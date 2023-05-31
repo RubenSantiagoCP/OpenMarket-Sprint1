@@ -3,16 +3,15 @@ package co.unicauca.openmarket.commons.domain;
 
 public class BankAccount {
     private Long bankId;
-    private User user;
+    private Long userId;
     private double saldo;
 
     public BankAccount() {
     }
 
-    
-    public BankAccount(Long bankId, User user, double saldo) {
+    public BankAccount(Long bankId, Long userId, double saldo) {
         this.bankId = bankId;
-        this.user = user;
+        this.userId = userId;
         this.saldo = saldo;
     }
 
@@ -24,12 +23,12 @@ public class BankAccount {
         this.bankId = bankId;
     }
 
-    public User getUser() {
-        return user;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public double getSaldo() {

@@ -12,7 +12,6 @@ co\unicauca\openmarket\client\presentation\vendedor\GUIVendedor.class
 co\unicauca\openmarket\client\presentation\repartidor\jpRecogerProducto.class
 co\unicauca\openmarket\client\infra\OpenMarketSocket.class
 co\unicauca\openmarket\client\presentation\comprador\JPBuscarProductos$2.class
-co\unicauca\openmarket\client\presentation\vendedor\GUIVendedor$5.class
 co\unicauca\openmarket\client\presentation\vendedor\JpAgregarProducto.class
 co\unicauca\openmarket\client\presentation\comprador\GUIComprador$2.class
 co\unicauca\openmarket\client\presentation\vendedor\JpPrincipal.class
@@ -20,12 +19,10 @@ co\unicauca\openmarket\client\access\BuyAccessImplSocket$1.class
 co\unicauca\openmarket\client\access\IProductAccess.class
 co\unicauca\openmarket\client\presentation\vendedor\JpCategoria$3.class
 co\unicauca\openmaket\client\command\AddProductCommand.class
-co\unicauca\openmarket\client\presentation\vendedor\GUIVendedor$7.class
 co\unicauca\openmarket\client\presentation\comprador\JPBuscarProductos.class
 co\unicauca\openmarket\client\presentation\comprador\JPConfirmarE$2.class
 co\unicauca\openmarket\client\presentation\comprador\GUIComprador.class
 co\unicauca\openmarket\client\access\ICategoryAccess.class
-co\unicauca\openmarket\client\presentation\vendedor\GUIVendedor$4.class
 co\unicauca\openmarket\client\presentation\comprador\JPBuscarProductos$3.class
 co\unicauca\openmarket\client\presentation\vendedor\JpPrincipal$4.class
 co\unicauca\openmarket\client\presentation\comprador\JPBuscarProductos$6.class
@@ -68,7 +65,6 @@ co\unicauca\openmarket\client\presentation\vendedor\JpCategoria$4.class
 co\unicauca\openmarket\client\presentation\inicioSesion\GUILogin$1.class
 co\unicauca\openmarket\client\access\CategoryAccessImplSockets$1.class
 co\unicauca\openmarket\client\presentation\comprador\JPTusCompras.class
-co\unicauca\openmarket\client\presentation\vendedor\GUIVendedor$6.class
 co\unicauca\openmarket\client\presentation\comprador\GUIComprador$3.class
 co\unicauca\openmarket\client\access\ProductAccessImplSockets$1.class
 co\unicauca\openmarket\client\presentation\vendedor\JpCategoria$1.class

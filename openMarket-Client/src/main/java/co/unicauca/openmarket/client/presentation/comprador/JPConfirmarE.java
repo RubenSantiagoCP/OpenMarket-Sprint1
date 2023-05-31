@@ -90,7 +90,7 @@ public class JPConfirmarE extends javax.swing.JPanel {
         Object rowData[] = new Object[4];
         for(int i = 0; i < lstBuys.size(); i++){
             String estado = lstBuys.get(i).getEstado();
-            if(estado.equals("Realizada")){
+            if(estado.equals("Entregado")){
                 //Se obtiene el producto de la venta
                 Product product = productService.findProductById(lstBuys.get(i).getProductoId());
                 

@@ -17,8 +17,10 @@ public class GUIRepartidor extends javax.swing.JFrame {
      * Creates new form GUIRepartidor
      */
     private BuyService buyService; 
-    public GUIRepartidor() {
+    public GUIRepartidor(BuyService buyService) {
         initComponents();
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        this.buyService = buyService;
         jpRecogerProducto vtnRecogerProducto = new jpRecogerProducto(buyService);
         vtnRecogerProducto .setSize(700, 600);
         vtnRecogerProducto .setLocation(0,0);
