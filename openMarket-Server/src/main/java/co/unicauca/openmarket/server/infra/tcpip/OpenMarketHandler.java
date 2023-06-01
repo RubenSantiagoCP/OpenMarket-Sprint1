@@ -304,8 +304,10 @@ public class OpenMarketHandler extends ServerHandler {
 
     private String processPostProduct(Protocol protocolRequest) {
         Long id = Long.valueOf(protocolRequest.getParameters().get(0).getValue());
-        Long catId= Long.valueOf(protocolRequest.getParameters().get(4).getValue());
-       Product product= getProductService().findById(id);
+        Long catId = Long.valueOf(protocolRequest.getParameters().get(4).getValue());
+        Long vendedorId = Long.valueOf(protocolRequest.getParameters().get(5).getValue());
+        
+       Product product = getProductService().findById(id);
 
         if(!(product == null)){
             return generateBadRequestJson(Context.PRODUCT);
@@ -322,15 +324,15 @@ public class OpenMarketHandler extends ServerHandler {
             Gson gson = new Gson();
             return gson.toJson(errors);
         }
-          product = new Product();
+        product = new Product();
+        
         // Reconstruir el producto a partir de lo que viene en los parámetros
         product.setProductId(Long.valueOf(protocolRequest.getParameters().get(0).getValue()));
         product.setName(protocolRequest.getParameters().get(1).getValue());
         product.setDescription(protocolRequest.getParameters().get(2).getValue());
         product.setPrice(Double.parseDouble(protocolRequest.getParameters().get(3).getValue()));
         product.setCategoryId(Long.valueOf(protocolRequest.getParameters().get(4).getValue()));
-
-
+        product.setVendedorId(Long.valueOf(protocolRequest.getParameters().get(5).getValue()));
 
         getProductService().createProduct(product);
 

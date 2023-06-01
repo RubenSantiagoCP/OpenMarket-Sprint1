@@ -77,7 +77,6 @@ public class JpCategoria extends javax.swing.JPanel implements Observer{
         txtIdCategoria = new javax.swing.JTextField();
         txtNombreCategoria = new javax.swing.JTextField();
         btnGuardar = new javax.swing.JButton();
-        btnDeshacer = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblAgregarCategoria = new javax.swing.JTable();
         btnEditarCategoria = new javax.swing.JButton();
@@ -110,12 +109,6 @@ public class JpCategoria extends javax.swing.JPanel implements Observer{
             }
         });
         add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 250, 100, -1));
-
-        btnDeshacer.setBackground(new java.awt.Color(224, 122, 95));
-        btnDeshacer.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
-        btnDeshacer.setForeground(new java.awt.Color(255, 255, 255));
-        btnDeshacer.setText("Deshacer");
-        add(btnDeshacer, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 250, 100, -1));
 
         tblAgregarCategoria.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -204,7 +197,6 @@ public class JpCategoria extends javax.swing.JPanel implements Observer{
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnDeshacer;
     private javax.swing.JButton btnEditarCategoria;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnGuardarEdicion;
@@ -264,7 +256,6 @@ public class JpCategoria extends javax.swing.JPanel implements Observer{
      private void stateInitial() {
         btnGuardar.setVisible(true);
         btnEditarCategoria.setVisible(true);
-        btnDeshacer.setVisible(true);
         btnGuardarEdicion.setVisible(false);
         btnVolver.setVisible(false);
     }
@@ -272,7 +263,6 @@ public class JpCategoria extends javax.swing.JPanel implements Observer{
      private void stateEdit() {
         btnGuardar.setVisible(false);
         btnEditarCategoria.setVisible(false);
-        btnDeshacer.setVisible(false);
         btnGuardarEdicion.setVisible(true);
         btnVolver.setVisible(true);
      }

@@ -201,7 +201,7 @@ public class JpPrincipal extends javax.swing.JPanel implements Observer{
         jpPrincipal.add(txtProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(168, 191, 179, -1));
 
         cmbBuscar.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
-        cmbBuscar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Id", "Nombre", "Categoria" }));
+        cmbBuscar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Id", "Nombre", "Id categoria" }));
         jpPrincipal.add(cmbBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(405, 189, -1, -1));
 
         tblPrincipal.setModel(new javax.swing.table.DefaultTableModel(

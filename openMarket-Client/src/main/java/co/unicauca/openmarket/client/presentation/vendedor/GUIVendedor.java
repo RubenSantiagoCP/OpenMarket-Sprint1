@@ -127,7 +127,7 @@ public class GUIVendedor extends javax.swing.JFrame implements Observer{
                 btnPrincipalActionPerformed(evt);
             }
         });
-        jpGestionVendedor.add(btnPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, 150, -1));
+        jpGestionVendedor.add(btnPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(21, 200, 160, -1));
 
         getContentPane().add(jpGestionVendedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, 600));
 

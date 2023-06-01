@@ -34,7 +34,7 @@ public class ProductRepositoryImplMysql implements IProductRepository {
     private void initDatabase() {
         // SQL statement for creating a new table
         String sql = "CREATE TABLE IF NOT EXISTS products (\n"
-                + "	productId integer PRIMARY KEY,\n"
+                + "	productId integer PRIMARY KEY AUTOINCREMENT,\n"
                 + "	name text NOT NULL,\n"
                 + "	description text NULL,\n"
                 + "	prod_price number NOT NULL,\n"
@@ -57,12 +57,12 @@ public class ProductRepositoryImplMysql implements IProductRepository {
     
     public void crearProductos() {
         String[] insertStatements = {
-            "INSERT INTO products (productId,name,description,prod_price,cat_id,user_id) VALUES(1,'Margarita limon','Paquete',2000,1,1)",
-            "INSERT INTO products (productId,name,description,prod_price,cat_id,user_id) VALUES(2,'Margarita picante','Paquete',3000,1,1)",
-            "INSERT INTO products (productId,name,description,prod_price,cat_id,user_id) VALUES(3,'Margarita pollo','Paquete',4000,2,1)",
-            "INSERT INTO products (productId,name,description,prod_price,cat_id,user_id) VALUES(4,'Margarita','Paquete',2400,1,2)",
-            "INSERT INTO products (productId,name,description,prod_price,cat_id,user_id) VALUES(5,'Margarita','Paquete',3500,1,3)",
-            "INSERT INTO products (productId,name,description,prod_price,cat_id,user_id) VALUES(6,'Margarita','Paquete',4700,1,4)"
+            "INSERT INTO products (productId,name,description,prod_price,cat_id,user_id) VALUES(1,'Margarita limon','Paquete',2000,1,3)",
+            "INSERT INTO products (productId,name,description,prod_price,cat_id,user_id) VALUES(2,'Margarita picante','Paquete',3000,1,3)",
+            "INSERT INTO products (productId,name,description,prod_price,cat_id,user_id) VALUES(3,'Margarita pollo','Paquete',4000,2,3)",
+            "INSERT INTO products (productId,name,description,prod_price,cat_id,user_id) VALUES(4,'Margarita','Paquete',2400,1,5)",
+            "INSERT INTO products (productId,name,description,prod_price,cat_id,user_id) VALUES(5,'Margarita','Paquete',3500,1,5)",
+            "INSERT INTO products (productId,name,description,prod_price,cat_id,user_id) VALUES(6,'Margarita','Paquete',4700,1,5)"
         };
 
         try {
@@ -171,12 +171,16 @@ public class ProductRepositoryImplMysql implements IProductRepository {
     public String createProduct(Product newProduct) {
         try {
             this.connect();
-            String sql = "INSERT INTO products ( name, description ) "
-                    + "VALUES ( ?, ?)";
+            String sql = "INSERT INTO products (productId,name,description,prod_price,cat_id,user_id) "
+                    + "VALUES ( ?, ?, ?, ?, ?, ?)";
 
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, newProduct.getName());
-            pstmt.setString(2, newProduct.getDescription());
+            pstmt.setLong(1, newProduct.getProductId());
+            pstmt.setString(2, newProduct.getName());
+            pstmt.setString(3, newProduct.getDescription());
+            pstmt.setDouble(4, newProduct.getPrice());
+            pstmt.setLong(5, newProduct.getCategoryId());
+            pstmt.setLong(6, newProduct.getVendedorId());
             pstmt.executeUpdate();
             pstmt.close();
             //this.disconnect();

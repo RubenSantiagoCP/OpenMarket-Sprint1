@@ -25,7 +25,7 @@ public class AddProductCommand implements Command {
 
     @Override
     public boolean execute() {
-        Long prodId=product.getProductId();
+        Long prodId = product.getProductId();
         String name= product.getName();
         String desc= product.getDescription();
         Double price = product.getPrice();

@@ -47,7 +47,7 @@ public class User {
         this.tipo = tipo;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 

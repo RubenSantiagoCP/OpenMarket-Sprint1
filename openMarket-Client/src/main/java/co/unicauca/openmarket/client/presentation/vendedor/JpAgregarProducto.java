@@ -168,8 +168,8 @@ public class JpAgregarProducto extends javax.swing.JPanel implements Observer{
         if (txtNombreProducto.getText().trim().equals("")
                 || txtIdCategoria.getText().trim().equals("")
                 || txtADescripcion.getText().trim().equals("")
-                || txtPrecio.getText().trim().equals("")
-                || txtIdProducto.getText().trim().equals("")) {
+                || txtPrecio.getText().trim().equals("")) {
+                //|| txtIdProducto.getText().trim().equals("")) {
             Messages.showMessageDialog("Debe llenar todos los datos", "Atención");
             txtNombreProducto.requestFocus();
             return;
@@ -213,7 +213,7 @@ public class JpAgregarProducto extends javax.swing.JPanel implements Observer{
             Long categoryId = Long.valueOf(this.txtIdCategoria.getText().trim());
             Double price = Double.valueOf(txtPrecio.getText().trim());
             Product prod = new Product(Long.valueOf(id), name, description, price, categoryId, vendedor.getId());
-
+            
             AddProductCommand comm = new AddProductCommand(productService, prod);
 
             if (invoker.executeCommand(comm)) {
