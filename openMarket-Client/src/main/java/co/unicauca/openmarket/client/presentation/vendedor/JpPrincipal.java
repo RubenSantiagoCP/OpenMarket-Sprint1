@@ -175,7 +175,7 @@ public class JpPrincipal extends javax.swing.JPanel implements Observer{
                 btnEditarActionPerformed(evt);
             }
         });
-        jpPrincipal.add(btnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(113, 100, 100, -1));
+        jpPrincipal.add(btnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 100, 100, -1));
 
         btnBorrar.setBackground(new java.awt.Color(224, 122, 95));
         btnBorrar.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
@@ -186,7 +186,7 @@ public class JpPrincipal extends javax.swing.JPanel implements Observer{
                 btnBorrarActionPerformed(evt);
             }
         });
-        jpPrincipal.add(btnBorrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(303, 100, 100, -1));
+        jpPrincipal.add(btnBorrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 100, 100, -1));
 
         btnBuscar.setBackground(new java.awt.Color(224, 122, 95));
         btnBuscar.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
@@ -197,12 +197,12 @@ public class JpPrincipal extends javax.swing.JPanel implements Observer{
                 btnBuscarActionPerformed(evt);
             }
         });
-        jpPrincipal.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 100, 100, -1));
-        jpPrincipal.add(txtProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(168, 191, 179, -1));
+        jpPrincipal.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 100, 100, -1));
+        jpPrincipal.add(txtProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 170, 179, -1));
 
         cmbBuscar.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
         cmbBuscar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Id", "Nombre", "Id categoria" }));
-        jpPrincipal.add(cmbBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(405, 189, -1, -1));
+        jpPrincipal.add(cmbBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 170, -1, -1));
 
         tblPrincipal.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -228,7 +228,7 @@ public class JpPrincipal extends javax.swing.JPanel implements Observer{
                 btnBuscarTodosActionPerformed(evt);
             }
         });
-        jpPrincipal.add(btnBuscarTodos, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 140, 100, -1));
+        jpPrincipal.add(btnBuscarTodos, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 100, 100, -1));
 
         btnEliminar.setBackground(new java.awt.Color(224, 122, 95));
         btnEliminar.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
@@ -239,7 +239,7 @@ public class JpPrincipal extends javax.swing.JPanel implements Observer{
                 btnEliminarActionPerformed(evt);
             }
         });
-        jpPrincipal.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(303, 140, 100, -1));
+        jpPrincipal.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 100, 100, -1));
 
         btnVolver.setBackground(new java.awt.Color(224, 122, 95));
         btnVolver.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N

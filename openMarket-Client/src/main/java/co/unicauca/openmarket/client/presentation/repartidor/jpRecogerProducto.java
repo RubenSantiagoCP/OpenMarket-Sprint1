@@ -125,7 +125,7 @@ public class jpRecogerProducto extends javax.swing.JPanel {
 
         lblMessage2.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
         lblMessage2.setForeground(new java.awt.Color(242, 204, 143));
-        lblMessage2.setText("esta entrega será confirmada por el comprador  y se añadirá a \"Tus entregas\" ");
+        lblMessage2.setText("esta entrega será confirmada por el comprador ");
 
         lblMessage1.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
         lblMessage1.setForeground(new java.awt.Color(242, 204, 143));

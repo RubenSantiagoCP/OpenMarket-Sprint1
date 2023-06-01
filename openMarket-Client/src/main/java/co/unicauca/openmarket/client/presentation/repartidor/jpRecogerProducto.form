@@ -100,7 +100,7 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="8f" green="cc" red="f2" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="esta entrega ser&#xe1; confirmada por el comprador  y se a&#xf1;adir&#xe1; a &quot;Tus entregas&quot; "/>
+        <Property name="text" type="java.lang.String" value="esta entrega ser&#xe1; confirmada por el comprador "/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblMessage1">

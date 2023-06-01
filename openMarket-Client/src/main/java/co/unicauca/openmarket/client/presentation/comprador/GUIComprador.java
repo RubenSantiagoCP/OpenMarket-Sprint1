@@ -105,10 +105,10 @@ public class GUIComprador extends javax.swing.JFrame {
         });
         jpOpcionesC.add(btnTusEntregas, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, 150, 40));
 
-        lblNombreComprador.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
+        lblNombreComprador.setFont(new java.awt.Font("Arial Black", 0, 18)); // NOI18N
         lblNombreComprador.setForeground(new java.awt.Color(255, 255, 255));
-        lblNombreComprador.setText("Nombre del Comprador");
-        jpOpcionesC.add(lblNombreComprador, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, -1, -1));
+        lblNombreComprador.setText("Comprador");
+        jpOpcionesC.add(lblNombreComprador, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, -1, -1));
 
         getContentPane().add(jpOpcionesC, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 200, 600));
 

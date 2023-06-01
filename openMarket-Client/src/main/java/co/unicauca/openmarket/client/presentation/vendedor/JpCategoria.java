@@ -123,7 +123,7 @@ public class JpCategoria extends javax.swing.JPanel implements Observer{
         ));
         jScrollPane1.setViewportView(tblAgregarCategoria);
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 290, 490, 240));
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 290, 490, 240));
 
         btnEditarCategoria.setBackground(new java.awt.Color(224, 122, 95));
         btnEditarCategoria.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
@@ -134,7 +134,7 @@ public class JpCategoria extends javax.swing.JPanel implements Observer{
                 btnEditarCategoriaActionPerformed(evt);
             }
         });
-        add(btnEditarCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 250, 100, -1));
+        add(btnEditarCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 250, 100, -1));
 
         btnGuardarEdicion.setBackground(new java.awt.Color(224, 122, 95));
         btnGuardarEdicion.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
@@ -145,7 +145,7 @@ public class JpCategoria extends javax.swing.JPanel implements Observer{
                 btnGuardarEdicionActionPerformed(evt);
             }
         });
-        add(btnGuardarEdicion, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 220, 100, -1));
+        add(btnGuardarEdicion, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 250, 100, -1));
 
         btnVolver.setBackground(new java.awt.Color(224, 122, 95));
         btnVolver.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
@@ -156,7 +156,7 @@ public class JpCategoria extends javax.swing.JPanel implements Observer{
                 btnVolverActionPerformed(evt);
             }
         });
-        add(btnVolver, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 550, 100, -1));
+        add(btnVolver, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 550, 100, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
