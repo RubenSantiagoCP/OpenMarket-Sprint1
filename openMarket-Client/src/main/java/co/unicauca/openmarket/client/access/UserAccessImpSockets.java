@@ -14,20 +14,21 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
- * @author SANTIAGO
+ * Implementación de la interfaz IUserAccess que utiliza sockets para la comunicación con el servidor.
  */
+
 public class UserAccessImpSockets implements IUserAccess{
 
     private OpenMarketSocket mySocket;
 
+     /**
+     * Constructor de la clase UserAccessImpSockets.
+     * Inicializa una instancia de OpenMarketSocket.
+     */
     public UserAccessImpSockets() {
         this.mySocket = new OpenMarketSocket();
     }
-    
-    
-    
-    
+  
     @Override
     public User findByLogin(String login) throws Exception {
         String jsonResponse = null;
