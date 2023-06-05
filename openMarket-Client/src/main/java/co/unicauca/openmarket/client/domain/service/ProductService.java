@@ -8,8 +8,7 @@ import co.unicauca.openmarket.commons.domain.Product;
 import co.unicauca.openmarket.commons.observer.Subject;
 
 /**
- *
- * @author Libardo, Julio
+ * Servicio de productos
  */
 public class ProductService implements Subject {
 
@@ -31,8 +30,21 @@ public class ProductService implements Subject {
         this.repository = repository;
     }
 
-    public boolean saveProduct(Long id, String name, String description,Double price, Long categoryId, Long vendedorId) throws Exception {
-        
+    /**
+     * Guarda un nuevo producto en el repositorio
+     *
+     * @param id identificador del producto
+     * @param name nombre del producto
+     * @param description descripción del producto
+     * @param price precio del producto
+     * @param categoryId identificador de la categoría del producto
+     * @param vendedorId identificador del vendedor del producto
+     * @return true si el producto se guarda correctamente, false de lo
+     * contrario
+     * @throws Exception si ocurre algún error en la operación
+     */
+    public boolean saveProduct(Long id, String name, String description, Double price, Long categoryId, Long vendedorId) throws Exception {
+
         Product newProduct = new Product();
         newProduct.setProductId(id);
         newProduct.setName(name);
@@ -40,7 +52,6 @@ public class ProductService implements Subject {
         newProduct.setPrice(price);
         newProduct.setCategoryId(categoryId);
         newProduct.setVendedorId(vendedorId);
-
 
         boolean result = repository.save(newProduct);
 
@@ -52,14 +63,27 @@ public class ProductService implements Subject {
         return result;
 
     }
-    
-    //Buscar productos por rango de precio
-    public List<Product> findProductsByPrice(Long minPrice, Long maxPrice) throws Exception{
+
+    /**
+     * Busca productos por rango de precio en el repositorio
+     *
+     * @param minPrice precio mínimo
+     * @param maxPrice precio máximo
+     * @return lista de productos que se encuentran en el rango de precio
+     * especificado
+     * @throws Exception si ocurre algún error en la operación
+     */
+    public List<Product> findProductsByPrice(Long minPrice, Long maxPrice) throws Exception {
         List<Product> products = new ArrayList<>();
         products = repository.finByPrice(minPrice, maxPrice);
         return products;
     }
 
+     /**
+     * Obtiene todos los productos almacenados en el repositorio
+     * @return lista de todos los productos
+     * @throws Exception si ocurre algún error en la operación
+     */
     public List<Product> findAllProducts() throws Exception {
         List<Product> products = new ArrayList<>();
         products = repository.findAll();
@@ -67,16 +91,34 @@ public class ProductService implements Subject {
         return products;
     }
 
+    /**
+     * Busca un producto por su identificador en el repositorio
+     * @param id identificador del producto
+     * @return objeto Product correspondiente al identificador, null si no se encuentra
+     * @throws Exception si ocurre algún error en la operación
+     */
     public Product findProductById(Long id) throws Exception {
         return repository.findById(id);
     }
 
+     /**
+     * Busca productos por su nombre en el repositorio
+     * @param name nombre del producto
+     * @return lista de productos que coinciden con el nombre
+     * @throws Exception si ocurre algún error en la operación
+     */
     public List<Product> findProductsByName(String name) throws Exception {
         List<Product> products = new ArrayList<>();
         products = repository.findByName(name);
         return products;
     }
 
+    /**
+     * Busca productos por su categoría en el repositorio
+     * @param categoryId identificador de la categoría
+     * @return lista de productos que pertenecen a la categoría especificada
+     * @throws Exception si ocurre algún error en la operación
+     */
     public List<Product> findProductsByCategory(Long categoryId) throws Exception {
         List<Product> products = new ArrayList<>();
         products = repository.findByCategory(categoryId);
@@ -84,6 +126,12 @@ public class ProductService implements Subject {
         return products;
     }
 
+     /**
+     * Elimina un producto del repositorio
+     * @param id identificador del producto a eliminar
+     * @return true si el producto se elimina correctamente, false de lo contrario
+     * @throws Exception si ocurre algún error en la operación
+     */
     public boolean deleteProduct(Long id) throws Exception {
         boolean result = repository.delete(id);
 
@@ -96,6 +144,13 @@ public class ProductService implements Subject {
 
     }
 
+     /**
+     * Edita un producto en el repositorio
+     * @param productId identificador del producto a editar
+     * @param newProd nuevo objeto Product con los datos actualizados del producto
+     * @return true si el producto se edita correctamente, false de lo contrario
+     * @throws Exception si ocurre algún error en la operación
+     */
     public boolean editProduct(Long productId, Product newProd) throws Exception {
 
         //Validate product

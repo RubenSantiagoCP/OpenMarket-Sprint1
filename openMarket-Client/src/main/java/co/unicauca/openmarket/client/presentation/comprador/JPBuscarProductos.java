@@ -48,23 +48,38 @@ public class JPBuscarProductos extends javax.swing.JPanel {
         actualizarSaldo();
     }
 
+    /**
+     * Deshabilita ciertas funciones dependiendo del estado del usuario. Si el
+     * usuario es nulo, oculta los botones "Crear Compra" y el label "Saldo".
+     */
     private void deshabilitarFunciones() {
         if (user == null) {
             this.btnCrearCompra.setVisible(false);
             this.lblSaldo.setVisible(false);
         }
     }
-    
-    private void actualizarSaldo(){
-        if(user!=null){
+
+    /**
+     * Actualiza el saldo mostrado en el label "Saldo" si el usuario no es nulo.
+     * Busca la cuenta bancaria del usuario y muestra el saldo actual.
+     */
+    private void actualizarSaldo() {
+        if (user != null) {
             BankAccount myBank = buscarCuenta();
-            if(myBank!=null){
-                 this.lblSaldo.setText("Saldo: $"+ myBank.getSaldo());
+            if (myBank != null) {
+                this.lblSaldo.setText("Saldo: $" + myBank.getSaldo());
             }
         }
     }
 
     //<editor-fold defaultstate="collapsed" desc="Metodo auxiliar para seleccionar producto">
+    /**
+     * Método auxiliar para seleccionar un producto en la tabla de productos.
+     * Obtiene el índice de la fila seleccionada, obtiene el id y el nombre del
+     * producto, y muestra un mensaje indicando si se desea comprar el producto.
+     * Si no se selecciona ningún producto, muestra un mensaje indicando que se
+     * debe seleccionar uno.
+     */
     private void rowSelection() {
         try {
             int selection = tblProductosO.getSelectedRow();
@@ -79,6 +94,11 @@ public class JPBuscarProductos extends javax.swing.JPanel {
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Metodo para imprimir todos lo productos">
+    /**
+     * Método para llenar la tabla de productos con una lista de productos. Crea
+     * un modelo de tabla y agrega filas con la información de cada producto. La
+     * información incluye el id, nombre, precio y categoría del producto.
+     */
     private void fillTable(List<Product> lstProducts) throws Exception {
         initializeTable();
         DefaultTableModel model = (DefaultTableModel) tblProductosO.getModel();
@@ -99,6 +119,11 @@ public class JPBuscarProductos extends javax.swing.JPanel {
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Metodo para imprimir con Id">
+    /**
+     * Método para llenar la tabla de productos con un solo producto. Crea un
+     * modelo de tabla y agrega una única fila con la información del producto.
+     * La información incluye el id, nombre, precio y categoría del producto.
+     */
     private void fillTableId(Product product) throws Exception {
         initializeTable();
         DefaultTableModel model = (DefaultTableModel) tblProductosO.getModel();
@@ -117,6 +142,12 @@ public class JPBuscarProductos extends javax.swing.JPanel {
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Metodo para imprimir con Categoria">
+    /**
+     * Método para llenar la tabla de productos filtrados por categoría. Crea un
+     * modelo de tabla y agrega filas con la información de cada producto
+     * filtrado. La información incluye el id, nombre, precio y categoría del
+     * producto.
+     */
     private void fillTableCategory(List<Product> lstProducts) throws Exception {
         initializeTable();
         DefaultTableModel model = (DefaultTableModel) tblProductosO.getModel();
@@ -138,6 +169,12 @@ public class JPBuscarProductos extends javax.swing.JPanel {
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Metodo para imprimir con Nombre">
+    /**
+     * Método para llenar la tabla de productos filtrados por nombre. Crea un
+     * modelo de tabla y agrega filas con la información de cada producto
+     * filtrado. La información incluye el id, nombre, precio y categoría del
+     * producto.
+     */
     private void fillTableName(List<Product> lstProducts) throws Exception {
         initializeTable();
         DefaultTableModel model = (DefaultTableModel) tblProductosO.getModel();
@@ -158,6 +195,11 @@ public class JPBuscarProductos extends javax.swing.JPanel {
     }
     //</editor-fold>
 
+    /**
+     * Obtiene la cantidad de compras realizadas y devuelve el resultado. Si la
+     * cantidad de compras es mayor o igual a cero, la devuelve, de lo contrario
+     * devuelve 0.
+     */
     private Integer cantBuy() throws Exception {
         int tamCompras = buyService.findAllBuys().size();
 
@@ -167,21 +209,30 @@ public class JPBuscarProductos extends javax.swing.JPanel {
         return 0;
     }
 
+    /**
+     * Realiza la compra del producto seleccionado en la tabla. Obtiene el
+     * precio del producto seleccionado y valida que el usuario tenga una cuenta
+     * bancaria asociada. Si no tiene una cuenta asociada, muestra un mensaje
+     * indicando que no tiene ninguna cuenta. Si tiene una cuenta, valida que
+     * tenga saldo suficiente para realizar la compra. Si tiene saldo
+     * suficiente, realiza la compra y actualiza el saldo. Si no tiene saldo
+     * suficiente, muestra un mensaje indicando que no tiene saldo disponible.
+     */
     private void realizarCompra() {
         int selection = tblProductosO.getSelectedRow();
         double price = Double.parseDouble(tblProductosO.getValueAt(selection, 2).toString());
         //Validar que tenga cuenta
         BankAccount myBank = buscarCuenta();
-        if(myBank==null){
-             Messages.showMessageDialog("No tienes ninguna cuenta asociada", "Atencion");
-             return;
+        if (myBank == null) {
+            Messages.showMessageDialog("No tienes ninguna cuenta asociada", "Atencion");
+            return;
         }
         //Valida el saldo del comprador
         if (validarSaldo(myBank, price)) {
             //Si tiene saldo realiza la compra
             //Si se realiza la compra con exito, se descuenta el saldo de la cuenta
-            if(addBuy()){
-                descontarSaldo(user.getId(), myBank.getSaldo()- price);
+            if (addBuy()) {
+                descontarSaldo(user.getId(), myBank.getSaldo() - price);
                 actualizarSaldo();
             }
         } else {
@@ -189,6 +240,10 @@ public class JPBuscarProductos extends javax.swing.JPanel {
         }
     }
 
+    /**
+     * Descuenta el saldo de la cuenta bancaria del usuario. Llama al servicio
+     * `bankService` para realizar la actualización.
+     */
     private void descontarSaldo(Long id, double price) {
         try {
             bankService.editBankAccount(id, price);
@@ -198,6 +253,12 @@ public class JPBuscarProductos extends javax.swing.JPanel {
     }
 
     //<editor-fold defaultstate="collapsed" desc="Metodo para crear compra">
+    /**
+     * Método para crear una compra. Crea una instancia de `Buy`, establece sus
+     * atributos y llama a un comando para agregar la compra. Si la compra se
+     * realiza con éxito, muestra un mensaje de éxito, de lo contrario muestra
+     * un mensaje de error.
+     */
     private boolean addBuy() {
         try {
             //Creacion de la compra
@@ -225,11 +286,15 @@ public class JPBuscarProductos extends javax.swing.JPanel {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error al grabar la compra", JOptionPane.ERROR_MESSAGE);
         }
-        
+
         return false;
     }
 
     //</editor-fold>
+    /**
+     * Busca la cuenta bancaria asociada al usuario actual. Llama al servicio
+     * `bankService` para realizar la búsqueda.
+     */
     public BankAccount buscarCuenta() {
         try {
             return bankService.findByIdUser(user.getId());
@@ -239,10 +304,19 @@ public class JPBuscarProductos extends javax.swing.JPanel {
         return null;
     }
 
+    /**
+     * Valida si el saldo de la cuenta bancaria es suficiente para realizar la
+     * compra. Compara el saldo de la cuenta con el precio del producto. Retorna
+     * true si el saldo es suficiente, de lo contrario retorna false.
+     */
     public boolean validarSaldo(BankAccount myBank, double precio) {
         return myBank.getSaldo() >= precio;
     }
 
+    /**
+     * Inicializa la tabla de productos. Crea un nuevo modelo de tabla vacío y
+     * lo establece como modelo de la tabla `tblProductosO`.
+     */
     private void initializeTable() {
         tblProductosO.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][]{},

@@ -35,9 +35,13 @@ public class GUIComprador extends javax.swing.JFrame {
         this.deshabilitarFunciones();
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
-    
-    private void deshabilitarFunciones(){
-        if(user==null){
+
+    /**
+     * Deshabilita ciertas funciones dependiendo del estado del usuario. Si el
+     * usuario es nulo, oculta los botones "Confirmar Entrega" y "Tus Entregas".
+     */
+    private void deshabilitarFunciones() {
+        if (user == null) {
             this.btnConfirmarE.setVisible(false);
             this.btnTusEntregas.setVisible(false);
         }
