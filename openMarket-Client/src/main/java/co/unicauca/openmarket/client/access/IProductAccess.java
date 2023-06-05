@@ -26,3 +26,4 @@ public interface IProductAccess {
     List<Product> finByPrice(Long minPrice, Long maxPrice) throws Exception;
     
 }
+

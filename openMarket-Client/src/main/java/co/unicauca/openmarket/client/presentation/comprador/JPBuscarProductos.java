@@ -46,30 +46,6 @@ public class JPBuscarProductos extends javax.swing.JPanel {
         this.invoker = new Invoker();
         this.deshabilitarFunciones();
         actualizarSaldo();
-
-        //<editor-fold defaultstate="collapsed" desc="Metodo auxiliar para seleccionar filas">
-        /*tblProductosO.addMouseListener(new MouseAdapter(){
-            public void mousePressed(MouseEvent mouseEvent){
-                try {
-                    JTable table = (JTable) mouseEvent.getSource();
-                    Point point = mouseEvent.getPoint();    //permite conocer el punto del click
-                    int numRow = table.rowAtPoint(point);
-                    
-                   //Condicional para contar numero de clicks en una fila
-                    if(mouseEvent.getClickCount() == 1){
-                    String id = tblProductosO.getValueAt(tblProductosO.getSelectedRow(), 0).toString();
-                    productSelect = Long.parseLong(id);
-                    String name = tblProductosO.getValueAt(tblProductosO.getSelectedRow(), 1).toString();
-                    lblInformacion.setText("¿Desea comprar el producto "+name+" con id "+id+"?");
-                    }
-                } catch (Exception e) {
-                    lblInformacion.setText("Seleccione un producto a comprar");
-                }
-                
-            }
-            
-        });*/
-        //</editor-fold>
     }
 
     private void deshabilitarFunciones() {

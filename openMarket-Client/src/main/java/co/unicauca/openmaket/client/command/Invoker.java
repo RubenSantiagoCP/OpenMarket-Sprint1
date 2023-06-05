@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package co.unicauca.openmaket.client.command;
 
 import co.unicauca.openmarket.commons.observer.Observer;
@@ -11,9 +8,10 @@ import java.util.List;
 import java.util.Stack;
 
 /**
- *
- * @author Jorge
+ * Clase Invoker que actúa como invocador de comandos. Mantiene un historial de comandos
+ * ejecutados y deshechos, y permite ejecutar, deshacer y rehacer comandos.
  */
+
 public class Invoker implements Subject {
 
     private final Stack<Command> commandHistory;
@@ -24,6 +22,14 @@ public class Invoker implements Subject {
         commandHistory = new Stack<>();
         undoneCommands = new Stack<>();
     }
+    
+       /**
+     * Ejecuta un comando y lo agrega al historial de comandos ejecutados.
+     * Si la ejecución es exitosa, se notifica a los observadores.
+     *
+     * @param command el comando a ejecutar
+     * @return true si el comando se ejecutó correctamente, false en caso contrario
+     */
 
     public boolean executeCommand(Command command) {
         if (command.execute()) {
@@ -37,6 +43,10 @@ public class Invoker implements Subject {
         return false;
     }
 
+        /**
+     * Deshace el último comando ejecutado y lo agrega al historial de comandos deshechos.
+     * Se notifica a los observadores después de deshacer el comando.
+     */
     public void undoLastCommand() {
         if (!commandHistory.isEmpty()) {
             Command lastCommand = commandHistory.pop();
@@ -46,6 +56,10 @@ public class Invoker implements Subject {
         }
     }
 
+     /**
+     * Rehace el último comando deshecho y lo agrega al historial de comandos ejecutados.
+     * Se notifica a los observadores después de rehacer el comando.
+     */
     public void redoLastCommand() {
         if (!undoneCommands.isEmpty()) {
             Command lastCommand = undoneCommands.pop();
@@ -55,10 +69,20 @@ public class Invoker implements Subject {
         }
     }
 
+       /**
+     * Verifica si hay más comandos que se pueden deshacer.
+     *
+     * @return true si hay más comandos para deshacer, false en caso contrario
+     */
     public boolean hasMoreUndoCommands() {
         return !commandHistory.isEmpty();
     }
 
+      /**
+     * Verifica si hay más comandos que se pueden rehacer.
+     *
+     * @return true si hay más comandos para rehacer, false en caso contrario
+     */
     public boolean hasMoreRedoCommands() {
         return !undoneCommands.isEmpty();
     }

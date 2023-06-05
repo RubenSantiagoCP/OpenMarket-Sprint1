@@ -29,6 +29,13 @@ public class UserAccessImpSockets implements IUserAccess{
         this.mySocket = new OpenMarketSocket();
     }
   
+    /**
+     * Busca un usuario por su login en el servidor.
+     *
+     * @param login El login del usuario a buscar
+     * @return El objeto User correspondiente al login especificado
+     * @throws Exception Si ocurre un error durante la búsqueda
+     */
     @Override
     public User findByLogin(String login) throws Exception {
         String jsonResponse = null;
@@ -59,6 +66,12 @@ public class UserAccessImpSockets implements IUserAccess{
 
     }
 
+     /**
+     * Obtiene una lista de todos los usuarios del servidor.
+     *
+     * @return Lista de usuarios
+     * @throws Exception Si ocurre un error al obtener la lista de usuarios
+     */
     @Override
     public List<User> findAll() throws Exception {
         String jsonResponse = null;
@@ -88,6 +101,13 @@ public class UserAccessImpSockets implements IUserAccess{
         }
     }
 
+     /**
+     * Busca usuarios por su tipo en el servidor.
+     *
+     * @param type El tipo de usuario a buscar
+     * @return Lista de usuarios del tipo especificado
+     * @throws Exception Si ocurre un error durante la búsqueda
+     */
     @Override
     public List<User> findByType(String type) throws Exception {
         String jsonResponse = null;
@@ -117,6 +137,11 @@ public class UserAccessImpSockets implements IUserAccess{
         }
     }
 
+    /**
+     * Crea una solicitud JSON para obtener la lista de todos los usuarios.
+     *
+     * @return Cadena JSON de la solicitud
+     */
     private String doFindAllUsersRequestJson() {
         Protocol protocol = new Protocol();
         protocol.setResource("user");
@@ -128,6 +153,12 @@ public class UserAccessImpSockets implements IUserAccess{
         return requestJson;
     }
 
+      /**
+     * Convierte una cadena JSON en una lista de objetos User.
+     *
+     * @param jsonUserList Cadena JSON que representa una lista de usuarios
+     * @return Lista de objetos User generada a partir del JSON
+     */
     private List<User> jsonToUserList(String jsonUserList) {
         Gson gson = new Gson();
         Type userListType = new TypeToken<List<User>>() {
@@ -136,6 +167,13 @@ public class UserAccessImpSockets implements IUserAccess{
         return userList;
     }    
     
+    
+    /**
+     * Extrae los mensajes de error de una respuesta JSON.
+     *
+     * @param jsonResponse Respuesta JSON que contiene errores
+     * @return Cadena que contiene los mensajes de error extraídos del JSON
+     */
      private String extractMessages(String jsonResponse) {
         JsonError[] errors = jsonToErrors(jsonResponse);
         String msjs = "";
@@ -145,12 +183,24 @@ public class UserAccessImpSockets implements IUserAccess{
         return msjs;
     }
      
+      /**
+     * Convierte una cadena JSON en un arreglo de objetos JsonError.
+     *
+     * @param jsonError Cadena JSON que representa un arreglo de errores
+     * @return Arreglo de objetos JsonError generados a partir del JSON
+     */
      private JsonError[] jsonToErrors(String jsonError) {
         Gson gson = new Gson();
         JsonError[] error = gson.fromJson(jsonError, JsonError[].class);
         return error;
     }
 
+      /**
+     * Crea una solicitud JSON para obtener un usuario por su login.
+     *
+     * @param login El login del usuario a buscar
+     * @return Cadena JSON de la solicitud
+     */
     private String doFindUserRequestJson(String login) {
         Protocol protocol = new Protocol();
         protocol.setResource("user");
@@ -163,12 +213,23 @@ public class UserAccessImpSockets implements IUserAccess{
         return requestJson;
     }
 
+     /**
+     * Convierte una cadena JSON en un objeto User.
+     *
+     * @param jsonResponse Cadena JSON que representa un usuario
+     * @return Objeto User generado a partir del JSON
+     */
     private User jsonToUser(String jsonResponse) {
         Gson gson = new Gson();
         User user = gson.fromJson(jsonResponse, User.class);
         return user;
     }
 
+      /**
+     * Crea una solicitud JSON para obtener usuarios por su tipo.
+     *
+     * @return Cadena JSON de la solicitud
+     */
     private String doFindByTypeUsersRequestJson() {
         Protocol protocol = new Protocol();
         protocol.setResource("user");

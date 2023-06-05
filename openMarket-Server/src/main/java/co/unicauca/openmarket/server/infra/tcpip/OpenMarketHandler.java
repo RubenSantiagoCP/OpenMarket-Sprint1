@@ -478,16 +478,8 @@ public class OpenMarketHandler extends ServerHandler {
     
 
     private String processSaveBuy(Protocol protocolRequest) throws Exception {
-        
-
-      
           Buy buy = new Buy();
         // Reconstruir el producto a partir de lo que viene en los parámetros
-        
-        //buy.setProductoId(Long.valueOf(protocolRequest.getParameters().get(2).getValue()));
-        //buy.setEstado(protocolRequest.getParameters().get(3).getValue());
-        
-        
         buy.setId(Long.valueOf(protocolRequest.getParameters().get(0).getValue()));
         buy.setCompradorId(Long.valueOf(protocolRequest.getParameters().get(1).getValue()));
         buy.setProductoId(Long.valueOf(protocolRequest.getParameters().get(2).getValue()));

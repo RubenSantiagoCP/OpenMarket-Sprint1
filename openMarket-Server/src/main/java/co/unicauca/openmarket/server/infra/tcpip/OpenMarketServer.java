@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package co.unicauca.openmarket.server.infra.tcpip;
 
 import co.unicauca.openmarket.server.access.BankAccountImplMySql;
@@ -23,10 +19,6 @@ import co.unicauca.strategyserver.infra.ServerSocketMultiThread;
 
 import java.util.Scanner;
 
-/**
- * @author brayan
- */
-
 public class OpenMarketServer {
     /**
      * @param args the command line arguments
@@ -38,16 +30,6 @@ public class OpenMarketServer {
         int port = teclado.nextInt();
         ServerSocketMultiThread myServer = new ServerSocketMultiThread(port);
         OpenMarketHandler myHandler = new OpenMarketHandler();
-        /*ICategoryRepository catRepo= new CategoryRepositoryImplMysql();
-        IProductRepository prodRepo= new ProductRepositoryImplMysql();
-        IUserRepository userRepo = new UserRepositoryImplMySql();
-        IBuyRepository buyRepo = new BuyRepositoryImplMySql();
-        UserCreated users = new UserCreated();
-
-        myHandler.setCategoryService(new CategoryService(catRepo));
-        myHandler.setProductService(new ProductService(prodRepo));
-        myHandler.setBuyService(new BuyService(buyRepo));
-        myHandler.setUserService(new UserService(userRepo));*/
        
         myHandler.setCategoryService(new CategoryService(new CategoryRepositoryImplMysql() ));
         myHandler.setProductService(new ProductService(new ProductRepositoryImplMysql()));

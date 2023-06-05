@@ -540,6 +540,12 @@ public class ProductAccessImplSockets implements IProductAccess {
 
     }
 
+    /**
+ * Convierte una cadena JSON en una lista de objetos Product.
+ *
+ * @param jsonProductList Cadena JSON que representa una lista de objetos Product
+ * @return Lista de objetos Product generada a partir del JSON
+ */
     private List<Product> jsonToProductList(String jsonProductList) {
         Gson gson = new Gson();
         Type productListType = new TypeToken<List<Product>>() {

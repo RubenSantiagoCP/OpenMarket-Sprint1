@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package co.unicauca.openmarket.client.access;
 
 import co.unicauca.openmarket.client.infra.OpenMarketSocket;
@@ -17,9 +14,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
- * @author nimbachi
+ * Implementación con sockets de acceso a la información de compras.
  */
+
 public class BuyAccessImplSocket implements IBuyAccess{
 
     private OpenMarketSocket mySocket;
@@ -29,6 +26,12 @@ public class BuyAccessImplSocket implements IBuyAccess{
     }
     
     //<editor-fold defaultstate="collapsed" desc="Metodos abstractos">
+      /**
+     * Guarda una compra en el sistema.
+     * @param newBuy Compra a guardar
+     * @return true si la compra se guarda correctamente, false en caso contrario.
+     * @throws Exception Si ocurre un error durante la operación
+     */
     @Override
     public boolean save(Buy newBuy) throws Exception {
         boolean bandera = false;
@@ -59,6 +62,14 @@ public class BuyAccessImplSocket implements IBuyAccess{
     }
 
     @Override
+    /**
+     * Edita una compra existente en el sistema.
+     *
+     * @param id ID de la compra a editar
+     * @param buy Compra con los nuevos datos
+     * @return true si la compra se edita correctamente, false en caso contrario.
+     * @throws Exception Si ocurre un error durante la operación
+     */
     public boolean edit(Long id, Buy buy) throws Exception {
         boolean bandera = false;
         String jsonResponse = null;
@@ -86,6 +97,14 @@ public class BuyAccessImplSocket implements IBuyAccess{
         return bandera;
     }
 
+    
+    /**
+     * Elimina una compra del sistema.
+     *
+     * @param id ID de la compra a eliminar
+     * @return true si la compra se elimina correctamente, false en caso contrario.
+     * @throws Exception Si ocurre un error durante la operación
+     */
     @Override
     public boolean delete(Long id) throws Exception {
         boolean bandera = false;
@@ -114,6 +133,12 @@ public class BuyAccessImplSocket implements IBuyAccess{
         return bandera;
     }
 
+     /**
+     * Busca una compra por su ID.
+     * @param id ID de la compra
+     * @return La compra encontrada
+     * @throws Exception Si ocurre un error durante la operación
+     */
     @Override
     public Buy findById(Long id) throws Exception {
         String jsonResponse = null;
@@ -144,6 +169,13 @@ public class BuyAccessImplSocket implements IBuyAccess{
         }
     }
 
+     /**
+     * Busca las compras realizadas por un comprador específico.
+     *
+     * @param idComp ID del comprador
+     * @return Lista de compras realizadas por el comprador
+     * @throws Exception Si ocurre un error durante la operación
+     */
     @Override
     public List<Buy> findByComp(Long idComp) throws Exception {
         String jsonResponse = null;
@@ -173,6 +205,12 @@ public class BuyAccessImplSocket implements IBuyAccess{
         }
     }
 
+       /**
+     * Busca todas las compras registradas.
+     *
+     * @return Lista de todas las compras
+     * @throws Exception Si ocurre un error durante la operación
+     */
     @Override
     public List<Buy> findAll() throws Exception {
         String jsonResponse = null;

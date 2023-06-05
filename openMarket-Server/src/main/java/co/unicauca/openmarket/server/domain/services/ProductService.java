@@ -1,23 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package co.unicauca.openmarket.server.domain.services;
 
 import co.unicauca.openmarket.commons.infra.JsonError;
 import co.unicauca.openmarket.server.access.IProductRepository;
 import co.unicauca.openmarket.commons.domain.Product;
 import com.google.gson.Gson;
-//import com.google.gson.Gson;
-//import java.util.ArrayList;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author brayan
- */
+
 public class ProductService {
  
     IProductRepository repo;

@@ -9,10 +9,7 @@ import co.unicauca.openmarket.server.access.IBuyRepository;
 import java.util.List;
 import javax.sql.rowset.spi.SyncResolver;
 
-/**
- *
- * @author SANTIAGO
- */
+
 public class BuyService {
     IBuyRepository repository;
 
