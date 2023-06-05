@@ -17,7 +17,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author juan
+ * @author jsarabino
  */
 public class JpPrincipal extends javax.swing.JPanel implements Observer{
     
@@ -49,7 +49,11 @@ public class JpPrincipal extends javax.swing.JPanel implements Observer{
         
         stateInitial();
     }
-
+    
+    /**
+     * Inicializa la tabla principal de productos con un modelo de tabla vacío.
+     * El modelo de tabla contiene las columnas "Id", "Name", "Description", "Precio" y "Categoria".
+     */
     private void initializeTable() {
         tblPrincipal.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][]{},
@@ -59,6 +63,14 @@ public class JpPrincipal extends javax.swing.JPanel implements Observer{
         ));
     }
 
+    /**
+     * Llena la tabla principal de productos con los datos de la lista de productos proporcionada.
+     * Cada fila de la tabla representa un producto y contiene información como el Id, el Nombre, la Descripción,
+     * el Precio y la Categoría del producto.
+     *
+     * @param listProducts La lista de productos a mostrar en la tabla.
+     * @throws Exception Si ocurre algún error al obtener la información de la categoría de un producto.
+     */
     private void fillTable(List<Product> listProducts) throws Exception {
         initializeTable();
         DefaultTableModel model = (DefaultTableModel) tblPrincipal.getModel();
@@ -76,6 +88,14 @@ public class JpPrincipal extends javax.swing.JPanel implements Observer{
         }
     }
     
+    /**
+     * Llena la tabla principal de productos con los datos de un único producto.
+     * La tabla mostrará la información del producto, incluyendo el Id, el Nombre, la Descripción,
+     * el Precio y la Categoría.
+     *
+     * @param producto El producto a mostrar en la tabla.
+     * @throws Exception Si ocurre algún error al obtener la información de la categoría del producto.
+     */
     private void fillTableId(Product producto) throws Exception {
         initializeTable();
         DefaultTableModel model = (DefaultTableModel) tblPrincipal.getModel();
@@ -93,6 +113,14 @@ public class JpPrincipal extends javax.swing.JPanel implements Observer{
         model.addRow(rowData);
     }
 
+    /**
+     * Llena la tabla principal de productos con los datos de una lista de productos.
+     * La tabla mostrará la información de cada producto, incluyendo el Id, el Nombre, la Descripción,
+     * el Precio y la Categoría.
+     *
+     * @param listProducts La lista de productos a mostrar en la tabla.
+     * @throws Exception Si ocurre algún error al obtener la información de la categoría de un producto.
+     */
     private void fillTableName(List<Product> listProducts) throws Exception {
         initializeTable();
         DefaultTableModel model = (DefaultTableModel) tblPrincipal.getModel();
@@ -112,6 +140,15 @@ public class JpPrincipal extends javax.swing.JPanel implements Observer{
         }
     }
 
+    /**
+     * Llena la tabla principal de productos con los datos de una lista de productos.
+     * La tabla mostrará la información de cada producto, incluyendo el Id, el Nombre, la Descripción,
+     * el Precio y la Categoría.
+     * La categoría de cada producto se obtiene mediante la búsqueda en el servicio de categorías.
+     *
+     * @param listProducts La lista de productos a mostrar en la tabla.
+     * @throws Exception Si ocurre algún error al obtener la información de la categoría de un producto.
+     */
     private void fillTableCategory(List<Product> listProducts) throws Exception {
         initializeTable();
         DefaultTableModel model = (DefaultTableModel) tblPrincipal.getModel();
@@ -134,7 +171,11 @@ public class JpPrincipal extends javax.swing.JPanel implements Observer{
         }
     }
     
-    
+    /**
+     * Devuelve la referencia a la tabla principal de productos.
+     *
+     * @return La tabla principal de productos.
+     */
     public javax.swing.JTable getTabla(){
         return this.tblPrincipal;
     }
@@ -255,10 +296,22 @@ public class JpPrincipal extends javax.swing.JPanel implements Observer{
         add(jpPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 710, 610));
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Realiza la acción de volver al estado inicial de la interfaz.
+     * Este método es llamado cuando se hace clic en el botón "Volver".
+     *
+     * @param evt El evento que desencadena la acción (clic en el botón "Volver").
+     */
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
         stateInitial();
     }//GEN-LAST:event_btnVolverActionPerformed
 
+    /**
+     * Realiza la acción de eliminar un producto.
+     * Este método es llamado cuando se hace clic en el botón "Eliminar".
+     *
+     * @param evt El evento que desencadena la acción (clic en el botón "Eliminar").
+     */
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         try {
             String id = txtProducto.getText().trim();
@@ -305,6 +358,12 @@ public class JpPrincipal extends javax.swing.JPanel implements Observer{
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
+    /**
+     * Realiza la acción de buscar y mostrar todos los productos del vendedor.
+     * Este método es llamado cuando se hace clic en el botón "Buscar Todos".
+     *
+     * @param evt El evento que desencadena la acción (clic en el botón "Buscar Todos").
+     */
     private void btnBuscarTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarTodosActionPerformed
         try {
             //Encontrar todos los productos
@@ -323,6 +382,12 @@ public class JpPrincipal extends javax.swing.JPanel implements Observer{
         }
     }//GEN-LAST:event_btnBuscarTodosActionPerformed
 
+    /**
+    * Realiza la acción de buscar productos según el criterio seleccionado (Id, Categoría o Nombre).
+    * Este método es llamado cuando se hace clic en el botón "Buscar".
+    *
+    * @param evt El evento que desencadena la acción (clic en el botón "Buscar").
+    */
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         try {
             if (txtProducto.getText().trim().isBlank()) {
@@ -384,11 +449,23 @@ public class JpPrincipal extends javax.swing.JPanel implements Observer{
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
+    /**
+     * Realiza la acción de cambiar al estado de eliminación.
+     * Este método es llamado cuando se hace clic en el botón "Borrar".
+     *
+     * @param evt El evento que desencadena la acción (clic en el botón "Borrar").
+     */
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
         stateDelete();
         txtProducto.requestFocus();
     }//GEN-LAST:event_btnBorrarActionPerformed
 
+    /**
+     * Realiza la acción de cambiar al estado de edición.
+     * Este método es llamado cuando se hace clic en el botón "Editar".
+     *
+     * @param evt El evento que desencadena la acción (clic en el botón "Editar").
+     */
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         productService.registerObserver(jpEditar);
         categoryService.registerObserver(jpEditar);
@@ -416,7 +493,12 @@ public class JpPrincipal extends javax.swing.JPanel implements Observer{
     private javax.swing.JTextField txtProducto;
     // End of variables declaration//GEN-END:variables
     
-    //Obtener solo los productos del vendedor
+    /**
+     * Filtra la lista de productos para obtener solo los productos del vendedor.
+     *
+     * @param products La lista de productos.
+     * @return Una lista que contiene solo los productos del vendedor.
+     */
     private List<Product> getProductsVendedor(List<Product> products){
         List<Product> productsVendedor = new ArrayList<>(); 
         
@@ -428,7 +510,12 @@ public class JpPrincipal extends javax.swing.JPanel implements Observer{
         return productsVendedor;
     }
     
-    //Validar si es un producto del vendedor
+    /**
+     * Valida si un producto pertenece al vendedor actual.
+     *
+     * @param productVendedor El producto a verificar.
+     * @return true si el producto pertenece al vendedor actual, false en caso contrario.
+     */
     private boolean isProductVendedor(Product productVendedor) {
         boolean bandera = false;
         if (productVendedor.getVendedorId() == vendedor.getId()) {
@@ -437,7 +524,9 @@ public class JpPrincipal extends javax.swing.JPanel implements Observer{
         return bandera;
     }
 
-    
+    /**
+     * Establece el estado inicial de la interfaz.
+     */
     private void stateInitial() {
        
         btnEditar.setVisible(true);
@@ -451,6 +540,9 @@ public class JpPrincipal extends javax.swing.JPanel implements Observer{
 
     }
     
+    /**
+     * Establece el estado de eliminación en la interfaz.
+     */
     private void stateDelete() {
         
         btnEditar.setVisible(false);
@@ -462,6 +554,9 @@ public class JpPrincipal extends javax.swing.JPanel implements Observer{
         cmbBuscar.setEnabled(false);
     }
     
+    /**
+     * Actualiza la vista de la interfaz.
+     */
     @Override
     public void update() {
         try {

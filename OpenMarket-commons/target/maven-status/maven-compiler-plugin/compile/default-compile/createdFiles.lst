@@ -6,6 +6,7 @@ co\unicauca\openmarket\commons\infra\JsonError.class
 co\unicauca\openmarket\commons\infra\Parameters.class
 co\unicauca\openmarket\commons\domain\Buy.class
 co\unicauca\openmarket\commons\infra\Utilities.class
+co\unicauca\openmarket\commons\domain\BankAccount.class
 co\unicauca\openmarket\commons\domain\Product.class
 co\unicauca\openmarket\commons\domain\Category.class
 co\unicauca\openmarket\commons\observer\Observer.class

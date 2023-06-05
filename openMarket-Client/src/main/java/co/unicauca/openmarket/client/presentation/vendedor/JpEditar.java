@@ -18,7 +18,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author juan
+ * @author jsarabino
  */
 public class JpEditar extends javax.swing.JPanel implements Observer {
     
@@ -46,7 +46,11 @@ public class JpEditar extends javax.swing.JPanel implements Observer {
         
     }
     
+    /**
+     * Inicializa la tabla de editar producto.
+     */
     private void initializeTable() {
+        // Crea un nuevo modelo de tabla con datos vacíos y encabezados de columna
         tblEditar.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][]{},
                 new String[]{
@@ -55,6 +59,15 @@ public class JpEditar extends javax.swing.JPanel implements Observer {
         ));
     }
     
+    /**
+     * Rellena la tabla con los datos de los productos.
+     * Inicializa la tabla y luego recorre la lista de productos para agregar filas a la tabla.
+     * Cada fila contiene el id, nombre, descripción, precio y categoría del producto.
+     * Si hay algún problema al obtener la categoría de un producto, se lanza una excepción.
+     * 
+     * @param listProducts La lista de productos para mostrar en la tabla.
+     * @throws Exception Si hay algún problema al obtener la categoría de un producto.
+     */
     private void fillTable(List<Product> listProducts) throws Exception {
         initializeTable();
         DefaultTableModel model = (DefaultTableModel) tblEditar.getModel();
@@ -173,6 +186,14 @@ public class JpEditar extends javax.swing.JPanel implements Observer {
         add(txtIdProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 30, 220, -1));
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Acción realizada al presionar el botón "Volver".
+     * Restaura el tamaño y la posición del panel principal (jpPrincipal) en el contenedor (jpContent).
+     * Remueve todos los componentes del contenedor y agrega el panel principal.
+     * Se realiza una revalidación y repintado del contenedor para reflejar los cambios.
+     * 
+     * @param evt El evento de acción generado al presionar el botón "Volver".
+     */
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
         
         jpPrincipal.setSize(700, 600);
@@ -183,6 +204,15 @@ public class JpEditar extends javax.swing.JPanel implements Observer {
         jpContent.repaint();
     }//GEN-LAST:event_btnVolverActionPerformed
 
+    /**
+     * Acción realizada al presionar el botón "Guardar".
+     * Valida y guarda los cambios realizados en el producto.
+     * Si falta ingresar el id del producto, se muestra un mensaje de advertencia.
+     * Luego, llama al método editProduct() para realizar la edición del producto.
+     * En caso de cualquier excepción, se muestra un mensaje de error.
+     * 
+     * @param evt El evento de acción generado al presionar el botón "Guardar".
+     */
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         try {
             txtIdProducto.requestFocus();
@@ -220,6 +250,20 @@ public class JpEditar extends javax.swing.JPanel implements Observer {
     private javax.swing.JTextField txtPrecio;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     * Edita un producto existente.
+     * Obtiene el id del producto del campo de texto txtIdProducto.
+     * Encuentra el producto correspondiente al id.
+     * Verifica si el usuario tiene permiso para editar el producto.
+     * Si los campos de nombre, descripción, precio o categoría tienen valores no vacíos,
+     * se actualizan los respectivos atributos del producto.
+     * Se realiza la edición del producto utilizando el método editProduct() del productService.
+     * Si la edición es exitosa, se muestra un mensaje de éxito, se limpian los controles y se actualiza la tabla.
+     * En caso contrario, se muestra un mensaje de error.
+     * Si el usuario no tiene permiso para editar el producto, se muestra un mensaje de error.
+     *
+     * @throws Exception Si ocurre algún error durante el proceso de edición del producto.
+     */
     private void editProduct() throws Exception {
         //Obtener dato del id
         Long productId = Long.valueOf(txtIdProducto.getText().trim());
@@ -267,7 +311,13 @@ public class JpEditar extends javax.swing.JPanel implements Observer {
         }
     }
     
-    //Obtener solo los productos del vendedor
+    /**
+     * Obtiene una lista de productos pertenecientes al vendedor actual.
+     * Recibe una lista de productos y filtra aquellos que tienen el mismo vendedorId que el vendedor actual.
+     *
+     * @param products La lista de productos a filtrar.
+     * @return Una lista de productos pertenecientes al vendedor actual.
+     */
     private List<Product> getProductsVendedor(List<Product> products){
         List<Product> productsVendedor = new ArrayList<>(); 
         
@@ -279,7 +329,13 @@ public class JpEditar extends javax.swing.JPanel implements Observer {
         return productsVendedor;
     }
     
-    //Validar si es un producto del vendedor
+    /**
+     * Valida si un producto pertenece al vendedor actual.
+     * Compara el vendedorId del producto con el id del vendedor actual para determinar si es un producto del vendedor.
+     *
+     * @param productVendedor El producto a validar.
+     * @return true si el producto pertenece al vendedor actual, false en caso contrario.
+     */
     private boolean isProductVendedor(Product productVendedor) {
         boolean bandera = false;
         if (productVendedor.getVendedorId() == vendedor.getId()) {
@@ -288,6 +344,10 @@ public class JpEditar extends javax.swing.JPanel implements Observer {
         return bandera;
     }
     
+    /**
+     * Limpia los controles de la interfaz de usuario relacionados con la información del producto.
+     * Establece el texto de los campos txtIdProducto, txtNombreProducto, txtADescripcion, txtIdCategoria y txtPrecio como una cadena vacía.
+     */
     private void cleanControls() {
         txtIdProducto.setText("");
         txtNombreProducto.setText("");
@@ -296,6 +356,11 @@ public class JpEditar extends javax.swing.JPanel implements Observer {
         txtPrecio.setText("");
     }
     
+    /**
+     * Actualiza la tabla de productos con los datos más recientes.
+     * Obtiene todos los productos, filtra los productos del vendedor actual y llena la tabla con los productos resultantes.
+     * Si ocurre alguna excepción durante el proceso, se registra en el registro de errores.
+     */
     @Override
     public void update() {
         try {
@@ -307,6 +372,7 @@ public class JpEditar extends javax.swing.JPanel implements Observer {
             List<Product> productsVendedor = new ArrayList<>();
             productsVendedor = getProductsVendedor(products);
             
+            // Llenar la tabla con los productos del vendedor
             fillTable(productsVendedor);
         } catch (Exception ex) {
             Logger.getLogger(JpEditar.class.getName()).log(Level.SEVERE, null, ex);

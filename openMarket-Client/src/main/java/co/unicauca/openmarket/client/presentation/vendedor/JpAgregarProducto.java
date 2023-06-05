@@ -17,7 +17,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author juan
+ * @author jsarabino
  */
 public class JpAgregarProducto extends javax.swing.JPanel implements Observer{
     
@@ -41,8 +41,11 @@ public class JpAgregarProducto extends javax.swing.JPanel implements Observer{
         this.vendedor = vendedor;
     }
 
-    
+    /**
+     * Inicializa la tabla de agregar producto.
+     */
     private void initializeTable() {
+        // Crea un nuevo modelo de tabla con datos vacíos y encabezados de columna
         tblAgregarProducto.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][]{},
                 new String[]{
@@ -51,6 +54,15 @@ public class JpAgregarProducto extends javax.swing.JPanel implements Observer{
         ));
     }
     
+    /**
+     * Rellena la tabla con los datos de los productos.
+     * Inicializa la tabla y luego recorre la lista de productos para agregar filas a la tabla.
+     * Cada fila contiene el id, nombre, descripción, precio y categoría del producto.
+     * Si hay algún problema al obtener la categoría de un producto, se lanza una excepción.
+     * 
+     * @param listProducts La lista de productos para mostrar en la tabla.
+     * @throws Exception Si hay algún problema al obtener la categoría de un producto.
+     */
     private void fillTable(List<Product> listProducts) throws Exception {
         initializeTable();
         DefaultTableModel model = (DefaultTableModel) tblAgregarProducto.getModel();
@@ -164,6 +176,13 @@ public class JpAgregarProducto extends javax.swing.JPanel implements Observer{
         add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(111, 362, 547, 225));
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Acción realizada al hacer clic en el botón "Guardar".
+     * Realiza la validación de los datos ingresados y agrega un producto.
+     * Si ocurre un error durante el proceso de agregado, muestra un mensaje de error.
+     *
+     * @param evt El evento de acción generado por hacer clic en el botón.
+     */
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         if (txtNombreProducto.getText().trim().equals("")
                 || txtIdCategoria.getText().trim().equals("")
@@ -176,7 +195,7 @@ public class JpAgregarProducto extends javax.swing.JPanel implements Observer{
         }
 
         try {
-            //Agregar
+            // Agregar el producto
             addProduct();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,
@@ -205,24 +224,35 @@ public class JpAgregarProducto extends javax.swing.JPanel implements Observer{
     private javax.swing.JTextField txtPrecio;
     // End of variables declaration//GEN-END:variables
 
-        private void addProduct() {
+    
+    /**
+     * Agrega un nuevo producto utilizando los datos ingresados en los campos de texto.
+     * Crea una instancia de la clase Product con los valores proporcionados.
+     * Luego, crea un comando de agregado de producto y lo ejecuta utilizando un invocador.
+     * Si el agregado es exitoso, muestra un mensaje de éxito y limpia los controles.
+     * Si el id del producto ya existe, muestra un mensaje de error.
+     * Si ocurre algún error durante el proceso, muestra un mensaje de error con la excepción correspondiente.
+     */
+    private void addProduct() {
         try {
+            // Obtener los valores de los campos de texto
             String id = txtIdProducto.getText().trim();
             String name = txtNombreProducto.getText().trim();
             String description = txtADescripcion.getText().trim();
             Long categoryId = Long.valueOf(this.txtIdCategoria.getText().trim());
             Double price = Double.valueOf(txtPrecio.getText().trim());
+
+            // Crear una instancia de Product con los valores proporcionados
             Product prod = new Product(Long.valueOf(id), name, description, price, categoryId, vendedor.getId());
-            
+
+            // Crear un comando de agregado de producto y ejecutarlo utilizando un invocador
             AddProductCommand comm = new AddProductCommand(productService, prod);
 
             if (invoker.executeCommand(comm)) {
                 Messages.showMessageDialog("Se grabó con éxito", "Atención");
-
                 cleanControls();
-
             } else {
-                Messages.showMessageDialog("El id ya existe,ingrese otro", "Error");
+                Messages.showMessageDialog("El id ya existe, ingrese otro", "Error");
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,
@@ -231,9 +261,15 @@ public class JpAgregarProducto extends javax.swing.JPanel implements Observer{
                     JOptionPane.ERROR_MESSAGE);
         }
     }
-
         
-    //Obtener solo los productos del vendedor
+        
+    /**
+     * Obtiene una lista de productos pertenecientes al vendedor actual.
+     * Filtra los productos de la lista proporcionada y devuelve solo los productos del vendedor.
+     *
+     * @param products La lista de productos de la cual se desea obtener los productos del vendedor.
+     * @return Una lista de productos del vendedor.
+     */
     private List<Product> getProductsVendedor(List<Product> products){
         List<Product> productsVendedor = new ArrayList<>(); 
         
@@ -245,6 +281,10 @@ public class JpAgregarProducto extends javax.swing.JPanel implements Observer{
         return productsVendedor;
     }
     
+    /**
+    * Limpia los controles de entrada de texto en la interfaz gráfica de usuario.
+    * Establece el texto de los campos de texto relacionados con la entrada de datos a una cadena vacía.
+    */
     private void cleanControls() {
         txtIdProducto.setText("");
         txtNombreProducto.setText("");
@@ -253,6 +293,12 @@ public class JpAgregarProducto extends javax.swing.JPanel implements Observer{
         txtPrecio.setText("");
     }
 
+    /**
+     * Actualiza la interfaz gráfica de usuario con los productos del vendedor.
+     * Recupera todos los productos, filtra los productos del vendedor actual
+     * y llena la tabla con los productos del vendedor.
+     * Si ocurre un error durante el proceso, se registra en el registro de errores.
+     */
     @Override
     public void update() {
         try {
@@ -264,6 +310,7 @@ public class JpAgregarProducto extends javax.swing.JPanel implements Observer{
             List<Product> productsVendedor = new ArrayList<>();
             productsVendedor = getProductsVendedor(products);
             
+            // Llenar la tabla con los productos del vendedor
             fillTable(productsVendedor);
         } catch (Exception ex) {
             Logger.getLogger(GUIVendedor.class.getName()).log(Level.SEVERE, null, ex);

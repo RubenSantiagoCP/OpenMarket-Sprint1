@@ -1,8 +1,10 @@
+co\unicauca\openmarket\server\access\IBankAccountRepository.class
 co\unicauca\openmarket\server\domain\services\UserService.class
 co\unicauca\openmarket\server\infra\tcpip\OpenMarketServer.class
 co\unicauca\openmarket\server\infra\Context.class
 co\unicauca\openmarket\server\access\ProductRepositoryImplMysql.class
 co\unicauca\openmarket\server\infra\tcpip\OpenMarketHandler$1.class
+co\unicauca\openmarket\server\access\BankAccountImplMySql.class
 co\unicauca\openmarket\server\access\IBuyRepository.class
 co\unicauca\openmarket\server\infra\ErrorResponse.class
 co\unicauca\openmarket\server\access\BuyRepositoryImplMySql.class
@@ -13,6 +15,7 @@ co\unicauca\openmarket\server\access\UserRepositoryImplMySql.class
 co\unicauca\openmarket\server\access\Factory.class
 co\unicauca\openmarket\server\access\IProductRepository.class
 co\unicauca\openmarket\server\domain\services\ProductService.class
+co\unicauca\openmarket\server\domain\services\BankAccountService.class
 co\unicauca\openmarket\server\access\ICategoryRepository.class
 co\unicauca\openmarket\server\domain\services\CategoryService.class
 co\unicauca\openmarket\server\access\IUserRepository.class

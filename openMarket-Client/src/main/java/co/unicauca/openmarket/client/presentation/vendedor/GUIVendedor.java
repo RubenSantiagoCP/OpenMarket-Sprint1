@@ -8,7 +8,7 @@ import co.unicauca.openmarket.commons.observer.Observer;
 
 /**
  *
- * @author juan
+ * @author jsarabino
  */
 public class GUIVendedor extends javax.swing.JFrame implements Observer{
     
@@ -47,7 +47,7 @@ public class GUIVendedor extends javax.swing.JFrame implements Observer{
         productService.registerObserver(jpAgregar);
         categoryService.registerObserver(jpAgregar);
         
-        //Panel Agregar producto
+        //Panel categoria
         jpCategoria = new JpCategoria(jpContent, productService, categoryService, invoker);
         productService.registerObserver(jpAgregar);
         categoryService.registerObserver(jpAgregar);

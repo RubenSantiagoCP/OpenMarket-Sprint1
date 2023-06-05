@@ -15,7 +15,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author juan
+ * @author jsarabino
  */
 public class JpCategoria extends javax.swing.JPanel implements Observer{
     
@@ -40,6 +40,11 @@ public class JpCategoria extends javax.swing.JPanel implements Observer{
         stateInitial();
     }
     
+    /**
+     * Inicializa la tabla de la interfaz gráfica de usuario para mostrar las categorías.
+     * Configura el modelo de tabla predeterminado con las columnas "Id" y "Name".
+     * La tabla se inicializa con datos vacíos.
+     */
     private void initializeTable() {
         tblAgregarCategoria.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][]{},
@@ -49,12 +54,18 @@ public class JpCategoria extends javax.swing.JPanel implements Observer{
         ));
     }
   
-    
+    /**
+     * Llena la tabla de la interfaz gráfica de usuario con los datos de las categorías proporcionadas.
+     * Inicializa la tabla y obtiene el modelo de tabla predeterminado.
+     * Luego, recorre la lista de categorías y agrega cada categoría como una fila en la tabla.
+     *
+     * @param listCategories La lista de categorías que se desea mostrar en la tabla.
+     */
     private void fillTable(List<Category> listCategories) {
         initializeTable();
         DefaultTableModel model = (DefaultTableModel) tblAgregarCategoria.getModel();
 
-        Object rowData[] = new Object[2];//No columnas
+        Object rowData[] = new Object[2];// Número de columnas
         for (int i = 0; i < listCategories.size(); i++) {
             rowData[0] = listCategories.get(i).getCategoryId();
             rowData[1] = listCategories.get(i).getName();
@@ -158,11 +169,23 @@ public class JpCategoria extends javax.swing.JPanel implements Observer{
         });
         add(btnVolver, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 550, 100, -1));
     }// </editor-fold>//GEN-END:initComponents
-
+    /**
+     * Maneja el evento de acción del botón "Guardar".
+     * Llama al método addCategory() para agregar una categoría.
+     *
+     * @param evt El objeto de evento de acción.
+     */
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        // Agregar categoría
         addCategory();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
+    /**
+     * Maneja el evento de acción del botón "Guardar Edición".
+     * Realiza validaciones de los campos de entrada y llama al método editCategory() para editar la categoría.
+     *
+     * @param evt El objeto de evento de acción.
+     */
     private void btnGuardarEdicionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarEdicionActionPerformed
         try {
             if (txtIdCategoria.getText().trim().equals("")) {
@@ -175,7 +198,7 @@ public class JpCategoria extends javax.swing.JPanel implements Observer{
                 txtNombreCategoria.requestFocus();
                 return;
             }
-            //Editar
+            // Editar categoría
             editCategory();
         }catch(Exception e){
            
@@ -186,11 +209,22 @@ public class JpCategoria extends javax.swing.JPanel implements Observer{
         }
     }//GEN-LAST:event_btnGuardarEdicionActionPerformed
 
+    /**
+     * Maneja el evento de acción del botón "Editar Categoría".
+     * Cambia el estado de la interfaz para permitir la edición de una categoría y establece el foco en el campo de texto del ID de categoría.
+     *
+     * @param evt El objeto de evento de acción.
+     */
     private void btnEditarCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarCategoriaActionPerformed
         stateEdit();
         txtIdCategoria.requestFocus();
     }//GEN-LAST:event_btnEditarCategoriaActionPerformed
-
+    /**
+     * Maneja el evento de acción del botón "Volver".
+     * Restablece el estado inicial de la interfaz gráfica.
+     *
+     * @param evt El objeto de evento de acción.
+     */
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
         stateInitial();
     }//GEN-LAST:event_btnVolverActionPerformed
@@ -209,7 +243,13 @@ public class JpCategoria extends javax.swing.JPanel implements Observer{
     private javax.swing.JTextField txtNombreCategoria;
     // End of variables declaration//GEN-END:variables
 
-    //agregar Categorias
+    /**
+     * Agrega una nueva categoría.
+     * Obtiene el nombre y el ID de categoría ingresados en los campos de texto.
+     * Llama al servicio de categoría para guardar la categoría.
+     * Actualiza la tabla y limpia los controles si la operación es exitosa.
+     * Muestra un mensaje de error si hay algún problema al grabar la categoría.
+     */
     private void addCategory() {
         try{
             String name = this.txtNombreCategoria.getText().trim();
@@ -227,7 +267,16 @@ public class JpCategoria extends javax.swing.JPanel implements Observer{
      
     }
     
-    //editar categorias
+    /**
+     * Edita una categoría existente.
+     * Obtiene el ID y el nombre de la categoría ingresados en los campos de texto.
+     * Crea un objeto Category con los datos obtenidos.
+     * Llama al servicio de categoría para editar la categoría.
+     * Actualiza la tabla y limpia los controles si la operación es exitosa.
+     * Muestra un mensaje de error si hay algún problema al editar la categoría.
+     *
+     * @throws Exception Si ocurre un error durante la edición de la categoría.
+     */
     private void editCategory() throws Exception {
         String id=this.txtIdCategoria.getText().trim();
         Long categoryId=Long.valueOf(id);
@@ -243,6 +292,11 @@ public class JpCategoria extends javax.swing.JPanel implements Observer{
         }
     }
     
+    /**
+     * Actualiza la vista de la categoría.
+     * Llama al servicio de categoría para obtener todas las categorías y luego actualiza la tabla con los datos obtenidos.
+     * Muestra un mensaje de error si hay algún problema al obtener las categorías.
+     */
     @Override
     public void update() {
         try {
@@ -252,14 +306,23 @@ public class JpCategoria extends javax.swing.JPanel implements Observer{
         }
     }
     
-   //para visibilizar los componentes
+    /**
+     * Establece el estado inicial de los componentes.
+     * Hace visible los botones "Guardar" y "Editar Categoría".
+     * Oculta los botones "Guardar Edición" y "Volver".
+     */
      private void stateInitial() {
         btnGuardar.setVisible(true);
         btnEditarCategoria.setVisible(true);
         btnGuardarEdicion.setVisible(false);
         btnVolver.setVisible(false);
     }
-    
+     
+    /**
+     * Establece el estado de edición de los componentes.
+     * Oculta los botones "Guardar" y "Editar Categoría".
+     * Hace visible los botones "Guardar Edición" y "Volver".
+     */
      private void stateEdit() {
         btnGuardar.setVisible(false);
         btnEditarCategoria.setVisible(false);
@@ -267,7 +330,10 @@ public class JpCategoria extends javax.swing.JPanel implements Observer{
         btnVolver.setVisible(true);
      }
      
-    //limpiar las cajas de texto
+    /**
+     * Limpia los campos de texto.
+     * Establece el texto vacío en los campos de texto "txtIdCategoria" y "txtNombreCategoria".
+     */
     private void cleanControls() {
         txtIdCategoria.setText("");
         txtNombreCategoria.setText("");
