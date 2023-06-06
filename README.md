@@ -12,3 +12,7 @@ y arquitectura, como el estilo cliente-servidor y las capas para cada uno de ell
 se aplicaron principios sólidos de ingeniería para crear una aplicación de escritorio usable, mantenible
 y eficiente. El resultado final fue un sistema bien estructurado, modular y escalable, 
 que cumplió con los requisitos del primer sprint. 
+
+[Planeacion](https://software1cauca.atlassian.net/jira/software/projects/OP/boards/3/roadmap)
+
+[Mockups](https://app.uizard.io/prototypes/MLr5m4LLdGcP65gxa5e6)
