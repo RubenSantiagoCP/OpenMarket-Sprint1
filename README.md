@@ -16,3 +16,5 @@ que cumplió con los requisitos del primer sprint.
 [Planeacion](https://software1cauca.atlassian.net/jira/software/projects/OP/boards/3/roadmap)
 
 [Mockups](https://app.uizard.io/prototypes/MLr5m4LLdGcP65gxa5e6)
+
+[Funcionamiento](https://www.youtube.com/watch?v=PgzhVVV-eDw)
