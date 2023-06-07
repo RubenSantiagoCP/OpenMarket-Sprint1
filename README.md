@@ -18,3 +18,7 @@ que cumplió con los requisitos del primer sprint.
 [Mockups](https://app.uizard.io/prototypes/MLr5m4LLdGcP65gxa5e6)
 
 [Funcionamiento](https://www.youtube.com/watch?v=PgzhVVV-eDw)
+
+[Historias de usuario](https://docs.google.com/spreadsheets/d/1sjIPDQW9OMb_gjuqQ9Ax_82ikFF2Gt6v/edit?usp=sharing&ouid=110312100959318969940&rtpof=true&sd=true)
+
+
